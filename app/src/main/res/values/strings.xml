@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Moim</string>
+    <string name="dialog_base_ok">확인</string>
 </resources>
