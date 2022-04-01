@@ -20,6 +20,8 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         initView()
+
+
     }
 
     private fun initView() {
