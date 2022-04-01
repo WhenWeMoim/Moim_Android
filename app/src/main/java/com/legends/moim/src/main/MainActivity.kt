@@ -8,6 +8,7 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMainBinding
 import com.legends.moim.src.makeMoim.MakeMoimActivity
+import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
 
 class MainActivity : BaseActivity() {
@@ -40,7 +41,8 @@ class MainActivity : BaseActivity() {
                 startActivity(intent)
             }
             R.id.main_user_btn -> {
-
+                val intent = Intent(this, UserActivity::class.java)
+                startActivity(intent)
             }
         }
     }
