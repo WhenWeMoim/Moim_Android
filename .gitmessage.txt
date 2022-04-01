@@ -1,6 +1,4 @@
-Commit Title : 
-Commit Body : 
-Commit Tag : NONE
+
 #
 #
 #######   Title 작성 방법   #########
