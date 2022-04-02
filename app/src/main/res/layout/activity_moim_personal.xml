@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/moim_personal_topbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/moim_personal_complete_btn"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Button
+            android:id="@+id/moim_personal_load_btn"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/moim_personal_complete_btn"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:elevation="5dp"
+        android:layout_marginVertical="120dp"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/moim_personal_preference_btn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            />
+
+        <Button
+            android:id="@+id/moim_personal_nonpreference_btn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            />
+
+        <Button
+            android:id="@+id/moim_personal_impossible_btn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            />
+
+        <Button
+            android:id="@+id/moim_personal_eraser_btn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            />
+
+        <Button
+            android:id="@+id/moim_personal_initial_btn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/moim_personal_schedule_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

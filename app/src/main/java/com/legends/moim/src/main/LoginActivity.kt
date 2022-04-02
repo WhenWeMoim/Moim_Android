@@ -1,4 +1,6 @@
 package com.legends.moim.src.main
 
-class LoginActivity {
+import com.legends.moim.config.BaseActivity
+
+class LoginActivity: BaseActivity() {
 }

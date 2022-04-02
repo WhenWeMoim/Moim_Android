@@ -1,4 +1,6 @@
 package com.legends.moim.src.makeMoim
 
-class SelectTimeActivity {
+import com.legends.moim.config.BaseActivity
+
+class SelectTimeActivity: BaseActivity() {
 }
