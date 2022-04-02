@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--상단 바-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/moim_group_topbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:padding="15dp"
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/moim_group_moim_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모임 이름"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/moim_group_moim_explain_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="모임 설명"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/moim_group_moim_name_tv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/moim_group_home_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:drawablePadding="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/moim_group_participant_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참가한 멤버"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/moim_group_home_btn"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/moim_group_invite_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:drawablePadding="0dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/moim_group_home_btn"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/moim_group_topbar_layout"
+        app:layout_constraintBottom_toTopOf="@id/moim_group_bottombar_layout"/>
+
+    <Button
+        android:id="@+id/moim_group_add_personal_btn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/moim_group_bottombar_layout"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <!--하단 인원 상세보기-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/moim_group_bottombar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

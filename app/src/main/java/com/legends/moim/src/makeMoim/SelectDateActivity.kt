@@ -1,4 +1,6 @@
 package com.legends.moim.src.makeMoim
 
-class SelectDateActivity {
+import com.legends.moim.config.BaseActivity
+
+class SelectDateActivity: BaseActivity() {
 }

@@ -1,4 +1,6 @@
 package com.legends.moim.src.makeMoim
 
-class MakeMoimActivity {
+import com.legends.moim.config.BaseActivity
+
+class MakeMoimActivity: BaseActivity() {
 }
