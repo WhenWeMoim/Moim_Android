@@ -9,17 +9,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moim">
+
         <activity android:name=".src.main.SplashActivity"
             android:exported="true"
             android:theme="@style/Splash">
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".src.main.MainActivity" android:exported="true"></activity>
 
+        <!--main-->
+        <activity android:name=".src.main.MainActivity"></activity>
+
+        <activity android:name=".src.main.LoginActivity" />
+        <!--groupMoim-->
+        <activity android:name=".src.groupMoim.MoimGroupActivity" />
+        <activity android:name=".src.groupMoim.MoimPersonalActivity" />
+        <!--makeMoim-->
+        <activity android:name=".src.makeMoim.MakeMoimActivity" />
+        <activity android:name=".src.makeMoim.SelectDateActivity" />
+        <activity android:name=".src.makeMoim.SelectTimeActivity"/>
+        <activity android:name=".src.makeMoim.SettingActivity"/>
+        <!--user-->
+        <activity android:name=".src.user.UserActivity"/>
+        <!--viewMoim-->
+        <activity android:name=".src.viewMoim.ViewMoimActivity"/>
     </application>
 
 </manifest>
