@@ -23,15 +23,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 카카오 앱 키 사용 -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
 
         <!--login-->
         <activity android:name=".src.main.LoginActivity"
             android:exported="true">
-
-            <!-- 카카오 앱 키 사용 -->
-            <meta-data
-                android:name="com.kakao.sdk.AppKey"
-                android:value="@string/kakao_app_key" />
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

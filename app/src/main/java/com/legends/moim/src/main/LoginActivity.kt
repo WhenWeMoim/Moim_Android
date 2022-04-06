@@ -2,9 +2,7 @@ package com.legends.moim.src.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.legends.moim.config.BaseActivity
-import com.kakao.sdk.common.util.Utility
 import com.legends.moim.R
 import com.kakao.sdk.user.UserApiClient
 import android.widget.Toast
@@ -18,6 +16,7 @@ class LoginActivity: BaseActivity() {
         setContentView(R.layout.activity_login)
 
         // 로그인 정보 확인
+        /*
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
@@ -28,7 +27,8 @@ class LoginActivity: BaseActivity() {
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
-        }
+        } */
+
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -67,19 +67,22 @@ class LoginActivity: BaseActivity() {
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
+            Toast.makeText(this, "테스트 메세지", Toast.LENGTH_SHORT).show()
         }
 
 
         val kakao_login_button = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
 
         kakao_login_button.setOnClickListener {
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
-                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)){
+                UserApiClient.instance.loginWithKakaoTalk(this@LoginActivity, callback = callback)
 
 
             }else{
-                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+                Toast.makeText(this, "로그인하러 이동중.", Toast.LENGTH_SHORT).show()
+                UserApiClient.instance.loginWithKakaoAccount(this@LoginActivity, callback = callback)
             }
         }
+
     }
 }
