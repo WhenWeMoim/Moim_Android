@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Moim">
         <!--main-->
         <activity
+            android:name=".src.home.MainActivity"
             android:name=".src.main.MainActivity"
             android:exported="true">
             <intent-filter>
