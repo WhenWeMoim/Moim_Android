@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moim">
+        <!--main-->
         <activity
             android:name=".src.home.MainActivity"
+            android:name=".src.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,6 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".src.main.LoginActivity" />
+        <activity android:name=".src.main.SplashActivity" />
+        <!--groupMoim-->
+        <activity android:name=".src.groupMoim.MoimGroupActivity" />
+        <activity android:name=".src.groupMoim.MoimPersonalActivity" />
+        <!--makeMoim-->
+        <activity android:name=".src.makeMoim.MakeMoimActivity" />
+        <activity android:name=".src.makeMoim.SelectDateActivity" />
+        <activity android:name=".src.makeMoim.SelectTimeActivity"/>
+        <activity android:name=".src.makeMoim.SettingActivity"/>
+        <!--user-->
+        <activity android:name=".src.user.UserActivity"/>
+        <!--viewMoim-->
+        <activity android:name=".src.viewMoim.ViewMoimActivity"/>
     </application>
 
 </manifest>
