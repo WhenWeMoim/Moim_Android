@@ -1,4 +1,4 @@
-package com.legends.moim.src
+package com.legends.moim.src.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
