@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.datepicker.MaterialCalendar
 import com.legends.moim.R
+import com.legends.moim.src.makeMoim.model.Date
+import com.legends.moim.src.makeMoim.model.makingMoim
 
 class DateDialog(context : Context) {
 
@@ -18,7 +20,29 @@ class DateDialog(context : Context) {
     private lateinit var btnOK: TextView
     private lateinit var calendar : CalendarView
 
-    var listener: BaseDialogClickListener? = null
+    var listener: DateDialogClickListener? = null
+
+    open fun showDateDialog() {
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_base)
+        dialog.setCancelable(false)
+        calendar = dialog.findViewById(R.id.dialog_date_calender_cv)
+        btnOK = dialog.findViewById(R.id.dialog_base_ok_btn_tv)
+
+        calendar.setOnDateChangeListener { calendarView, year, month, day ->
+            makingMoim.dates.add( Date(year = year, month = month, day = day) )
+
+        }
+        btnOK.setOnClickListener {
+
+            listener!!.onDateDialogOKClicked()
+
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
 
     open fun showDateDialog(title: String, message: String, okMessage: String) {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -36,7 +60,7 @@ class DateDialog(context : Context) {
         btnOK.text = okMessage
         btnOK.setOnClickListener {
 
-            listener!!.onOKClicked()
+            listener!!.onDateDialogOKClicked()
 
             dialog.dismiss()
         }
@@ -50,8 +74,8 @@ class DateDialog(context : Context) {
         dialog.show()
     }
 
-    interface BaseDialogClickListener {
-        fun onOKClicked()
+    interface DateDialogClickListener {
+        fun onDateDialogOKClicked()
 //        fun onCancelClicked()
     }
 }

@@ -6,7 +6,7 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 
-class MakeMoimActivity: BaseActivity() {
+class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, TimeDialog.TimeDialogClickListener {
 
     lateinit var binding : ActivityMakeMoimBinding
 
@@ -29,10 +29,10 @@ class MakeMoimActivity: BaseActivity() {
         super.onClick(v)
         when(v!!.id) {
             R.id.make_moim_select_date_btn -> {
-
+                showDateDialog()
             }
             R.id.make_moim_select_time_btn -> {
-
+                showTimeDialog()
             }
             R.id.make_moim_setting_tv -> {
 
@@ -43,4 +43,25 @@ class MakeMoimActivity: BaseActivity() {
 
         }
     }
+
+    fun showTimeDialog() {
+        val dig = TimeDialog(this)
+        dig.listener = this
+        dig.showTimeDialog()
+    }
+
+    fun showDateDialog() {
+        val dig = DateDialog(this)
+        dig.listener = this
+        dig.showDateDialog()
+    }
+
+    override fun onDateDialogOKClicked() {
+        //TODO("Not yet implemented")
+    }
+
+    override fun onTimeDialogOKClicked() {
+        //TODO("Not yet implemented")
+    }
+
 }

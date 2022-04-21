@@ -1,13 +1,19 @@
 package com.legends.moim.src.makeMoim
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.res.Resources
 import android.view.Window
+import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.TimePicker
 import com.legends.moim.R
 import com.legends.moim.databinding.DialogTimeBinding
+import com.legends.moim.src.makeMoim.model.makingMoim
 
+
+@SuppressLint("NewApi")
 class TimeDialog(context : Context) {
 
     val dialog = Dialog(context)
@@ -20,55 +26,58 @@ class TimeDialog(context : Context) {
 
     private lateinit var startTimePicker: TimePicker
     private lateinit var endTimePicker: TimePicker
-//    private lateinit var startTime: Int
-//    private lateinit var startMin: Int
-//    private lateinit var endTime: Int
-//    private lateinit var endMin: Int
 
+    var listener: TimeDialogClickListener? = null
 
-    var listener: BaseDialogClickListener? = null
-
-    open fun show(title: String, message: String, okMessage: String) {
+    open fun showTimeDialog() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_base)
         dialog.setCancelable(false)
 
-        tvTitle = dialog.findViewById(R.id.dialog_base_title_tv)
-        tvTitle.text = title
-
-        tvMessage = dialog.findViewById(R.id.dialog_base_message_tv)
-        tvMessage.text = message
-
-        btnOK = dialog.findViewById(R.id.dialog_base_ok_btn_tv)
-        btnOK.text = okMessage
-        btnOK.setOnClickListener {
-            listener!!.onOKClicked()
-
-            dialog.dismiss()
-        }
-
         startTimePicker = dialog.findViewById(R.id.dialog_time_start_tp)
         endTimePicker = dialog.findViewById(R.id.dialog_time_end_tp)
 
-        
-        startTimePicker.setOnTimeChangedListener()
         //todo dialog 설정
         startTimePicker.minute = 0
+        endTimePicker.minute = 0
+        setTimePickerInterval(startTimePicker)
+        setTimePickerInterval(endTimePicker)
 
+        btnOK.setOnClickListener {
+            makingMoim.startTimeHour = startTimePicker.hour
+            makingMoim.endTimeHour = endTimePicker.hour
 
+            listener!!.onTimeDialogOKClicked()
+
+            dialog.dismiss()
+        }
         dialog.show()
     }
 
-    open fun getStartTime(): Int = startTimePicker.hour
-    open fun getEndTime(): Int = endTimePicker.hour
+    private fun setTimePickerInterval(timePicker: TimePicker) {
+        try {
+            val TIME_PICKER_INTERVAL = 30
+            val minutePicker = timePicker.findViewById(
+                Resources.getSystem().getIdentifier(
+                    "minute", "id", "android"
+                )
+            ) as NumberPicker
+            minutePicker.minValue = 0
+            minutePicker.maxValue = 60 / TIME_PICKER_INTERVAL - 1
+            val displayedValues: MutableList<String> = ArrayList()
+            var i = 0
+            while (i < 60) {
+                displayedValues.add(String.format("%02d", i))
+                i += TIME_PICKER_INTERVAL
+            }
+            minutePicker.displayedValues = displayedValues.toTypedArray()
+        } catch (e: Exception) {
+        }
+    }
 
-    interface BaseDialogClickListener {
-        fun onOKClicked()
+    interface TimeDialogClickListener {
+        fun onTimeDialogOKClicked()
 //        fun onCancelClicked()
     }
-}
-
-private fun TimePicker.setOnTimeChangedListener() {
-    TODO("Not yet implemented")
 }
