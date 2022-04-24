@@ -39,7 +39,7 @@
 
 
         <!--main-->
-        <activity android:name=".src.main.MainActivity"></activity>
+        <activity android:name=".src.main.MainActivity" />
         <!--groupMoim-->
         <activity android:name=".src.groupMoim.MoimGroupActivity" />
         <activity android:name=".src.groupMoim.MoimPersonalActivity" />
@@ -53,5 +53,4 @@
         <!--viewMoim-->
         <activity android:name=".src.viewMoim.ViewMoimActivity"/>
     </application>
-
 </manifest>

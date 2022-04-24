@@ -22,7 +22,7 @@ class DateDialog(context : Context) {
 
     var listener: DateDialogClickListener? = null
 
-    open fun showDateDialog() {
+    fun showDateDialog() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_base)
@@ -44,7 +44,7 @@ class DateDialog(context : Context) {
         dialog.show()
     }
 
-    open fun showDateDialog(title: String, message: String, okMessage: String) {
+    fun showDateDialog(title: String, message: String, okMessage: String) {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_base)

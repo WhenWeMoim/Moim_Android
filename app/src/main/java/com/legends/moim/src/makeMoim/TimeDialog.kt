@@ -29,7 +29,7 @@ class TimeDialog(context : Context) {
 
     var listener: TimeDialogClickListener? = null
 
-    open fun showTimeDialog() {
+    fun showTimeDialog() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_base)
