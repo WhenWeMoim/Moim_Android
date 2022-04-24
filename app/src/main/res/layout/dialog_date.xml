@@ -41,25 +41,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <DatePicker
+        <com.aminography.primedatepicker.calendarview.other.TouchControllableRecyclerView
             android:id="@+id/dialog_date_calender_cv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/dialog_date_view"
             app:layout_constraintBottom_toTopOf="@id/dialog_date_ok_btn_tv"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-
-<!--        <com.prolificinteractive.materialcalendarview.MaterialCalendarView-->
-<!--            android:id="@+id/dialog_date_calender_mcv"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            app:mcv_selectionColor="@color/tripbook_main_1"-->
-<!--            app:mcv_selectionMode="range"-->
-<!--            app:mcv_showOtherDates="all"-->
-<!--            />-->
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
 <!--        <TextView-->
 <!--            android:id="@+id/dialog_base_message_tv"-->

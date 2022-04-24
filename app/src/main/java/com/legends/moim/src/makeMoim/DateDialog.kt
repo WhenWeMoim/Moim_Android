@@ -6,10 +6,14 @@ import android.view.Window
 import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
+import com.aminography.primecalendar.civil.CivilCalendar
+import com.aminography.primecalendar.persian.PersianCalendar
+import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.google.android.material.datepicker.MaterialCalendar
 import com.legends.moim.R
 import com.legends.moim.src.makeMoim.model.Date
 import com.legends.moim.src.makeMoim.model.makingMoim
+import java.util.*
 
 class DateDialog(context : Context) {
 
@@ -18,7 +22,7 @@ class DateDialog(context : Context) {
     private lateinit var tvTitle: TextView
     private lateinit var tvMessage: TextView
     private lateinit var btnOK: TextView
-    private lateinit var calendar : CalendarView
+    private lateinit var datePicker : PrimeDatePicker
 
     var listener: DateDialogClickListener? = null
 
@@ -27,17 +31,17 @@ class DateDialog(context : Context) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_base)
         dialog.setCancelable(false)
-        calendar = dialog.findViewById(R.id.dialog_date_calender_cv)
+        datePicker = dialog.findViewById(R.id.dialog_date_calender_cv)
         btnOK = dialog.findViewById(R.id.dialog_base_ok_btn_tv)
 
-        calendar.setOnDateChangeListener { calendarView, year, month, day ->
-            makingMoim.dates.add( Date(year = year, month = month, day = day) )
+        val today = CivilCalendar()
 
-        }
+        datePicker = PrimeDatePicker.dialogWith(today)
+            .pickMultipleDays()
+            .build()
+
         btnOK.setOnClickListener {
-
             listener!!.onDateDialogOKClicked()
-
             dialog.dismiss()
         }
 
