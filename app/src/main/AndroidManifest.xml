@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.legends.moim">
+    <!-- 인터넷 사용 권한 설정-->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.legends.moim.src.main.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moim">
-        <!--main-->
-        <activity
-            android:name=".src.home.MainActivity"
-            android:name=".src.main.MainActivity"
-            android:exported="true">
+        <activity android:name=".src.main.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".src.main.LoginActivity" />
-        <activity android:name=".src.main.SplashActivity" />
+        <!-- 카카오 앱 키 사용 -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+        <!--login-->
+        <activity android:name=".src.main.LoginActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="oauth"
+                    android:scheme="kakaod04b5837217105d4b2a2b16ced721572" />
+            </intent-filter>
+
+        </activity>
+
+
+        <!--main-->
+        <activity android:name=".src.main.MainActivity"></activity>
         <!--groupMoim-->
         <activity android:name=".src.groupMoim.MoimGroupActivity" />
         <activity android:name=".src.groupMoim.MoimPersonalActivity" />
