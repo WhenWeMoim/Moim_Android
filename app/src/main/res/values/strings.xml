@@ -2,6 +2,9 @@
     <string name="app_name">Moim</string>
     <string name="dialog_base_ok">확인</string>
 
+    //login
+    <string name="kakao_app_key">d04b5837217105d4b2a2b16ced721572</string>
+
     //main
     <string name="main_make_moim">모임 생성</string>
     <string name="main_view_moim">모임 조회</string>

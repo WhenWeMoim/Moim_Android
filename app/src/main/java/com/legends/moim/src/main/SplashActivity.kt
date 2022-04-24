@@ -1,18 +1,31 @@
 package com.legends.moim.src.main
-
-import android.annotation.SuppressLint
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.legends.moim.config.BaseActivity
-import com.legends.moim.databinding.ActivitySplashBinding
+import android.os.Handler
+import android.os.Looper
+import com.legends.moim.R
 
-@SuppressLint("CustomSplashScreen")
-class SplashActivity : BaseActivity() {
-
-    lateinit var binding : ActivitySplashBinding
+class SplashActivity : AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
-        binding = ActivitySplashBinding.inflate(layoutInflater)
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
+            finish()
+        },DURATION)
+
     }
+    companion object {
+        private const val DURATION : Long = 3000
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
 }

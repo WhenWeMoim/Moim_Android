@@ -20,6 +20,7 @@ dependencyResolutionManagement {
         }
         jcenter()
         maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
 }
 rootProject.name = "Moim"
