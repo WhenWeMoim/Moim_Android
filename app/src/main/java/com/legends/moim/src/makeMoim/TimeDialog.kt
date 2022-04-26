@@ -18,8 +18,6 @@ class TimeDialog(context : Context) {
 
     val dialog = Dialog(context)
 
-    lateinit var binding : DialogTimeBinding
-
     private lateinit var tvTitle: TextView
     private lateinit var tvMessage: TextView
     private lateinit var btnOK: TextView
@@ -45,13 +43,14 @@ class TimeDialog(context : Context) {
         setTimePickerInterval(endTimePicker)
 
         btnOK.setOnClickListener {
-            makingMoim.startTimeHour = startTimePicker.hour
-            makingMoim.endTimeHour = endTimePicker.hour
+            val startTimeHour = startTimePicker.hour
+            val endTimeHour = endTimePicker.hour
 
-            listener!!.onTimeDialogOKClicked()
+            listener!!.onTimeDialogOKClicked(startTimeHour, endTimeHour)
 
             dialog.dismiss()
         }
+
         dialog.show()
     }
 
@@ -77,7 +76,7 @@ class TimeDialog(context : Context) {
     }
 
     interface TimeDialogClickListener {
-        fun onTimeDialogOKClicked()
+        fun onTimeDialogOKClicked( startTimeHour: Int, endTimeHour: Int )
 //        fun onCancelClicked()
     }
 }

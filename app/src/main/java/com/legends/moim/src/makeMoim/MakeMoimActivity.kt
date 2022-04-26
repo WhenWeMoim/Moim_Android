@@ -1,5 +1,6 @@
 package com.legends.moim.src.makeMoim
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.SparseIntArray
@@ -13,6 +14,7 @@ import com.aminography.primedatepicker.picker.theme.LightThemeFactory
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMakeMoimBinding
+import com.legends.moim.src.makeMoim.model.makingMoim
 import java.util.*
 
 class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, TimeDialog.TimeDialogClickListener {
@@ -29,6 +31,38 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         initDatePickerDialog()
         initView()
     }
+
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when(v!!.id) {
+            R.id.make_moim_select_date_btn -> {
+                datePicker.show(supportFragmentManager, "SOME_TAG")
+                //showDateDialog()
+            }
+            R.id.make_moim_select_time_btn -> {
+                showTimeDialog()
+            }
+            R.id.make_moim_setting_tv -> {
+
+            }
+            R.id.make_moim_complete_btn -> {
+                val intent = Intent()
+            }
+        }
+    }
+
+    fun showTimeDialog() {
+        val dig = TimeDialog(this)
+        dig.listener = this
+        dig.showTimeDialog()
+    }
+
+    fun showDateDialog() {
+        val dig = DateDialog(this)
+        dig.listener = this
+        dig.showDateDialog()
+    }
+
 
     private fun initDatePickerDialog() {
 
@@ -113,43 +147,15 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         binding.makeMoimCompleteBtn.setOnClickListener(this)
     }
 
-    override fun onClick(v: View?) {
-        super.onClick(v)
-        when(v!!.id) {
-            R.id.make_moim_select_date_btn -> {
-                datePicker.show(supportFragmentManager, "SOME_TAG")
-            }
-            R.id.make_moim_select_time_btn -> {
-                showTimeDialog()
-            }
-            R.id.make_moim_setting_tv -> {
-
-            }
-            R.id.make_moim_complete_btn -> {
-
-            }
-
-        }
-    }
-
-    fun showTimeDialog() {
-        val dig = TimeDialog(this)
-        dig.listener = this
-        dig.showTimeDialog()
-    }
-
-    fun showDateDialog() {
-        val dig = DateDialog(this)
-        dig.listener = this
-        dig.showDateDialog()
-    }
-
     override fun onDateDialogOKClicked() {
         //TODO("Not yet implemented")
     }
 
-    override fun onTimeDialogOKClicked() {
-        //TODO("Not yet implemented")
+    override fun onTimeDialogOKClicked(startTimeHour: Int, endTimeHour: Int) {
+        makingMoim.startTimeHour= startTimeHour
+        makingMoim.endTimeHour= endTimeHour
+
+        binding.makeMoimSelectTimeBtn.text = String.format("%d 부터 %d 까지", startTimeHour, endTimeHour)
     }
 
 }
