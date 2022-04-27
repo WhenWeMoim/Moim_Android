@@ -29,9 +29,9 @@
             android:value="@string/kakao_app_key" />
 
         <!--login-->
-        <activity android:name=".src.main.LoginActivity"
+        <activity android:name=".src.main.LoginActivity"/>
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -39,7 +39,6 @@
                 <data android:host="oauth"
                     android:scheme="kakaod04b5837217105d4b2a2b16ced721572" />
             </intent-filter>
-
         </activity>
 
 

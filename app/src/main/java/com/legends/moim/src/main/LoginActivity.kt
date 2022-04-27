@@ -9,14 +9,24 @@ import android.widget.Toast
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import android.widget.ImageButton
+import android.util.Log
+import com.kakao.sdk.common.util.Utility
+
+private const val TAG = "LoginActivity"
+
 
 class LoginActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        val kakao_login_button = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
+
+        // 키해시 값 찾기
+        //var keyHash = Utility.getKeyHash(this)
+        //Log.e("getkeyHasg", ""+keyHash)
 
         // 로그인 정보 확인
-        /*
+
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
             if (error != null) {
                 Toast.makeText(this, "토큰 정보 보기 실패", Toast.LENGTH_SHORT).show()
@@ -27,10 +37,12 @@ class LoginActivity: BaseActivity() {
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
-        } */
+        }
 
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
+                Log.e(TAG, "로그인 실패", error)
+
                 when {
                     error.toString() == AccessDenied.toString() -> {
                         Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
@@ -67,11 +79,8 @@ class LoginActivity: BaseActivity() {
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                 finish()
             }
-            Toast.makeText(this, "테스트 메세지", Toast.LENGTH_SHORT).show()
         }
 
-
-        val kakao_login_button = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
 
         kakao_login_button.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)){
@@ -83,6 +92,8 @@ class LoginActivity: BaseActivity() {
                 UserApiClient.instance.loginWithKakaoAccount(this@LoginActivity, callback = callback)
             }
         }
+
+
 
     }
 }
