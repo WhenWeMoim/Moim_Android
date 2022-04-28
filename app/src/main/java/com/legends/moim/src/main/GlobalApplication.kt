@@ -8,5 +8,6 @@ class GlobalApplication : Application() {
         super.onCreate()
 
         KakaoSdk.init(this, "d04b5837217105d4b2a2b16ced721572")
+
     }
 }
