@@ -39,19 +39,21 @@ class MoimGroupActivity : BaseActivity() {
             R.id.main_user_btn -> {
                 //유저
             }
-            R.id.moim_group_home_btn -> {
+            R.id.moim_group_home_btn -> { // 홈으로 돌아가기 기능. 모임 저장은 생성 및 적용(개인쪽)시에 구현.
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
-            R.id.moim_group_invite_btn -> {
+            R.id.moim_group_invite_btn -> {// 멤버들에게 초대하는 기능. 카카오톡 링크로 고민중.
 
             }
-            R.id.moim_group_participant_tv -> {
+            R.id.moim_group_participant_tv -> {// 참가자 명단. ~명 참여, 버튼 누르면 참가자 명단도 나오도록.
 
             }
-            R.id.moim_group_add_personal_btn -> {
+            R.id.moim_group_add_personal_btn -> {//개인 시간표 적용 시키기.
                 
             }
+            //모드 1, 2로 한눈에 보기 시간표 보여주기 fragment
+            //인원 상세보기 - 색칠된 시간표의 해당 멤버들 보여주기 기능
         }
     }
 }
