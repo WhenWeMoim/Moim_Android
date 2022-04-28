@@ -21,8 +21,6 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         initView()
-
-
     }
 
     private fun initView() {
