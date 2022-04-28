@@ -14,6 +14,8 @@ import com.aminography.primedatepicker.picker.theme.LightThemeFactory
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMakeMoimBinding
+import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.makeMoim.model.SelectedDate
 import com.legends.moim.src.makeMoim.model.makingMoim
 import java.util.*
 
@@ -30,6 +32,9 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
 
         initDatePickerDialog()
         initView()
+
+        //testValue 삽입 함수
+        addTestDumyData()
     }
 
     override fun onClick(v: View?) {
@@ -46,7 +51,9 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
 
             }
             R.id.make_moim_complete_btn -> {
-                val intent = Intent()
+                val intent = Intent(this, MoimGroupActivity::class.java)
+                startActivity(intent)
+                finish()
             }
         }
     }
@@ -63,6 +70,16 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         dig.showDateDialog()
     }
 
+    private fun addTestDumyData() {
+        val dummyDayVal1: SelectedDate = SelectedDate( year = 2022, month = 6, day = 13 )
+        val dummyDayVal2: SelectedDate = SelectedDate( year = 2022, month = 6, day = 14 )
+        val dummyDayVal3: SelectedDate = SelectedDate( year = 2022, month = 6, day = 18 )
+        val dummyDayVal4: SelectedDate = SelectedDate( year = 2022, month = 7, day = 15 )
+        makingMoim.dates.add(dummyDayVal1)
+        makingMoim.dates.add(dummyDayVal2)
+        makingMoim.dates.add(dummyDayVal3)
+        makingMoim.dates.add(dummyDayVal4)
+    }
 
     private fun initDatePickerDialog() {
 

@@ -12,11 +12,11 @@ data class Moim(
     var endTimeMin: Int = 0,
     var interval: Int = 60,
 
-    val dates: ArrayList<Date> = ArrayList<Date>()
+    val dates: ArrayList<SelectedDate> = ArrayList<SelectedDate>()
 )
 
-data class Date(
-    var year: Int= -1,
-    var month: Int= -1,
-    var day: Int= -1
+data class SelectedDate(
+    var year: Int,
+    var month: Int,
+    var day: Int
 )

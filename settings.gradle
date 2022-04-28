@@ -3,10 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         google()
         mavenCentral()
-        maven {
-            url 'https://maven.google.com'
-        }
-        jcenter()
+        maven { url 'https://maven.google.com' }
         maven { url 'https://maven.fabric.io/public' }
     }
 }
@@ -15,10 +12,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url 'https://maven.google.com'
-        }
-        jcenter()
+        maven { url 'https://maven.google.com' }
         maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
     }
