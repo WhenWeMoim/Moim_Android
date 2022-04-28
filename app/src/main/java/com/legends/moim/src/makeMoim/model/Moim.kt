@@ -7,12 +7,13 @@ data class Moim(
     var description: String = "임시로 생성된 모임",
 
     var startTimeHour : Int = 9,
-    var startTimeMin: Int = 0,
     var endTimeHour: Int = 18,
-    var endTimeMin: Int = 0,
-    var interval: Int = 60,
 
     val dates: ArrayList<SelectedDate> = ArrayList<SelectedDate>()
+
+//    var endTimeMin: Int = 0,
+//    var startTimeMin: Int = 0,
+//    var interval: Int = 60,
 )
 
 data class SelectedDate(
