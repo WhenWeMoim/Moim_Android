@@ -34,7 +34,7 @@ class ViewMoimActivity: BaseActivity() {
             override fun onItemClick(moim: Moim) {
                 val intent = Intent(applicationContext, MoimGroupActivity::class.java)
 
-                TODO("해당한 position의 moim 정보를 intent에 넣어서 보내주든, 서버에서 받아오든 해야 함")
+                //TODO("해당한 position의 moim 정보를 intent에 넣어서 보내주든, 서버에서 받아오든 해야 함")
 
                 startActivity(intent)
             }

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.legends.moim">
-    <!-- 인터넷 사용 권한 설정-->
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.legends.moim.src.main.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,7 +38,7 @@
 
 
         <!--main-->
-        <activity android:name=".src.main.MainActivity"></activity>
+        <activity android:name=".src.main.MainActivity" />
         <!--groupMoim-->
         <activity android:name=".src.groupMoim.MoimGroupActivity" />
         <activity android:name=".src.groupMoim.MoimPersonalActivity" />
@@ -55,5 +52,4 @@
         <!--viewMoim-->
         <activity android:name=".src.viewMoim.ViewMoimActivity"/>
     </application>
-
 </manifest>
