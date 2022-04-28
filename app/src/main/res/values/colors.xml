@@ -13,4 +13,15 @@
 
     <color name="moim_main_1">#FF4DA470</color>
 
+    //PrimeDatePicker
+    <color name="yellow100">#FFEB3B</color>
+    <color name="green800">#009688</color>
+    <color name="green400">#4CAF50</color>
+
+    <color name="gray900">#E6000000</color>
+    <color name="purple200">#9C27B0</color>
+    <color name="red300">#4DFF0000</color>
+    <color name="indigo500">#80FFFFFF</color>
+    <color name="brown600">#570000</color>
+    <color name="orange700">#FF5722</color>
 </resources>
