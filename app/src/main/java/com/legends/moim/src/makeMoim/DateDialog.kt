@@ -3,17 +3,10 @@ package com.legends.moim.src.makeMoim
 import android.app.Dialog
 import android.content.Context
 import android.view.Window
-import android.widget.CalendarView
-import android.widget.ImageView
 import android.widget.TextView
 import com.aminography.primecalendar.civil.CivilCalendar
-import com.aminography.primecalendar.persian.PersianCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
-import com.google.android.material.datepicker.MaterialCalendar
 import com.legends.moim.R
-import com.legends.moim.src.makeMoim.model.Date
-import com.legends.moim.src.makeMoim.model.makingMoim
-import java.util.*
 
 class DateDialog(context : Context) {
 
