@@ -16,10 +16,11 @@ import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.model.SelectedDate
+import com.legends.moim.src.makeMoim.model.SettingDialog
 import com.legends.moim.src.makeMoim.model.makingMoim
 import java.util.*
 
-class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, TimeDialog.TimeDialogClickListener {
+class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
 
     lateinit var binding: ActivityMakeMoimBinding
 
@@ -48,7 +49,7 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
                 showTimeDialog()
             }
             R.id.make_moim_setting_tv -> {
-
+                showSettingDialog()
             }
             R.id.make_moim_complete_btn -> {
                 val intent = Intent(this, MoimGroupActivity::class.java)
@@ -58,16 +59,22 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         }
     }
 
-    fun showTimeDialog() {
+    private fun showTimeDialog() {
         val dig = TimeDialog(this)
         dig.listener = this
         dig.showTimeDialog()
     }
 
-    fun showDateDialog() {
+    private fun showDateDialog() {
         val dig = DateDialog(this)
         dig.listener = this
         dig.showDateDialog()
+    }
+
+    private fun showSettingDialog() {
+        val dig = SettingDialog(this)
+        dig.listener = this
+        dig.showSettingDialog()
     }
 
     private fun addTestDumyData() {
@@ -79,6 +86,32 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         makingMoim.dates.add(dummyDayVal2)
         makingMoim.dates.add(dummyDayVal3)
         makingMoim.dates.add(dummyDayVal4)
+    }
+
+    /*------- interface override fun -------*/
+
+    override fun onDateDialogOKClicked() {
+        //TODO("Not yet implemented")
+    }
+
+    override fun onTimeDialogOKClicked(startTimeHour: Int, endTimeHour: Int) {
+        makingMoim.startTimeHour= startTimeHour
+        makingMoim.endTimeHour= endTimeHour
+
+        binding.makeMoimSelectTimeBtn.text = String.format("%d 부터 %d 까지", startTimeHour, endTimeHour)
+    }
+
+    override fun onSettingDialogOKClicked() {
+        //아직까진 아무것도 안함
+    }
+
+    /*------- initial -------*/
+
+    private fun initView() {
+        binding.makeMoimSelectDateBtn.setOnClickListener(this)
+        binding.makeMoimSelectTimeBtn.setOnClickListener(this)
+        binding.makeMoimSettingTv.setOnClickListener(this)
+        binding.makeMoimCompleteBtn.setOnClickListener(this)
     }
 
     private fun initDatePickerDialog() {
@@ -155,24 +188,6 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
             .applyTheme(themeFactory) // applyTheme(themeFactory: ThemeFactory)
             //.initiallyPickedMultipleDays(pickedDays)
             .build()
-    }
-
-    fun initView() {
-        binding.makeMoimSelectDateBtn.setOnClickListener(this)
-        binding.makeMoimSelectTimeBtn.setOnClickListener(this)
-        binding.makeMoimSettingTv.setOnClickListener(this)
-        binding.makeMoimCompleteBtn.setOnClickListener(this)
-    }
-
-    override fun onDateDialogOKClicked() {
-        //TODO("Not yet implemented")
-    }
-
-    override fun onTimeDialogOKClicked(startTimeHour: Int, endTimeHour: Int) {
-        makingMoim.startTimeHour= startTimeHour
-        makingMoim.endTimeHour= endTimeHour
-
-        binding.makeMoimSelectTimeBtn.text = String.format("%d 부터 %d 까지", startTimeHour, endTimeHour)
     }
 
 }
