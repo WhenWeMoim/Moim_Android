@@ -36,11 +36,7 @@ class TimeDialog(context : Context) {
         startTimePicker = dialog.findViewById(R.id.dialog_time_start_tp)
         endTimePicker = dialog.findViewById(R.id.dialog_time_end_tp)
 
-        //todo dialog 설정
-        startTimePicker.minute = 0
-        endTimePicker.minute = 0
-        setTimePickerInterval(startTimePicker)
-        setTimePickerInterval(endTimePicker)
+        initTimePicker()
 
         btnOK.setOnClickListener {
             val startTimeHour = startTimePicker.hour
@@ -54,9 +50,20 @@ class TimeDialog(context : Context) {
         dialog.show()
     }
 
+    private fun initTimePicker() {
+        startTimePicker.hour = 9
+        startTimePicker.hour = 18
+
+        startTimePicker.minute = 0
+        endTimePicker.minute = 0
+
+        setTimePickerInterval(startTimePicker)
+        setTimePickerInterval(endTimePicker)
+    }
+
     private fun setTimePickerInterval(timePicker: TimePicker) {
         try {
-            val TIME_PICKER_INTERVAL = 30
+            val TIME_PICKER_INTERVAL = 60
             val minutePicker = timePicker.findViewById(
                 Resources.getSystem().getIdentifier(
                     "minute", "id", "android"
