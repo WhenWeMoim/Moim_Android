@@ -23,6 +23,8 @@
                 android:layout_height="380dp"
                 android:orientation="vertical"
                 android:stretchColumns="*"
+                android:scaleX="-1f"
+                android:rotation="270"
 
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -31,6 +33,15 @@
                 >
 
             </TableLayout>
+
+<!--            <com.legends.moim.src.groupMoim.view.ScheduleViewGrid-->
+<!--                android:id="@+id/week_horizontal_grid_holder"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

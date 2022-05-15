@@ -1,8 +1,10 @@
 package com.legends.moim.src.groupMoim
 
 import android.app.Dialog
+import android.content.ClipDescription
 import android.content.Intent
 import android.os.Bundle
+import android.view.DragEvent
 import android.view.View
 import android.view.Window
 import com.legends.moim.R
@@ -11,6 +13,7 @@ import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.main.MainActivity
 import com.legends.moim.src.makeMoim.TimeDialog
 import com.legends.moim.src.makeMoim.model.makingMoim
+import java.util.*
 
 class MoimGroupActivity : BaseActivity() {
 
@@ -61,5 +64,12 @@ class MoimGroupActivity : BaseActivity() {
             //모드 1, 2로 한눈에 보기 시간표 보여주기 fragment
             //인원 상세보기 - 색칠된 시간표의 해당 멤버들 보여주기 기능
         }
+    }
+
+    private class CellClickListener(): View.OnClickListener {
+        override fun onClick(view: View?) {
+            TODO("Not yet implemented")
+        }
+
     }
 }
