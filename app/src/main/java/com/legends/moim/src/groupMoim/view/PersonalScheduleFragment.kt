@@ -11,6 +11,7 @@ import android.widget.TableRow
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.databinding.FragmentSchedulePersonalBinding
+import com.legends.moim.src.groupMoim.selectedBtnFunc
 
 /**
  * 한개 row = 한개 날짜
@@ -45,6 +46,20 @@ class PersonalScheduleFragment: Fragment() {
         return v
     }
 
+    public fun resetScheduleTable(){
+        var i: Int =0
+        var j: Int
+        while( i < numOfDays ){
+            j=0
+            while ( j < numOfTimes ){
+                scheduleResult[i][j] = 2
+                cellButtons[i][j]!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
+                j++
+            }
+            i++
+        }
+    }
+
     private fun initScheduleTable(v: View) {
         val rowPm = TableLayout.LayoutParams(0, 0, 1F)
         val cellPm: TableLayout.LayoutParams =
@@ -66,22 +81,23 @@ class PersonalScheduleFragment: Fragment() {
                 cellButtons[i][j]?.setBackgroundResource(R.drawable.bg_schedule_cell_btn)
                 cellButtons[i][j]?.layoutParams = cellPm
 
-                val finalI = i
-                val finalJ = j
-                cellButtons[i][j]?.setOnClickListener(object : PixelClickListener(finalI, finalJ) {
-                    override fun onClick(v: View) {
-                        val bundle = arguments //번들(선택한 선호도) 안의 텍스트 불러오기
-                        if (bundle != null) {
-                            val color = v.resources.getColor(bundle.getInt("color"))
-                            val choice = bundle.getInt("choice")
-                            Log.d("RECV_COLOR_FROM_ACT", Integer.toString(color))
-                            cellButtons[finalI][finalJ]?.setBackgroundColor(color)
-                            scheduleResult[finalI][finalJ] = choice
-                        } else {
-                            //pixels[finalI][finalJ]?.setBackgroundColor(R.color.orange700)
-                        }
-                    }
-                })
+//                val finalI = i
+//                val finalJ = j
+//                cellButtons[i][j]?.setOnClickListener(object : PixelClickListener(finalI, finalJ) {
+//                    override fun onClick(v: View) {
+//                        val bundle = arguments //번들(선택한 선호도) 안의 텍스트 불러오기
+//                        if (bundle != null) {
+//                            val color = v.resources.getColor(bundle.getInt("color"))
+//                            val choice = bundle.getInt("choice")
+//                            Log.d("RECV_COLOR_FROM_ACT", Integer.toString(color))
+//                            cellButtons[finalI][finalJ]?.setBackgroundColor(color)
+//                            scheduleResult[finalI][finalJ] = choice
+//                        } else {
+//                            //pixels[finalI][finalJ]?.setBackgroundColor(R.color.orange700)
+//                        }
+//                    }
+//                })
+                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
                 dayRows[i]?.addView(cellButtons[i][j])
                 j += 1
             }
@@ -102,10 +118,32 @@ class PersonalScheduleFragment: Fragment() {
     }
 }
 
-private abstract class PixelClickListener(protected var xAxis: Int, protected var yAxis: Int) : View.OnClickListener
+//private abstract class PixelClickListener(var xAxis: Int, protected var yAxis: Int) : View.OnClickListener
 
-private class CellClickListener(protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {
-    override fun onClick(view: View?) {
-        TODO("Not yet implemented")
+private open class CellClickListener(protected var scheduleResult: Array<IntArray>, protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {
+    override fun onClick(v: View?) {
+        when(selectedBtnFunc) {
+            0 -> {
+                //default -> 아무것도 선택하지 않았을때, 생략
+            }
+            1 -> {
+                v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice1_like_btn)
+                scheduleResult[xAxis][yAxis] = 1
+            }
+            2 -> {
+                v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
+                scheduleResult[xAxis][yAxis] = 2
+            }
+            3 -> {
+                v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice3_dislike_btn)
+                scheduleResult[xAxis][yAxis] = 3
+            }
+            4 -> {
+                v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice4_impossible_btn)
+                scheduleResult[xAxis][yAxis] = 4
+            }
+        }
     }
+
+
 }

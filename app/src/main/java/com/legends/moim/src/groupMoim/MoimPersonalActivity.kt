@@ -5,10 +5,13 @@ import android.view.View
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
+import com.legends.moim.src.groupMoim.view.PersonalScheduleFragment
 
 class MoimPersonalActivity: BaseActivity() {
 
     lateinit var binding: ActivityMoimPersonalBinding
+
+    private val personalScheduleFragment= PersonalScheduleFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,14 +21,14 @@ class MoimPersonalActivity: BaseActivity() {
         initView()
     }
 
-    fun initView() {
+    private fun initView() {
         binding.moimPersonalCompleteBtn.setOnClickListener(this)
         binding.moimPersonalLoadBtn.setOnClickListener(this)
-        binding.moimPersonalPreferenceBtn.setOnClickListener(this)
-        binding.moimPersonalNonpreferenceBtn.setOnClickListener(this)
+        binding.moimPersonalLikeBtn.setOnClickListener(this)
+        binding.moimPersonalPossibleBtn.setOnClickListener(this)
+        binding.moimPersonalDislikeBtn.setOnClickListener(this)
         binding.moimPersonalImpossibleBtn.setOnClickListener(this)
-        binding.moimPersonalEraserBtn.setOnClickListener(this)
-        binding.moimPersonalInitialBtn.setOnClickListener(this)
+        binding.moimPersonalResetBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -35,23 +38,23 @@ class MoimPersonalActivity: BaseActivity() {
                 //내용 적용
                 finish()
             }
-            R.id.moim_personal_load_btn -> {
+            R.id.moim_personal_load_btn -> { // User 스케줄 불러오기 -> 아직 구현 x
 
             }
-            R.id.moim_personal_preference_btn -> {
-
+            R.id.moim_personal_like_btn -> {
+                selectedBtnFunc = 1
             }
-            R.id.moim_personal_nonpreference_btn -> {
-
+            R.id.moim_personal_possible_btn -> {
+                selectedBtnFunc = 2
+            }
+            R.id.moim_personal_dislike_btn -> {
+                selectedBtnFunc = 3
             }
             R.id.moim_personal_impossible_btn -> {
-
+                selectedBtnFunc = 4
             }
-            R.id.moim_personal_eraser_btn -> {
-
-            }
-            R.id.moim_personal_initial_btn -> {
-
+            R.id.moim_personal_reset_btn -> { //Table 초기화
+                personalScheduleFragment.resetScheduleTable()
             }
         }
     }

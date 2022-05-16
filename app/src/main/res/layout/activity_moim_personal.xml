@@ -38,13 +38,19 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/moim_personal_preference_btn"
+            android:id="@+id/moim_personal_like_btn"
             android:layout_width="30dp"
             android:layout_height="50dp"
             />
 
         <Button
-            android:id="@+id/moim_personal_nonpreference_btn"
+            android:id="@+id/moim_personal_possible_btn"
+            android:layout_width="30dp"
+            android:layout_height="50dp"
+            />
+
+        <Button
+            android:id="@+id/moim_personal_dislike_btn"
             android:layout_width="30dp"
             android:layout_height="50dp"
             />
@@ -56,13 +62,7 @@
             />
 
         <Button
-            android:id="@+id/moim_personal_eraser_btn"
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            />
-
-        <Button
-            android:id="@+id/moim_personal_initial_btn"
+            android:id="@+id/moim_personal_reset_btn"
             android:layout_width="30dp"
             android:layout_height="50dp"
             />
