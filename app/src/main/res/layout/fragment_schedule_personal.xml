@@ -19,7 +19,7 @@
             android:layout_height="380dp"
             android:orientation="vertical"
             android:stretchColumns="*"
-            android:scaleX="-1f"
+            android:scaleX="-1"
             android:rotation="270"
 
             app:layout_constraintTop_toTopOf="parent"

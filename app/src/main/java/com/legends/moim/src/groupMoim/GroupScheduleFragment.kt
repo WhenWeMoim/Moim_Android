@@ -52,9 +52,8 @@ class GroupScheduleFragment: Fragment() {
         val cellPm: TableLayout.LayoutParams = TableLayout.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
 
         var i: Int = 0
-        var j: Int = 0
+        var j: Int
 
-        i=0
         while( i < numOfDays ) {
             //TableRow 생성
             dayRows[i] = TableRow(v.context)

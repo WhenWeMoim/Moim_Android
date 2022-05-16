@@ -51,14 +51,13 @@ class PersonalScheduleFragment: Fragment() {
             TableLayout.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
 
         var i: Int = 0
-        var j: Int = 0
+        var j: Int
 
-        i = 0
         while (i < numOfDays) {
             //TableRow 생성
             dayRows[i] = TableRow(v.context)
             dayRows[i]?.layoutParams = rowPm
-            scheduleLayout!!.addView(dayRows[i])
+            scheduleLayout.addView(dayRows[i])
 
             j = 0
             while (j < numOfTimes) {
