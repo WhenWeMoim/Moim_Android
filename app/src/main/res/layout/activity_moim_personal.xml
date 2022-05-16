@@ -75,6 +75,13 @@
         app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <androidx.fragment.app.FragmentContainerView
+            class="com.legends.moim.src.groupMoim.view.PersonalScheduleFragment"
+            android:id="@+id/moim_personal_schedule_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
