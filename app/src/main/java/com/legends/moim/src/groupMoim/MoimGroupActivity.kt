@@ -65,11 +65,4 @@ class MoimGroupActivity : BaseActivity() {
             //인원 상세보기 - 색칠된 시간표의 해당 멤버들 보여주기 기능
         }
     }
-
-    private class CellClickListener(): View.OnClickListener {
-        override fun onClick(view: View?) {
-            TODO("Not yet implemented")
-        }
-
-    }
 }

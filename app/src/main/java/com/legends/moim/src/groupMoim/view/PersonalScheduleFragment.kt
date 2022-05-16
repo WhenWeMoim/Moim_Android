@@ -1,4 +1,4 @@
-package com.legends.moim.src.groupMoim
+package com.legends.moim.src.groupMoim.view
 
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +10,7 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
-import com.legends.moim.databinding.FragmentScheduleGroupBinding
-import com.legends.moim.src.makeMoim.model.makingMoim
+import com.legends.moim.databinding.FragmentSchedulePersonalBinding
 
 /**
  * 한개 row = 한개 날짜
@@ -20,49 +19,49 @@ import com.legends.moim.src.makeMoim.model.makingMoim
  * 즉, 하나의 날짜가 하나의 열로 보이지만, 하나의 행이 하나의 날짜를 표현함
  * 배열은 두개가 들어감. 관리를 위한 실제 버튼 배열(buttons), 스케줄 결과가 들어가는 배열(resultSchedule)
  */
-class GroupScheduleFragment: Fragment() {
+class PersonalScheduleFragment: Fragment() {
 
-    lateinit var binding: FragmentScheduleGroupBinding
+    lateinit var binding: FragmentSchedulePersonalBinding
 
     private val numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
-    private val numOfTimes = makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
+    private val numOfTimes = 12 //임시데이터 -> todo makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
 
-    private var scheduleLayout: TableLayout? = null
+    private lateinit var scheduleLayout: TableLayout
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var dayRows: Array<TableRow?>
+    private lateinit var cellButtons: Array<Array<Button?>>
+    private lateinit var scheduleResult: Array<IntArray>
+
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        binding = FragmentScheduleGroupBinding.inflate(layoutInflater)
-
+        binding = FragmentSchedulePersonalBinding.inflate(layoutInflater)
         val v: View = inflater.inflate(R.layout.fragment_schedule_group, container, false)
 
-        scheduleLayout = v.findViewById(R.id.group_schedule_tableLayout) as TableLayout
+        initView(v)
 
-        val dayRows: Array<TableRow?> = arrayOfNulls<TableRow>(numOfTimes) //한개 행 = 하루
-        val cellButtons: Array<Array<Button?>> = Array<Array<Button?>>(numOfDays) {
-            arrayOfNulls<Button>( numOfTimes )
-        }
+        initScheduleTable(v)
 
-        val scheduleResult= Array(size = numOfDays, init = { IntArray(size = numOfTimes, init = { 2 } ) } )
+        return v
+    }
 
+    private fun initScheduleTable(v: View) {
         val rowPm = TableLayout.LayoutParams(0, 0, 1F)
-        val cellPm: TableLayout.LayoutParams = TableLayout.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
+        val cellPm: TableLayout.LayoutParams =
+            TableLayout.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
 
         var i: Int = 0
         var j: Int = 0
 
-        i=0
-        while( i < numOfDays ) {
+        i = 0
+        while (i < numOfDays) {
             //TableRow 생성
             dayRows[i] = TableRow(v.context)
             dayRows[i]?.layoutParams = rowPm
             scheduleLayout!!.addView(dayRows[i])
 
             j = 0
-            while( j < numOfTimes ) {
+            while (j < numOfTimes) {
                 //TableRow 안에 Button(cell) 생성
                 cellButtons[i][j] = Button(v.context)
                 cellButtons[i][j]?.setBackgroundResource(R.drawable.bg_schedule_cell_btn)
@@ -89,13 +88,22 @@ class GroupScheduleFragment: Fragment() {
             }
             i += 1
         }
+    }
 
-        return v
+    private fun initView(v: View) {
+        scheduleLayout = v.findViewById(R.id.personal_schedule_tableLayout) as TableLayout
+
+        dayRows = arrayOfNulls<TableRow>(numOfTimes) //한개 행 = 하루
+        cellButtons = Array<Array<Button?>>(numOfDays) {
+            arrayOfNulls<Button>(numOfTimes)
+        }
+
+        scheduleResult =
+            Array(size = numOfDays, init = { IntArray(size = numOfTimes, init = { 2 }) })
     }
 }
 
-private abstract class PixelClickListener(protected var xAxis: Int, protected var yAxis: Int) :
-    View.OnClickListener
+private abstract class PixelClickListener(protected var xAxis: Int, protected var yAxis: Int) : View.OnClickListener
 
 private class CellClickListener(protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {
     override fun onClick(view: View?) {
