@@ -15,6 +15,7 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.groupMoim.MoimPersonalActivity
 import com.legends.moim.src.makeMoim.dialog.DateDialog
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog

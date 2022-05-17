@@ -27,70 +27,63 @@ class GroupScheduleFragment: Fragment() {
     private val numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
     private val numOfTimes = 12 //makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
 
-    private var scheduleLayout: TableLayout? = null
+    private lateinit var scheduleLayout: TableLayout
+
+    private lateinit var dayRows: Array<TableRow?>
+    private lateinit var cellButtons: Array<Array<Button?>>
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentScheduleGroupBinding.inflate(layoutInflater)
-
         val v: View = inflater.inflate(R.layout.fragment_schedule_group, container, false)
 
+        initView(v)
+
+        initScheduleTable(v)
+
+        return v
+    }
+
+    private fun initView(v: View) {
         scheduleLayout = v.findViewById(R.id.group_schedule_tableLayout) as TableLayout
 
-        val dayRows: Array<TableRow?> = arrayOfNulls<TableRow>(numOfTimes) //한개 행 = 하루
-        val cellButtons: Array<Array<Button?>> = Array<Array<Button?>>(numOfDays) {
-            arrayOfNulls<Button>( numOfTimes )
+        dayRows = arrayOfNulls<TableRow>(numOfTimes) //한개 행 = 하루
+        cellButtons = Array<Array<Button?>>(numOfDays) {
+            arrayOfNulls<Button>(numOfTimes)
         }
+    }
 
-        val scheduleResult= Array(size = numOfDays, init = { IntArray(size = numOfTimes, init = { 2 } ) } )
-
-        val rowPm = TableLayout.LayoutParams(0, 0, 1F)
-        val cellPm: TableLayout.LayoutParams = TableLayout.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
+    private fun initScheduleTable(v: View) {
+        val rowPm: TableLayout.LayoutParams = TableLayout.LayoutParams(0, 0, 1F)
+        val cellPm: TableRow.LayoutParams =
+            TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
 
         var i: Int = 0
         var j: Int
 
-        while( i < numOfDays ) {
+        while ( i < numOfDays ) {
             //TableRow 생성
             dayRows[i] = TableRow(v.context)
             dayRows[i]?.layoutParams = rowPm
-            scheduleLayout!!.addView(dayRows[i])
+            scheduleLayout.addView(dayRows[i])
 
             j = 0
-            while( j < numOfTimes ) {
+            while ( j < numOfTimes ) {
                 //TableRow 안에 Button(cell) 생성
                 cellButtons[i][j] = Button(v.context)
                 cellButtons[i][j]?.setBackgroundResource(R.drawable.bg_schedule_cell_btn)
                 cellButtons[i][j]?.layoutParams = cellPm
 
-                val finalI = i
-                val finalJ = j
-                cellButtons[i][j]?.setOnClickListener(object : PixelClickListener(finalI, finalJ) {
-                    override fun onClick(v: View) {
-                        val bundle = arguments //번들(선택한 선호도) 안의 텍스트 불러오기
-                        if (bundle != null) {
-                            val color = v.resources.getColor(bundle.getInt("color"))
-                            val choice = bundle.getInt("choice")
-                            Log.d("RECV_COLOR_FROM_ACT", Integer.toString(color))
-                            cellButtons[finalI][finalJ]?.setBackgroundColor(color)
-                            scheduleResult[finalI][finalJ] = choice
-                        } else {
-                            //pixels[finalI][finalJ]?.setBackgroundColor(R.color.orange700)
-                        }
-                    }
-                })
+//                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
                 dayRows[i]?.addView(cellButtons[i][j])
                 j += 1
             }
             i += 1
         }
-        return v
     }
 }
-
-private abstract class PixelClickListener(protected var xAxis: Int, protected var yAxis: Int) :
-    View.OnClickListener
