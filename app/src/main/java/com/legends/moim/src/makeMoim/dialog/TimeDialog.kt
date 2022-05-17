@@ -1,4 +1,4 @@
-package com.legends.moim.src.makeMoim
+package com.legends.moim.src.makeMoim.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -9,8 +9,6 @@ import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.TimePicker
 import com.legends.moim.R
-import com.legends.moim.databinding.DialogTimeBinding
-import com.legends.moim.src.makeMoim.model.makingMoim
 
 
 @SuppressLint("NewApi")
