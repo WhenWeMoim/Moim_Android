@@ -16,7 +16,7 @@ import com.legends.moim.src.makeMoim.model.makingMoim
 @SuppressLint("NewApi")
 class TimeDialog(context : Context) {
 
-    val dialog = Dialog(context)
+    private val dialog = Dialog(context)
 
     private lateinit var tvTitle: TextView
     private lateinit var tvMessage: TextView
@@ -30,7 +30,7 @@ class TimeDialog(context : Context) {
     fun showTimeDialog() {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.dialog_base)
+        dialog.setContentView(R.layout.dialog_time)
         dialog.setCancelable(false)
 
         startTimePicker = dialog.findViewById(R.id.dialog_time_start_tp)
@@ -38,6 +38,7 @@ class TimeDialog(context : Context) {
 
         initTimePicker()
 
+        btnOK = dialog.findViewById(R.id.dialog_time_ok_btn_tv)
         btnOK.setOnClickListener {
             val startTimeHour = startTimePicker.hour
             val endTimeHour = endTimePicker.hour
@@ -52,7 +53,7 @@ class TimeDialog(context : Context) {
 
     private fun initTimePicker() {
         startTimePicker.hour = 9
-        startTimePicker.hour = 18
+        endTimePicker.hour = 18
 
         startTimePicker.minute = 0
         endTimePicker.minute = 0

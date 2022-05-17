@@ -16,7 +16,6 @@ import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.model.SelectedDate
-import com.legends.moim.src.makeMoim.model.SettingDialog
 import com.legends.moim.src.makeMoim.model.makingMoim
 import java.util.*
 
@@ -120,8 +119,8 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
 
         val themeFactory = object : LightThemeFactory() {
 
-            override val typefacePath: String?
-                get() = "fonts/Righteous-Regular.ttf"
+//            override val typefacePath: String?
+//                get() = "font/notosans_kr_default.otf"
 
             override val dialogBackgroundColor: Int
                 get() = getColor(R.color.yellow100)
