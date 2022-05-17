@@ -26,4 +26,8 @@
     <color name="indigo500">#80FFFFFF</color>
     <color name="brown600">#570000</color>
     <color name="orange700">#FF5722</color>
+
+
+    <color name="divider_grey">#88808080</color>
+
 </resources>
