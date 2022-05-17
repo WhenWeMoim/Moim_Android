@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Title"/>
+            tools:text="Time"/>
 
         <View
             android:id="@+id/dialog_time_view"
@@ -62,7 +62,7 @@
                 />
 
             <TextView
-                android:id="@+id/dialog_time_divide_tv"
+                android:id="@+id/dialog_time_since_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
@@ -79,6 +79,18 @@
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner"
                 />
+
+            <TextView
+                android:id="@+id/dialog_time_until_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="까지"/>
         </LinearLayout>
 
         <TextView
