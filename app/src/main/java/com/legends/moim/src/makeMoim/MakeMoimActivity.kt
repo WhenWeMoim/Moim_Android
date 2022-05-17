@@ -42,8 +42,8 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         super.onClick(v)
         when(v!!.id) {
             R.id.make_moim_select_date_btn -> {
-                datePicker.show(supportFragmentManager, "SOME_TAG")
-                //showDateDialog()
+                //datePicker.show(supportFragmentManager, "SOME_TAG")
+                showDateDialog()
             }
             R.id.make_moim_select_time_btn -> {
                 showTimeDialog()
@@ -67,8 +67,10 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
 
     private fun showDateDialog() {
         val dig = DateDialog(this)
-        dig.listener = this
+        //dig.listener = this
         dig.showDateDialog()
+        R.id.make_moim_select_date_btn
+        dig.selectedDate
     }
 
     private fun showSettingDialog() {
