@@ -42,7 +42,7 @@
             android:id="@+id/main_user_btn"
             android:layout_width="130dp"
             android:layout_height="80dp"
-            android:text="@string/main_view_moim"
+            android:text="@string/main_user"
             />
 
     </LinearLayout>
