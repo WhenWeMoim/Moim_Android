@@ -1,4 +1,4 @@
-package com.legends.moim.src.makeMoim
+package com.legends.moim.src.makeMoim.dialog
 
 import android.app.Dialog
 import android.content.Context

@@ -3,6 +3,7 @@ package com.legends.moim.utils
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.kakao.sdk.common.KakaoSdk
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,6 +18,8 @@ class ApplicationClass : Application() {
     }
     override fun onCreate() {
         super.onCreate()
+
+        KakaoSdk.init(this, "d04b5837217105d4b2a2b16ced721572")
 
 //        val clientWithoutAccessToken: OkHttpClient = OkHttpClient.Builder()
 //            .readTimeout(10000, TimeUnit.MILLISECONDS)

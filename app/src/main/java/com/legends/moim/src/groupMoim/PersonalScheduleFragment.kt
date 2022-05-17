@@ -1,7 +1,6 @@
-package com.legends.moim.src.groupMoim.view
+package com.legends.moim.src.groupMoim
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.TableRow
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.databinding.FragmentSchedulePersonalBinding
-import com.legends.moim.src.groupMoim.selectedBtnFunc
 
 /**
  * 한개 row = 한개 날짜

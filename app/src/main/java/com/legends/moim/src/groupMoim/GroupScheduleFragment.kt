@@ -95,9 +95,3 @@ class GroupScheduleFragment: Fragment() {
 
 private abstract class PixelClickListener(protected var xAxis: Int, protected var yAxis: Int) :
     View.OnClickListener
-
-private class CellClickListener(protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {
-    override fun onClick(view: View?) {
-        TODO("Not yet implemented")
-    }
-}
