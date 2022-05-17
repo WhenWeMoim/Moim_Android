@@ -1,19 +1,13 @@
 package com.legends.moim.src.groupMoim
 
-import android.app.Dialog
-import android.content.ClipDescription
 import android.content.Intent
 import android.os.Bundle
-import android.view.DragEvent
 import android.view.View
-import android.view.Window
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.main.MainActivity
-import com.legends.moim.src.makeMoim.TimeDialog
 import com.legends.moim.src.makeMoim.model.makingMoim
-import java.util.*
 
 class MoimGroupActivity : BaseActivity() {
 

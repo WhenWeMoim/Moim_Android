@@ -5,7 +5,6 @@ import android.view.View
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
-import com.legends.moim.src.groupMoim.view.PersonalScheduleFragment
 
 class MoimPersonalActivity: BaseActivity() {
 

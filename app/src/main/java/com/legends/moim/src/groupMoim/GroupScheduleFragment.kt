@@ -25,7 +25,7 @@ class GroupScheduleFragment: Fragment() {
     lateinit var binding: FragmentScheduleGroupBinding
 
     private val numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
-    private val numOfTimes = makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
+    private val numOfTimes = 12 //makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
 
     private var scheduleLayout: TableLayout? = null
 
@@ -88,7 +88,6 @@ class GroupScheduleFragment: Fragment() {
             }
             i += 1
         }
-
         return v
     }
 }
