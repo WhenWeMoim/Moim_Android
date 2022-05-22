@@ -54,6 +54,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/dialog_time_ok_btn_tv">
 
+<!--            <NumberPicker-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                />-->
+
             <TimePicker
                 android:id="@+id/dialog_time_start_tp"
                 android:layout_width="wrap_content"
@@ -65,7 +70,7 @@
                 android:id="@+id/dialog_time_since_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:includeFontPadding="false"
                 app:layout_constraintTop_toTopOf="parent"
@@ -84,7 +89,7 @@
                 android:id="@+id/dialog_time_until_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:includeFontPadding="false"
                 app:layout_constraintTop_toTopOf="parent"
@@ -96,7 +101,7 @@
         <TextView
             android:id="@+id/dialog_time_ok_btn_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:gravity="center"
