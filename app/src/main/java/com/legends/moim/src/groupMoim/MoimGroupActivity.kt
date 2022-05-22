@@ -18,10 +18,10 @@ class MoimGroupActivity : BaseActivity() {
         binding = ActivityMoimGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initView()
+        setInitialize()
     }
 
-    fun initView() {
+    private fun setInitialize() {
         binding.moimGroupMoimNameTv.text = makingMoim.title
         binding.moimGroupMoimExplainTv.text = makingMoim.description
 
