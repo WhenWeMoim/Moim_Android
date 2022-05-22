@@ -4,12 +4,12 @@ data class Moim(
     private var index : Int = -1,
 
     var title: String = "임시 모임",
-    var description: String = "임시로 생성된 모임",
+    var explain: String = "임시로 생성된 모임",
 
     var startTimeHour : Int = 9,
     var endTimeHour: Int = 18,
 
-    val dates: ArrayList<SelectedDate> = ArrayList<SelectedDate>()
+    val dates: ArrayList<String> = ArrayList<String>()
 
 //    var endTimeMin: Int = 0,
 //    var startTimeMin: Int = 0,

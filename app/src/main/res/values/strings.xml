@@ -11,10 +11,12 @@
     <string name="main_user">유저 페이지</string>
 
     //make moim
-    <string name="moim_name">모임 이름</string>
-    <string name="moim_date">날짜 선정</string>
-    <string name="moim_time">시간 설정</string>
-    <string name="moim_setting">상세 설정</string>
+    <string name="make_moim_name">모임 이름</string>
+    <string name="make_moim_explain">모임 설명</string>
+    <string name="make_moim_date">날짜 선정</string>
+    <string name="make_moim_time">시간 설정</string>
+    <string name="make_moim_setting">상세 설정</string>
+    <string name="make_moim">모임 생성</string>
 
     //dialog_date
     //dialog_time
