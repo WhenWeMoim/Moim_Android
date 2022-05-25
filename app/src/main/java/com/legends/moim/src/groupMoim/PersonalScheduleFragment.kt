@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TableLayout
 import android.widget.TableRow
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.databinding.FragmentSchedulePersonalBinding
@@ -23,14 +24,13 @@ class PersonalScheduleFragment: Fragment() {
     private lateinit var binding: FragmentSchedulePersonalBinding
 
     private var numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
-    private val numOfTimes = 12 //임시데이터 -> todo makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
+    private var numOfTimes = 12 //임시데이터 -> todo makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
 
     private lateinit var scheduleLayout: TableLayout
-
     private lateinit var timeRows: Array<TableRow> //한개 행(row)
     private lateinit var scheduleButtons: Array<Array<Button>>
 
-    private var scheduleResult= Array(size = numOfDays, init = { IntArray(size = numOfTimes, init = { 2 } ) } )
+    private lateinit var scheduleData: Array<IntArray>
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -46,7 +46,20 @@ class PersonalScheduleFragment: Fragment() {
     }
 
     private fun getData() {
+        val interval: Int = thisMoim.endTimeHour - thisMoim.startTimeHour
+        if( interval <= 0 ) {
+            Toast.makeText(context, "시간 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
+            return
+        }
+        numOfTimes = interval
 
+        if( thisMoim.dates.isEmpty() ) {
+            Toast.makeText(context, "날짜 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
+            return
+        }
+        numOfDays = thisMoim.dates.size
+
+        scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
     }
 
     private fun initScheduleTable(v: View) {
@@ -75,7 +88,7 @@ class PersonalScheduleFragment: Fragment() {
                 scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_btn)
                 scheduleButtons[i][j].layoutParams = cellPm
 
-                scheduleButtons[i][j].setOnClickListener(CellClickListener(scheduleResult, i, j))
+                scheduleButtons[i][j].setOnClickListener(CellClickListener(scheduleData, i, j))
                 timeRows[i].addView(scheduleButtons[i][j])
                 j += 1
             }
@@ -89,7 +102,7 @@ class PersonalScheduleFragment: Fragment() {
         while ( i < numOfTimes ) {
             j = 0
             while ( j < numOfDays ) {
-                scheduleResult[i][j] = 2
+                scheduleData[i][j] = 2
                 scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
                 j++
             }

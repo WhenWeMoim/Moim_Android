@@ -25,10 +25,10 @@ class GroupScheduleFragment: Fragment() {
 
     private lateinit var scheduleLayout: TableLayout
 
-    private lateinit var timeRows: Array<TableRow?>
+    private lateinit var timeRows: Array<TableRow>
     private lateinit var scheduleButtons: Array<Array<Button>>
 
-    private lateinit var scheduleData: Array<Array<Int>>
+    private lateinit var scheduleData: Array<IntArray>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,18 +53,21 @@ class GroupScheduleFragment: Fragment() {
             return
         }
         numOfTimes = interval
-        
+
         if( thisMoim.dates.isEmpty() ) {
             Toast.makeText(context, "날짜 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
             return
         }
         numOfDays = thisMoim.dates.size
+
+        //todo Group용 scheduleData 초기화 필요
+        //scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
     }
 
     private fun initScheduleTable(v: View) {
         scheduleLayout = v.findViewById(R.id.group_schedule_tableLayout) as TableLayout
 
-        timeRows = arrayOfNulls<TableRow>(numOfTimes) //한개 행 = 날짜 개수
+        timeRows = Array<TableRow>(size = numOfTimes, init = { TableRow(v.context) } ) //한개 행 = 날짜 개수
         scheduleButtons = Array<Array<Button>>(size = numOfTimes,
             init = { Array<Button>(size = numOfDays, init = {Button(v.context)} ) }
         )
@@ -79,7 +82,7 @@ class GroupScheduleFragment: Fragment() {
         while ( i < numOfTimes ) {
             //TableRow 생성
             timeRows[i] = TableRow(v.context)
-            timeRows[i]?.layoutParams = rowPm
+            timeRows[i].layoutParams = rowPm
             scheduleLayout.addView(timeRows[i])
 
             j = 0
@@ -90,7 +93,7 @@ class GroupScheduleFragment: Fragment() {
                 scheduleButtons[i][j].layoutParams = cellPm
 
 //                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
-                timeRows[i]?.addView(scheduleButtons[i][j])
+                timeRows[i].addView(scheduleButtons[i][j])
                 j += 1
             }
             i += 1
