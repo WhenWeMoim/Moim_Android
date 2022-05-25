@@ -13,25 +13,23 @@ import com.legends.moim.R
 import com.legends.moim.databinding.FragmentSchedulePersonalBinding
 
 /**
- * 한개 row = 한개 날짜
- * 한개 column = 한 날짜의 한 시간대
- * 시간표에는 전치(T)된 상태로 보여지게 됨.
- * 즉, 하나의 날짜가 하나의 열로 보이지만, 하나의 행이 하나의 날짜를 표현함
+ * 한 개 행(row) : 한 시간대
+ * 한 개 열(column) : 하루
  * 배열은 두개가 들어감. 관리를 위한 실제 버튼 배열(buttons), 스케줄 결과가 들어가는 배열(resultSchedule)
  */
+
 class PersonalScheduleFragment: Fragment() {
 
     private lateinit var binding: FragmentSchedulePersonalBinding
 
-    private val numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
+    private var numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
     private val numOfTimes = 12 //임시데이터 -> todo makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
 
     private lateinit var scheduleLayout: TableLayout
 
-    private lateinit var dayRows: Array<TableRow?>
-    private var cellButtons: Array<Array<Button?>> = Array<Array<Button?>>(numOfDays) {
-        arrayOfNulls<Button>(numOfTimes)
-    }
+    private lateinit var timeRows: Array<TableRow> //한개 행(row)
+    private lateinit var scheduleButtons: Array<Array<Button>>
+
     private var scheduleResult= Array(size = numOfDays, init = { IntArray(size = numOfTimes, init = { 2 } ) } )
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -40,20 +38,25 @@ class PersonalScheduleFragment: Fragment() {
         binding = FragmentSchedulePersonalBinding.inflate(layoutInflater)
         val v: View = inflater.inflate(R.layout.fragment_schedule_personal, container, false)
 
-        initView(v)
+        getData()
 
         initScheduleTable(v)
 
         return v
     }
 
-    private fun initView(v: View) {
-        scheduleLayout = v.findViewById(R.id.personal_schedule_tableLayout) as TableLayout
+    private fun getData() {
 
-        dayRows = arrayOfNulls<TableRow>(numOfTimes) //한개 행 = 하루
     }
 
     private fun initScheduleTable(v: View) {
+        scheduleLayout = v.findViewById(R.id.personal_schedule_tableLayout) as TableLayout
+
+        timeRows = Array<TableRow>(size = numOfTimes, init = { TableRow(v.context) } ) //한개 행 = 날짜 개수
+        scheduleButtons = Array<Array<Button>>(size = numOfTimes,
+            init = { Array<Button>(size = numOfDays, init = {Button(v.context)} ) }
+        )
+
         val rowPm: TableLayout.LayoutParams = TableLayout.LayoutParams(0, 0, 1F)
         val cellPm: TableRow.LayoutParams =
             TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
@@ -61,21 +64,19 @@ class PersonalScheduleFragment: Fragment() {
         var i: Int = 0
         var j: Int
 
-        while( i < numOfDays ) {
+        while( i < numOfTimes ) {
             //TableRow 생성
-            dayRows[i] = TableRow(v.context)
-            dayRows[i]?.layoutParams = rowPm
-            scheduleLayout.addView(dayRows[i])
+            timeRows[i].layoutParams = rowPm
+            scheduleLayout.addView(timeRows[i])
 
             j = 0
-            while( j < numOfTimes ) {
+            while( j < numOfDays ) {
                 //TableRow 안에 Button(cell) 생성
-                cellButtons[i][j] = Button(v.context)
-                cellButtons[i][j]?.setBackgroundResource(R.drawable.bg_schedule_cell_btn)
-                cellButtons[i][j]?.layoutParams = cellPm
+                scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_btn)
+                scheduleButtons[i][j].layoutParams = cellPm
 
-                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
-                dayRows[i]?.addView(cellButtons[i][j])
+                scheduleButtons[i][j].setOnClickListener(CellClickListener(scheduleResult, i, j))
+                timeRows[i].addView(scheduleButtons[i][j])
                 j += 1
             }
             i += 1
@@ -84,15 +85,12 @@ class PersonalScheduleFragment: Fragment() {
 
     public fun resetScheduleTable() {
         var i: Int = 0
-        Log.d("AAAAAAAAAA", "$i")
         var j: Int
-        while ( i < numOfDays ) {
+        while ( i < numOfTimes ) {
             j = 0
-            while ( j < numOfTimes ) {
-                Log.d("BBBBBBBBBB", "$i, $j")
+            while ( j < numOfDays ) {
                 scheduleResult[i][j] = 2
-                cellButtons[i][j]!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
-                Log.d("CCCCCCCCCC", "$i, $j")
+                scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
                 j++
             }
             i++

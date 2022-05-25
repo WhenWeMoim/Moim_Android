@@ -74,6 +74,7 @@
         android:id="@+id/moim_personal_schedule_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+
         app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         />

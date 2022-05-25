@@ -64,7 +64,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 getMakingMoimInfo()
 
                 val intent = Intent(this, MoimGroupActivity::class.java)
-                intent.putExtra("MoimInfo", gson.toJson(makingMoim))
+                intent.putExtra("moimInfo", gson.toJson(makingMoim))
                 startActivity(intent)
                 finish()
             }

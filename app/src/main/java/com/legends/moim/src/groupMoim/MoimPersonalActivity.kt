@@ -34,7 +34,7 @@ class MoimPersonalActivity: BaseActivity() {
         super.onClick(v)
         when(v!!.id) {
             R.id.moim_personal_complete_btn -> {
-                //내용 적용
+                //todo 내용 적용
                 finish()
             }
             R.id.moim_personal_load_btn -> { // User 스케줄 불러오기 -> 아직 구현 x

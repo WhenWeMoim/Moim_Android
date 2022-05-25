@@ -3,15 +3,19 @@ package com.legends.moim.src.groupMoim
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.main.MainActivity
-import com.legends.moim.src.makeMoim.model.makingMoim
+import com.legends.moim.src.makeMoim.model.Moim
 
 class MoimGroupActivity : BaseActivity() {
 
-    lateinit var binding : ActivityMoimGroupBinding
+    private lateinit var binding : ActivityMoimGroupBinding
+
+    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,12 +26,21 @@ class MoimGroupActivity : BaseActivity() {
     }
 
     private fun setInitialize() {
-        binding.moimGroupMoimNameTv.text = makingMoim.title
-        binding.moimGroupMoimExplainTv.text = makingMoim.description
 
-        //~ 명 참여 초기화 필요. 인원 파악 데이터 필요. 일단은 더미로 설정.
+        if( intent.getStringExtra("moimInfo").isNullOrBlank() ) {
+            Toast.makeText(this, "모임 생성 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+            finish()
+        }
+
+        thisMoim = gson.fromJson(intent.getStringExtra("moimInfo"), Moim::class.java)
+
+        binding.moimGroupMoimNameTv.text = thisMoim.title
+        binding.moimGroupMoimExplainTv.text = thisMoim.explain
         val participantDummy = "8"
         binding.moimGroupParticipantTv.text = participantDummy + "명 참여"
+
+        //~ 명 참여 초기화 필요. 인원 파악 데이터 필요. 일단은 더미로 설정.
+
         binding.moimGroupHomeBtn.setOnClickListener(this)
         binding.moimGroupInviteBtn.setOnClickListener(this)
         binding.moimGroupParticipantTv.setOnClickListener(this)
