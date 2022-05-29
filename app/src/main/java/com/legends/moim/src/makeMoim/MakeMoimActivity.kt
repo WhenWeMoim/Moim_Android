@@ -31,9 +31,9 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     lateinit var datePicker: PrimeDatePicker
 
-    private val gson = Gson()
-
     private val makingMoim = Moim()
+
+    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +42,6 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
         initDatePickerDialog()
         setInitialize()
-
-        //testValue 삽입 함수
-        addTestDummyData()
     }
 
     override fun onClick(v: View?) {
@@ -55,7 +52,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 //showDateDialog()
             }
             R.id.make_moim_select_time_btn -> {
-                showTimeDialog()
+                showTimeDialog(makingMoim)
             }
             R.id.make_moim_setting_tv -> {
                 showSettingDialog()
@@ -76,6 +73,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             makingMoim.title = binding.makeMoimTitleEt.text.toString()
         if( binding.makeMoimExplainEt.text.isNotEmpty() )
             makingMoim.explain = binding.makeMoimExplainEt.text.toString()
+        //testValue 삽입 함수
+        addTestDummyData()
     }
 
     private fun addTestDummyData() {
@@ -90,8 +89,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         makingMoim.dates.add(dummyDayVal4)
     }
 
-    private fun showTimeDialog() {
-        val dig = TimeDialog(this)
+    private fun showTimeDialog(makingMoim: Moim) {
+        val dig = TimeDialog(this, makingMoim)
         dig.listener = this
         dig.showTimeDialog()
     }
