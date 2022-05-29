@@ -40,6 +40,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         setContentView(binding.root)
 
         initDatePickerDialog()
+        initView()
         setInitialize()
     }
 
@@ -114,6 +115,10 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     /*------- initial -------*/
+
+    private fun initView() {
+        binding.makeMoimTopbarLayout.layoutTopbarTitleTv.text = getString(R.string.main_make_moim)
+    }
 
     private fun setInitialize() {
         binding.makeMoimSelectDateBtn.setOnClickListener(this)

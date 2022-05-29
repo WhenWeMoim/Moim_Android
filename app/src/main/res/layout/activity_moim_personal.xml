@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
         android:id="@+id/moim_personal_topbar_layout"
+        layout="@layout/layout_topbar"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/moim_personal_toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout">
 
         <Button
             android:id="@+id/moim_personal_complete_btn"
             android:layout_width="80dp"
             android:layout_height="50dp"
-            android:text="완료"
+            android:background="@drawable/bg_button_base_btn"
+
+            android:text="@string/complete"
+            android:fontFamily="@font/notosans_kr_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
         <Button
             android:id="@+id/moim_personal_load_btn"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginEnd="10dp"
-            android:text="불러오기"
+            android:background="@drawable/bg_button_base_btn"
+            android:visibility="gone"
+
+            android:text="@string/personal_load"
+            android:fontFamily="@font/notosans_kr_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/moim_personal_complete_btn"
             />
+
+        <TextView
+            android:id="@+id/moim_personal_notice_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+
+            android:text="@string/personal_notice"
+            android:fontFamily="@font/notosans_kr_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/darkGray"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -83,18 +119,19 @@
         android:id="@+id/moim_personal_schedule_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/moim_personal_toolbar_layout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
         <androidx.fragment.app.FragmentContainerView
-            class="com.legends.moim.src.groupMoim.PersonalScheduleFragment"
             android:id="@+id/moim_personal_schedule_fragment"
+            class="com.legends.moim.src.groupMoim.PersonalScheduleFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout" />
 
     </ScrollView>
 

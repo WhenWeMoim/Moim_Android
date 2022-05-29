@@ -27,4 +27,9 @@
 
     //base
     <string name="complete">완료</string>
+    <string name="topbar_title">상단바</string>
+
+    //moim_personal
+    <string name="personal_load">불러오기</string>
+    <string name="personal_notice">선택하지 않으면 기본 선택은 \'가능\'이 됩니다.</string>
 </resources>

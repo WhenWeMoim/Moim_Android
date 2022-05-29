@@ -19,13 +19,18 @@ class MoimGroupActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMoimGroupBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         setInitialize()
+        initView()
+    }
+
+    private fun initView() {
+        binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
     }
 
     private fun setInitialize() {
+        binding = ActivityMoimGroupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if( intent.getStringExtra("moimInfo").isNullOrBlank() ) {
             Toast.makeText(this, "모임 생성 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
