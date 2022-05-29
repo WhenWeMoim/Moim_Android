@@ -21,8 +21,7 @@ import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
-import com.legends.moim.src.makeMoim.model.Moim
-import com.legends.moim.src.makeMoim.model.SelectedDate
+import com.legends.moim.config.baseModel.Moim
 import java.util.*
 
 class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {

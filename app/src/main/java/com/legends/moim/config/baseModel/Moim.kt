@@ -1,4 +1,4 @@
-package com.legends.moim.src.makeMoim.model
+package com.legends.moim.config.baseModel
 
 data class Moim(
     private var index : Int = -1,

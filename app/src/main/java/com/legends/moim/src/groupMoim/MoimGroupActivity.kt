@@ -9,7 +9,7 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.main.MainActivity
-import com.legends.moim.src.makeMoim.model.Moim
+import com.legends.moim.config.baseModel.Moim
 
 class MoimGroupActivity : BaseActivity() {
 
