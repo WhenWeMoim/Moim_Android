@@ -1,15 +1,12 @@
 package com.legends.moim.src.makeMoim.dialog
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.res.Resources
 import android.view.Window
 import android.widget.NumberPicker
 import android.widget.TextView
-import android.widget.TimePicker
 import com.legends.moim.R
-import com.legends.moim.src.makeMoim.model.Moim
+import com.legends.moim.config.baseModel.Moim
 
 class TimeDialog(context : Context, private val makingMoim: Moim) {
 

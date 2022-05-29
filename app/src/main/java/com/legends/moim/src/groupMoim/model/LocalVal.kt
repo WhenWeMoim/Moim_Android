@@ -1,6 +1,6 @@
 package com.legends.moim.src.groupMoim
 
-import com.legends.moim.src.makeMoim.model.Moim
+import com.legends.moim.config.baseModel.Moim
 
 //const val CHOICE_LIKE = 1       //선호
 //const val CHOICE_POSSIBLE = 2   //가능(Default)
