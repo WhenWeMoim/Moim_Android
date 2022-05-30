@@ -82,29 +82,168 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="10dp"
         app:layout_constraintTop_toBottomOf="@id/moim_group_moim_info_layout"
-        app:layout_constraintBottom_toTopOf="@id/moim_group_bottombar_layout"/>
+        app:layout_constraintBottom_toTopOf="@id/moim_group_bottombar_scrollView"/>
 
     <Button
         android:id="@+id/moim_group_add_personal_btn"
         android:layout_width="80dp"
         android:layout_height="80dp"
+
+        android:text="개인시간표 추가"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/moim_group_bottombar_layout"
+        app:layout_constraintBottom_toTopOf="@id/moim_group_bottombar_scrollView"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         />
 
     <!--하단 인원 상세보기-->
-    <LinearLayout
-        android:id="@+id/moim_group_bottombar_layout"
+    <ScrollView
+        android:id="@+id/moim_group_bottombar_scrollView"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:elevation="5dp"
-        android:orientation="vertical"
+        android:layout_height="144dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:background="@color/moim_main_1"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:elevation="5dp">
+
+        <LinearLayout
+            android:id="@+id/moim_group_bottombar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            >
+
+            <!--선호 인원-->
+            <LinearLayout
+                android:id="@+id/moim_group_like_member_linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choice_like"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    />
+
+                <View
+                    android:layout_width="68dp"
+                    android:layout_height="2dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+
+            </LinearLayout>
+
+            <!--가능 인원-->
+            <LinearLayout
+                android:id="@+id/moim_group_possible_member_linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choice_possible"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    />
+
+                <View
+                    android:layout_width="68dp"
+                    android:layout_height="2dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    />
 
 
-    </LinearLayout>
+
+
+            </LinearLayout>
+
+            <!--비선호 인원-->
+            <LinearLayout
+                android:id="@+id/moim_group_dislike_member_linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choice_dislike"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    />
+
+                <View
+                    android:layout_width="68dp"
+                    android:layout_height="2dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+            </LinearLayout>
+
+            <!--불가능 인원-->
+            <LinearLayout
+                android:id="@+id/moim_group_impossible_member_linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginHorizontal="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choice_impossible"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    />
+
+                <View
+                    android:layout_width="68dp"
+                    android:layout_height="2dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

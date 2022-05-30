@@ -17,6 +17,7 @@ import com.aminography.primedatepicker.picker.theme.LightThemeFactory
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.baseModel.DateStructure
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
@@ -78,10 +79,10 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun addTestDummyData() {
-        val dummyDayVal1: String = "2022-06-14"
-        val dummyDayVal2: String = "2022-06-15"
-        val dummyDayVal3: String = "2022-06-18"
-        val dummyDayVal4: String = "2022-06-24"
+        val dummyDayVal1= DateStructure(6, 4, '월')
+        val dummyDayVal2= DateStructure(8, 13, '수')
+        val dummyDayVal3= DateStructure(11, 4, '목')
+        val dummyDayVal4= DateStructure(12, 31, '토')
 
         makingMoim.dates.add(dummyDayVal1)
         makingMoim.dates.add(dummyDayVal2)

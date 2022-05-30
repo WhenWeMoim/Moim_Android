@@ -10,9 +10,6 @@ class MoimPersonalActivity: BaseActivity() {
 
     lateinit var binding: ActivityMoimPersonalBinding
 
-    private val _personalScheduleFragment: PersonalScheduleFragment
-        = supportFragmentManager.findFragmentById(R.id.moim_personal_schedule_fragment) as PersonalScheduleFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMoimPersonalBinding.inflate(layoutInflater)
@@ -55,7 +52,7 @@ class MoimPersonalActivity: BaseActivity() {
                 selectedBtnFunc = 4
             }
             R.id.moim_personal_reset_btn -> { //Table 초기화
-                _personalScheduleFragment.resetScheduleTable()
+                //todo 테이블 초기화
             }
         }
     }

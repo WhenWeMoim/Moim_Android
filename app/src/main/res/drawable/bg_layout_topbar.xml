@@ -5,7 +5,7 @@
     <solid android:color="@color/moim_main_1" />
 
     <size
-        android:height="80dp"
+        android:height="92dp"
         />
 
     <corners

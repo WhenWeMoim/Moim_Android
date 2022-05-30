@@ -9,15 +9,15 @@ data class Moim(
     var startTimeHour : Int = 9,
     var endTimeHour: Int = 18,
 
-    val dates: ArrayList<String> = ArrayList<String>()
+    val dates: ArrayList<DateStructure> = ArrayList<DateStructure>()
 
 //    var endTimeMin: Int = 0,
 //    var startTimeMin: Int = 0,
 //    var interval: Int = 60,
 )
 
-data class SelectedDate(
-    var year: Int,
+data class DateStructure(
     var month: Int,
-    var day: Int
+    var day: Int,
+    var dayOfWeek: Char
 )

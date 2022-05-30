@@ -29,6 +29,13 @@
     <string name="complete">완료</string>
     <string name="topbar_title">상단바</string>
 
+    //choice
+    <string name="choice_like">선호</string>
+    <string name="choice_possible">가능</string>
+    <string name="choice_dislike">비선호</string>
+    <string name="choice_impossible">불가능</string>
+
+
     //moim_personal
     <string name="personal_load">불러오기</string>
     <string name="personal_notice">선택하지 않으면 기본 선택은 \'가능\'이 됩니다.</string>

@@ -20,7 +20,7 @@
             android:id="@+id/moim_personal_complete_btn"
             android:layout_width="80dp"
             android:layout_height="50dp"
-            android:background="@drawable/bg_button_base_btn"
+            android:background="@drawable/bg_base_main_btn"
 
             android:text="@string/complete"
             android:fontFamily="@font/notosans_kr_bold"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_button_base_btn"
+            android:background="@drawable/bg_base_main_btn"
             android:visibility="gone"
 
             android:text="@string/personal_load"
