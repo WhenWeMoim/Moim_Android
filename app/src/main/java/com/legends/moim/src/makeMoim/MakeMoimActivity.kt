@@ -126,6 +126,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     /*------- initial -------*/
 
     private fun initView() {
+        binding.makeMoimSelectTimeBtn.text = String.format("%d시 부터 %d시 까지", makingMoim.startTimeHour, makingMoim.endTimeHour)
+
         binding.makeMoimSelectDateBtn.setOnClickListener(this)
         binding.makeMoimSelectTimeBtn.setOnClickListener(this)
         binding.makeMoimSettingTv.setOnClickListener(this)
