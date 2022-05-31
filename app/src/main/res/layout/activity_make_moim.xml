@@ -30,6 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/make_moim_explain_et"
                 android:layout_width="match_parent"
@@ -72,12 +73,27 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:layout_marginBottom="8dp"
                 />
+
             <Button
                 android:id="@+id/make_moim_select_date_btn"
                 android:layout_width="280dp"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_base_main_stroke_btn"
+
+                android:text="날짜 선택"
+                android:textSize="16sp"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:includeFontPadding="false"
+                android:gravity="center"
                 />
+            <TableLayout
+                android:id="@+id/make_moim_select_date_tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TableLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -94,11 +110,20 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:layout_marginBottom="8dp"
                 />
+
             <Button
                 android:id="@+id/make_moim_select_time_btn"
                 android:layout_width="280dp"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_base_main_stroke_btn"
+
+                android:text="9시 ~ 18시"
+                android:textSize="16sp"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:includeFontPadding="false"
+                android:gravity="center"
                 />
         </LinearLayout>
 

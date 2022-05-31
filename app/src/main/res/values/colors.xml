@@ -23,7 +23,7 @@
 
     //choice color
     <color name="choice_like">#7AA1DC</color>
-    <color name="choice_possible">#A3C46B</color>
+    <color name="choice_possible">#FFFFFF</color>
     <color name="choice_dislike">#FFEB95</color>
     <color name="choice_impossible">#EE4252</color>
 
