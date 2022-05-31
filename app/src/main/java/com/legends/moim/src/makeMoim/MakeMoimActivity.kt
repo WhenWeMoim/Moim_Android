@@ -2,28 +2,19 @@ package com.legends.moim.src.makeMoim
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.util.SparseIntArray
 import android.view.View
-import android.widget.Toast
 import com.aminography.primecalendar.civil.CivilCalendar
-import com.aminography.primedatepicker.common.BackgroundShapeType
-import com.aminography.primedatepicker.common.LabelFormatter
-import com.aminography.primedatepicker.common.OnDayPickedListener
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
-import com.aminography.primedatepicker.picker.theme.LightThemeFactory
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
-import com.legends.moim.config.baseModel.DateStructure
+import com.legends.moim.config.baseModel.DateStruct
+import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
-import com.legends.moim.config.baseModel.Moim
 import java.util.*
 
 class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
@@ -87,10 +78,10 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun addTestDummyData() {
-        val dummyDayVal1= DateStructure(6, 4, '월')
-        val dummyDayVal2= DateStructure(8, 13, '수')
-        val dummyDayVal3= DateStructure(11, 4, '목')
-        val dummyDayVal4= DateStructure(12, 31, '토')
+        val dummyDayVal1= DateStruct(2022, 6, 4, '월')
+        val dummyDayVal2= DateStruct(2022, 8, 13, '수')
+        val dummyDayVal3= DateStruct(2022, 11, 4, '목')
+        val dummyDayVal4= DateStruct(2022, 12, 31, '토')
 
         makingMoim.dates.add(dummyDayVal1)
         makingMoim.dates.add(dummyDayVal2)
@@ -180,12 +171,4 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             .build()
 
     }
-
 }
-
-data class DateStruct (
-    var year : Int,
-    var month : Int,
-    var day : Int,
-    var dayOfWeek : Char
-)
