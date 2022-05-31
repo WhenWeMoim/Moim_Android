@@ -152,17 +152,17 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 listOfDate = ArrayList<DateStruct>();
                 for (i: Int in 0 until selectCount) {
                     var st = StringTokenizer(dateline[i], ",| ")
-                    var temp_dayofWeek: Char = st.nextToken().toString()[0]
+                    var temp_dayOfWeek: Char = st.nextToken().toString()[0]
                     var temp_day: Int = st.nextToken().toInt()
-                    var temp_month: Int = st.nextToken().toString()[0].code
+                    var temp_month: Int = st.nextToken().toString()[0]-'0'
                     var temp_year: Int = st.nextToken().toInt()
 
-                    var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayofWeek)
+                    var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayOfWeek)
                     listOfDate.add(temp)
                 }
                 //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
                 var tempDate: String =
-                    listOfDate[1].year.toString() + " " + listOfDate[0].month + "월, "+ listOfDate[0].day.toString() + "일, " + listOfDate[0].dayOfWeek
+                    listOfDate[0].year.toString() + " " + listOfDate[0].month.toString() + "월, "+ listOfDate[0].day.toString() + "일, " + listOfDate[0].dayOfWeek.toString()
                 binding.makeMoimSelectDateBtn.text = tempDate
                 //여기까지 날짜저장. listOfDate 에 있음.
             }
