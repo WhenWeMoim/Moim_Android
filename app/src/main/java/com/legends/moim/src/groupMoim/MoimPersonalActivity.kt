@@ -10,8 +10,6 @@ class MoimPersonalActivity: BaseActivity() {
 
     lateinit var binding: ActivityMoimPersonalBinding
 
-    private val personalScheduleFragment= PersonalScheduleFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMoimPersonalBinding.inflate(layoutInflater)
@@ -34,11 +32,12 @@ class MoimPersonalActivity: BaseActivity() {
         super.onClick(v)
         when(v!!.id) {
             R.id.moim_personal_complete_btn -> {
-                //내용 적용
+                //todo 서버로 전송
+                //todo 그룹 시간표에 적용
                 finish()
             }
             R.id.moim_personal_load_btn -> { // User 스케줄 불러오기 -> 아직 구현 x
-
+                binding.moimPersonalLoadBtn.visibility = View.INVISIBLE
             }
             R.id.moim_personal_like_btn -> {
                 selectedBtnFunc = 1
@@ -53,7 +52,7 @@ class MoimPersonalActivity: BaseActivity() {
                 selectedBtnFunc = 4
             }
             R.id.moim_personal_reset_btn -> { //Table 초기화
-                personalScheduleFragment.resetScheduleTable()
+                //todo 테이블 초기화
             }
         }
     }

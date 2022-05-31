@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
-            android:id="@+id/dialog_base_title_tv"
+            android:id="@+id/dialog_time_ex_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
@@ -28,58 +28,85 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Title"/>
+            tools:text="Time"/>
 
         <View
-            android:id="@+id/dialog_base_view"
+            android:id="@+id/dialog_time_ex_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:background="@color/gray"
-            app:layout_constraintTop_toBottomOf="@id/dialog_base_title_tv"
+            app:layout_constraintTop_toBottomOf="@id/dialog_time_ex_title_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/dialog_base_message_tv"
+        <LinearLayout
+            android:id="@+id/dialog_time_ex_main_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            android:includeFontPadding="false"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_marginTop="15dp"
             android:drawablePadding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/dialog_base_view"
+            app:layout_constraintTop_toBottomOf="@id/dialog_time_ex_view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/dialog_base_ok_btn_tv"
-            tools:text="메세지 내용을 입력주세요."
-            app:drawableTopCompat="@null" />
+            app:layout_constraintBottom_toTopOf="@id/dialog_time_ex_ok_btn_tv">
+
+            <TimePicker
+                android:id="@+id/dialog_time_ex_start_tp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                />
+
+            <TextView
+                android:id="@+id/dialog_time_ex_since_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="부터"/>
+
+            <TimePicker
+                android:id="@+id/dialog_time_ex_end_tp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:timePickerMode="spinner"
+                />
+
+            <TextView
+                android:id="@+id/dialog_time_ex_until_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="까지"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/dialog_base_ok_btn_tv"
+            android:id="@+id/dialog_time_ex_ok_btn_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:gravity="center"
             android:background="@drawable/bg_base_main_btn"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/dialog_base_message_tv"
+            app:layout_constraintTop_toBottomOf="@id/dialog_time_ex_main_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="@string/dialog_base_ok"/>
-
-<!--        <ImageView-->
-<!--            android:id="@+id/dialog_base_cancel_btn_iv"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/btn_dialog_base_cancel"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
