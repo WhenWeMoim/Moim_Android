@@ -72,6 +72,8 @@ class DateDialog(context : Context) {
     }
 
     interface DateDialogClickListener {
+
+
         fun onDateDialogOKClicked()
 //        fun onCancelClicked()
     }

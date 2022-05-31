@@ -94,6 +94,5 @@ class LoginActivity: BaseActivity() {
         }
 
 
-
     }
 }

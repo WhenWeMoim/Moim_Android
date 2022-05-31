@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.common.BackgroundShapeType
 import com.aminography.primedatepicker.common.LabelFormatter
+import com.aminography.primedatepicker.common.OnDayPickedListener
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.aminography.primedatepicker.picker.theme.LightThemeFactory
@@ -27,6 +28,11 @@ import java.util.*
 
 class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
 
+    companion object {
+        //var multipleDaysString :String? = null //전역변수로 날짜 데이터 관리.
+        var listOfDate = ArrayList<DateStruct>(); //전역변수로 날짜 데이터 관리. DateStruct는 최하단의 클래스 코드 참조.
+    }
+
     lateinit var binding: ActivityMakeMoimBinding
 
     lateinit var datePicker: PrimeDatePicker
@@ -42,14 +48,16 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
         initDatePickerDialog()
         initView()
-        setInitialize()
+//        setInitialize()
     }
 
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v!!.id) {
             R.id.make_moim_select_date_btn -> {
+                initDatePickerDialog()
                 datePicker.show(supportFragmentManager, "SOME_TAG")
+                //binding.makeMoimSelectDateBtn.text = multipleDaysString
                 //showDateDialog()
             }
             R.id.make_moim_select_time_btn -> {
@@ -118,113 +126,64 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     /*------- initial -------*/
 
     private fun initView() {
-        binding.makeMoimTopbarLayout.layoutTopbarTitleTv.text = getString(R.string.main_make_moim)
-    }
-
-    private fun setInitialize() {
         binding.makeMoimSelectDateBtn.setOnClickListener(this)
         binding.makeMoimSelectTimeBtn.setOnClickListener(this)
         binding.makeMoimSettingTv.setOnClickListener(this)
         binding.makeMoimCompleteBtn.setOnClickListener(this)
-
-        binding.makeMoimExplainEt.addTextChangedListener(object : TextWatcher {
-            val wordCountTv = binding.makeMoimTextCountTv
-            var userInput = binding.makeMoimExplainEt
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                wordCountTv.text = "0 / 200"
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                wordCountTv.text = "${userInput.length()} / 200"
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (userInput.isFocused && userInput.length() > 200) {
-                    userInput.setText(s.toString().substring(0, 200))
-                    userInput.setSelection(s!!.length - 1)
-                    Toast.makeText(this@MakeMoimActivity,
-                        "200자까지 입력 가능합니다.",
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
     }
 
     private fun initDatePickerDialog() {
 
-        val themeFactory = object : LightThemeFactory() {
-
-//            override val typefacePath: String?
-//                get() = "font/notosans_kr_default.otf"
-
-            override val dialogBackgroundColor: Int
-                get() = getColor(R.color.yellow100)
-
-            override val calendarViewBackgroundColor: Int
-                get() = getColor(R.color.yellow100)
-
-            override val pickedDayBackgroundShapeType: BackgroundShapeType
-                get() = BackgroundShapeType.ROUND_SQUARE
-
-            override val calendarViewPickedDayBackgroundColor: Int
-                get() = getColor(R.color.green800)
-
-            override val calendarViewPickedDayInRangeBackgroundColor: Int
-                get() = getColor(R.color.green400)
-
-            override val calendarViewPickedDayInRangeLabelTextColor: Int
-                get() = getColor(R.color.gray900)
-
-            override val calendarViewTodayLabelTextColor: Int
-                get() = getColor(R.color.purple200)
-
-            override val calendarViewWeekLabelFormatter: LabelFormatter
-                get() = { primeCalendar ->
-                    when (primeCalendar[Calendar.DAY_OF_WEEK]) {
-                        Calendar.SATURDAY,
-                        Calendar.SUNDAY -> String.format("%s😍", primeCalendar.weekDayNameShort)
-                        else -> String.format("%s", primeCalendar.weekDayNameShort)
-                    }
-                }
-
-            override val calendarViewWeekLabelTextColors: SparseIntArray
-                get() = SparseIntArray(7).apply {
-                    val red = getColor(R.color.red300)
-                    val indigo = getColor(R.color.indigo500)
-                    put(Calendar.SATURDAY, red)
-                    put(Calendar.SUNDAY, red)
-                    put(Calendar.MONDAY, indigo)
-                    put(Calendar.TUESDAY, indigo)
-                    put(Calendar.WEDNESDAY, indigo)
-                    put(Calendar.THURSDAY, indigo)
-                    put(Calendar.FRIDAY, indigo)
-                }
-
-            override val calendarViewShowAdjacentMonthDays: Boolean
-                get() = true
-
-            override val selectionBarBackgroundColor: Int
-                get() = getColor(R.color.brown600)
-
-            override val selectionBarRangeDaysItemBackgroundColor: Int
-                get() = getColor(R.color.orange700)
-        }
-
         val today = CivilCalendar()
 
-        val callback = MultipleDaysPickCallback { days ->
+        val callback = MultipleDaysPickCallback{ multipleDays ->
             //todo 무언가 더 해야 함
-            Log.d("PickedDates>>>", days.toString())
+            var multipleDaysString = multipleDays.joinToString(" -\n") { it.longDateString }
+            //binding.makeMoimSelectDateBtn.text = multipleDaysString
+            //Log.d("PickedDates>>>", multipleDays.joinToString(" -\n") { it.longDateString })
+
+            //일단은 여기다 날짜 저장 코드 실행.
+            var datestring: String = multipleDaysString
+
+            if (datestring != null && datestring?.length > 0) {
+                //var datestring = "수요일, 11 5월 2022\n목요일, 12 5월 2022\n금요일, 13 5월 2022" //더미데이터
+                var dateline = datestring.split("\n")
+                var selectCount = dateline.count()
+                listOfDate = ArrayList<DateStruct>();
+                for (i: Int in 0 until selectCount) {
+                    var st = StringTokenizer(dateline[i], ",| ")
+                    var temp_dayofWeek: String = st.nextToken().toString()
+                    var temp_day: Int = st.nextToken().toInt()
+                    var temp_month: String = st.nextToken().toString()
+                    var temp_year: Int = st.nextToken().toInt()
+
+                    var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayofWeek)
+                    listOfDate.add(temp)
+                }
+                //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
+                var tempDate: String =
+                    listOfDate[1].year.toString() + " " + listOfDate[0].month + listOfDate[0].day.toString() + "일, " + listOfDate[0].dayofWeek
+                binding.makeMoimSelectDateBtn.text = tempDate
+                //여기까지 날짜저장. listOfDate 에 있음.
+            }
+
         }
 
-        datePicker = PrimeDatePicker.bottomSheetWith(today)
+        datePicker = PrimeDatePicker.dialogWith(today)
             .pickMultipleDays(callback)
+            //.initiallyPickedMultipleDays(callback.onMultipleDaysPicked(multipleDays)) 이거 아니다...이건 초기 달력 상태를 선택된거 만드는거..
             //.maxPossibleDate()
             .firstDayOfWeek(Calendar.SUNDAY)
-            .applyTheme(themeFactory) // applyTheme(themeFactory: ThemeFactory)
-            //.initiallyPickedMultipleDays(pickedDays)
+            //.applyTheme(themeFactory) // applyTheme(themeFactory: ThemeFactory)
             .build()
+
     }
 
 }
+
+data class DateStruct (
+    var year : Int,
+    var month : String,
+    var day : Int,
+    var dayofWeek : String
+)
