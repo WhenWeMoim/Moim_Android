@@ -2,32 +2,38 @@ package com.legends.moim.src.makeMoim
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.SparseIntArray
 import android.view.View
+import android.widget.Toast
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.common.BackgroundShapeType
 import com.aminography.primedatepicker.common.LabelFormatter
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.aminography.primedatepicker.picker.theme.LightThemeFactory
+import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.baseModel.DateStructure
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
-import com.legends.moim.src.groupMoim.MoimPersonalActivity
-import com.legends.moim.src.makeMoim.dialog.DateDialog
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
-import com.legends.moim.src.makeMoim.model.SelectedDate
-import com.legends.moim.src.makeMoim.model.makingMoim
+import com.legends.moim.config.baseModel.Moim
 import java.util.*
 
-class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
+class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
 
     lateinit var binding: ActivityMakeMoimBinding
 
     lateinit var datePicker: PrimeDatePicker
+
+    private val makingMoim = Moim()
+
+    private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +42,7 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
 
         initDatePickerDialog()
         initView()
-
-        //testValue 삽입 함수
-        addTestDumyData()
+        setInitialize()
     }
 
     override fun onClick(v: View?) {
@@ -49,29 +53,47 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
                 //showDateDialog()
             }
             R.id.make_moim_select_time_btn -> {
-                showTimeDialog()
+                showTimeDialog(makingMoim)
             }
             R.id.make_moim_setting_tv -> {
                 showSettingDialog()
             }
             R.id.make_moim_complete_btn -> {
+                getMakingMoimInfo()
+
                 val intent = Intent(this, MoimGroupActivity::class.java)
+                intent.putExtra("moimInfo", gson.toJson(makingMoim))
                 startActivity(intent)
                 finish()
             }
         }
     }
 
-    private fun showTimeDialog() {
-        val dig = TimeDialog(this)
-        dig.listener = this
-        dig.showTimeDialog()
+    private fun getMakingMoimInfo() {
+        if( binding.makeMoimTitleEt.text.isNotEmpty() )
+            makingMoim.title = binding.makeMoimTitleEt.text.toString()
+        if( binding.makeMoimExplainEt.text.isNotEmpty() )
+            makingMoim.explain = binding.makeMoimExplainEt.text.toString()
+        //testValue 삽입 함수
+        addTestDummyData()
     }
 
-    private fun showDateDialog() {
-        val dig = DateDialog(this)
+    private fun addTestDummyData() {
+        val dummyDayVal1= DateStructure(6, 4, '월')
+        val dummyDayVal2= DateStructure(8, 13, '수')
+        val dummyDayVal3= DateStructure(11, 4, '목')
+        val dummyDayVal4= DateStructure(12, 31, '토')
+
+        makingMoim.dates.add(dummyDayVal1)
+        makingMoim.dates.add(dummyDayVal2)
+        makingMoim.dates.add(dummyDayVal3)
+        makingMoim.dates.add(dummyDayVal4)
+    }
+
+    private fun showTimeDialog(makingMoim: Moim) {
+        val dig = TimeDialog(this, makingMoim)
         dig.listener = this
-        dig.showDateDialog()
+        dig.showTimeDialog()
     }
 
     private fun showSettingDialog() {
@@ -80,28 +102,13 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
         dig.showSettingDialog()
     }
 
-    private fun addTestDumyData() {
-        val dummyDayVal1: SelectedDate = SelectedDate( year = 2022, month = 6, day = 13 )
-        val dummyDayVal2: SelectedDate = SelectedDate( year = 2022, month = 6, day = 14 )
-        val dummyDayVal3: SelectedDate = SelectedDate( year = 2022, month = 6, day = 18 )
-        val dummyDayVal4: SelectedDate = SelectedDate( year = 2022, month = 7, day = 15 )
-        makingMoim.dates.add(dummyDayVal1)
-        makingMoim.dates.add(dummyDayVal2)
-        makingMoim.dates.add(dummyDayVal3)
-        makingMoim.dates.add(dummyDayVal4)
-    }
-
     /*------- interface override fun -------*/
 
-    override fun onDateDialogOKClicked() {
-        //TODO("Not yet implemented")
-    }
-
     override fun onTimeDialogOKClicked(startTimeHour: Int, endTimeHour: Int) {
-        makingMoim.startTimeHour= startTimeHour
-        makingMoim.endTimeHour= endTimeHour
+        makingMoim.startTimeHour = startTimeHour
+        makingMoim.endTimeHour = endTimeHour
 
-        binding.makeMoimSelectTimeBtn.text = String.format("%d 부터 %d 까지", startTimeHour, endTimeHour)
+        binding.makeMoimSelectTimeBtn.text = String.format("%d시 부터 %d시 까지", startTimeHour, endTimeHour)
     }
 
     override fun onSettingDialogOKClicked() {
@@ -111,10 +118,37 @@ class MakeMoimActivity: BaseActivity(), DateDialog.DateDialogClickListener, Time
     /*------- initial -------*/
 
     private fun initView() {
+        binding.makeMoimTopbarLayout.layoutTopbarTitleTv.text = getString(R.string.main_make_moim)
+    }
+
+    private fun setInitialize() {
         binding.makeMoimSelectDateBtn.setOnClickListener(this)
         binding.makeMoimSelectTimeBtn.setOnClickListener(this)
         binding.makeMoimSettingTv.setOnClickListener(this)
         binding.makeMoimCompleteBtn.setOnClickListener(this)
+
+        binding.makeMoimExplainEt.addTextChangedListener(object : TextWatcher {
+            val wordCountTv = binding.makeMoimTextCountTv
+            var userInput = binding.makeMoimExplainEt
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                wordCountTv.text = "0 / 200"
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                wordCountTv.text = "${userInput.length()} / 200"
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (userInput.isFocused && userInput.length() > 200) {
+                    userInput.setText(s.toString().substring(0, 200))
+                    userInput.setSelection(s!!.length - 1)
+                    Toast.makeText(this@MakeMoimActivity,
+                        "200자까지 입력 가능합니다.",
+                        Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     private fun initDatePickerDialog() {

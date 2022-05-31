@@ -12,8 +12,21 @@
     <color name="white">#FFFFFFFF</color>
     <color name="whiteGray">#FFDFDFDF</color>
     <color name="invisible">#00000000</color>
+    <color name="darkGray">#8E8E97</color>
 
-    <color name="moim_main_1">#FF4DA470</color>
+    //main
+    <color name="moim_main_1">#374BA4</color>
+    <color name="moim_sub_1">#EAEEFF</color>
+
+
+
+
+    //choice color
+    <color name="choice_like">#7AA1DC</color>
+    <color name="choice_possible">#A3C46B</color>
+    <color name="choice_dislike">#FFEB95</color>
+    <color name="choice_impossible">#EE4252</color>
+
 
     //PrimeDatePicker
     <color name="yellow100">#FFEB3B</color>
