@@ -1,7 +1,6 @@
-package com.olympos.tripbook.src.tripcourse.model
+package com.legends.moim.utils.retrofit
 
 import android.util.Log
-import com.legends.moim.utils.retrofit.*
 import com.legends.moim.utils.ApplicationClass.Companion.retrofit
 import com.legends.moim.utils.getUserIdx
 import retrofit2.*

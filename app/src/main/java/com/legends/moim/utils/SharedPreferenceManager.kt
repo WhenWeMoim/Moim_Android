@@ -89,6 +89,7 @@ fun logout() {
 }
 
 /*----- 액세스 토큰 관련 함수 ----*/
+
 //fun saveAccessToken(accessToken: String) {
 //    val editor = mSharedPreferences.edit()
 //    editor.putString(X_ACCESS_TOKEN, accessToken)
