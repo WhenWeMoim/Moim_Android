@@ -29,6 +29,7 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener 
         binding.mainMakeMoimBtn.setOnClickListener(this)
         binding.mainViewMoimBtn.setOnClickListener(this)
         binding.mainUserBtn.setOnClickListener(this)
+        binding.mainJoinMoimBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -58,7 +59,9 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener 
         dig.showJoinMoimDialog()
     }
 
-    override fun onJoinMoimDialogOKClicked(moimIdx: Int, moimPw: Int) {
-        //TODO 모임 정보 서버로 전송 + 일치하면 모임 정보도 가져옴
+    override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: Int?) {
+        if ( moimIdx != null ) { //Pw는 null일 수도 있음
+            //TODO 모임 정보 서버로 전송 + 일치하면 모임 정보도 가져옴
+        }
     }
 }

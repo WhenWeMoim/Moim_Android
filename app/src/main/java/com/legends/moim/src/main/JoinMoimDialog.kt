@@ -15,7 +15,8 @@ class JoinMoimDialog(context : Context) {
 
     private lateinit var btnOK: TextView
 
-    private var moimPw: Int = 0
+    private lateinit var moimIdxEt: EditText
+    private lateinit var moimPwEt: EditText
 
     var listener: JoinMoimDialogClickListener? = null
 
@@ -25,10 +26,18 @@ class JoinMoimDialog(context : Context) {
         dialog.setContentView(R.layout.dialog_join_moim)
         dialog.setCancelable(false)
 
-        btnOK = dialog.findViewById(R.id.dialog_time_ok_btn_tv)
+        moimIdxEt = dialog.findViewById<EditText>(R.id.dialog_join_moimIdx_et)
+        moimPwEt = dialog.findViewById<EditText>(R.id.dialog_join_moimPw_et)
+
+        btnOK = dialog.findViewById(R.id.dialog_join_ok_btn_tv)
         btnOK.setOnClickListener {
-            val moimIdx: Int = dialog.findViewById<EditText>(R.id.dialog_join_moimIdx_et).text.toString().toInt()
-            val moimPw: Int = dialog.findViewById<EditText>(R.id.dialog_join_moimPw_et).text.toString().toInt()
+            var moimIdx: Int? = null
+            if( moimIdxEt.text.isNotEmpty() )
+                moimIdx = moimIdxEt.text.toString().toInt()
+
+            var moimPw: Int? = null
+            if( moimPwEt.text.isNotEmpty() )
+                moimPw = moimIdxEt.text.toString().toInt()
 
             listener!!.onJoinMoimDialogOKClicked( moimIdx, moimPw )
 
@@ -38,6 +47,6 @@ class JoinMoimDialog(context : Context) {
     }
 
     interface JoinMoimDialogClickListener {
-        fun onJoinMoimDialogOKClicked( moimIdx: Int, moimPw: Int )
+        fun onJoinMoimDialogOKClicked( moimIdx: Int?, moimPw: Int? )
     }
 }

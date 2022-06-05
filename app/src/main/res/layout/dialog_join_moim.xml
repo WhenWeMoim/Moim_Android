@@ -26,11 +26,11 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textColor="@color/black"
+            android:text="@string/main_join_moim"
             android:includeFontPadding="false"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:text="@string/main_join_moim"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <View
             android:id="@+id/dialog_join_view"
@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="@string/join_moimIdx"
+                android:text="@string/join_moimIdx"
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textColor="@color/black"
@@ -85,7 +85,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="@string/join_moimPw"
+                android:text="@string/join_moimPw"
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textColor="@color/black"
@@ -107,9 +107,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/dialog_date_ok_btn_tv"
+            android:id="@+id/dialog_join_ok_btn_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/dialog_base_ok"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:gravity="center"
@@ -117,8 +118,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="@string/dialog_base_ok"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
