@@ -60,8 +60,8 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener 
     }
 
     override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: Int?) {
-        if ( moimIdx != null ) { //Pw는 null일 수도 있음
-            //TODO 모임 정보 서버로 전송 + 일치하면 모임 정보도 가져옴
-        }
+        if ( moimIdx == null ) return
+
+        //TODO 모임 정보 서버로 전송 + 일치하면 모임 정보도 가져옴
     }
 }

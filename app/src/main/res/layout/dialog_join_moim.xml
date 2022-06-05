@@ -114,7 +114,7 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             android:gravity="center"
-            android:background="@drawable/bg_base_main_btn"
+            android:background="@drawable/bg_dialog_base_ok_btn"
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

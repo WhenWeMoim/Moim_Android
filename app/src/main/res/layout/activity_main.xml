@@ -71,7 +71,7 @@
             android:background="@drawable/bg_base_main_btn"
             android:visibility="gone"
 
-            android:text="@string/main_user"
+            android:text="@string/main_user_moim"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:fontFamily="@font/notosans_kr_bold"
