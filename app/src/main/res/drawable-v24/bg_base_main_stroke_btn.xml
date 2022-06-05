@@ -7,7 +7,7 @@
         android:width="280dp"
         android:height="60dp"/>
     <stroke
-        android:width="4dp"
+        android:width="3dp"
         android:color="@color/moim_main_1"
         />
 

@@ -56,9 +56,6 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,7 +73,7 @@
                 android:layout_marginBottom="8dp"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/make_moim_select_date_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,11 +90,12 @@
                 android:id="@+id/make_moim_select_date_tableLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -109,7 +107,7 @@
                         android:includeFontPadding="false"
                         android:gravity="center"
                         />
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -121,7 +119,7 @@
                         android:includeFontPadding="false"
                         android:gravity="center"
                         />
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -142,6 +140,40 @@
 
 
             </TableLayout>
+
+            <GridLayout
+                android:id="@+id/make_moim_select_date_gridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:columnCount="3"
+                android:rowCount="3">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:background="@drawable/bg_base_main_stroke_btn"
+
+                    android:text="날짜 선택"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:gravity="center"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_columnWeight="1"
+                    android:background="@drawable/bg_base_main_stroke_btn"
+
+                    android:text="날짜 선택"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:gravity="center"
+                    />
+            </GridLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -161,7 +193,7 @@
                 android:layout_marginBottom="8dp"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/make_moim_select_time_btn"
                 android:layout_width="280dp"
                 android:layout_height="60dp"

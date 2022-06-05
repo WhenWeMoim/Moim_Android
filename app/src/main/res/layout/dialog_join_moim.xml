@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Title"/>
+            tools:text="@string/main_join_moim"/>
 
         <View
             android:id="@+id/dialog_join_view"
@@ -38,6 +38,7 @@
             android:layout_height="1dp"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/gray"
             app:layout_constraintTop_toBottomOf="@id/dialog_join_title_tv"
             app:layout_constraintStart_toStartOf="parent"

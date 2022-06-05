@@ -9,6 +9,7 @@ import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.BaseDialog
 import com.legends.moim.config.baseModel.DateStruct
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
@@ -40,6 +41,16 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         initDatePickerDialog()
         initView()
 //        setInitialize()
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        showDialog("모임 생성 취소", "모임 생성을 취소하시겠습니까?\n입력된 정보는 사라집니다.", "확인")
+    }
+
+    override fun onOKClicked() {
+        super.onOKClicked()
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -130,27 +141,26 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         val today = CivilCalendar()
 
         val callback = MultipleDaysPickCallback{ multipleDays ->
-            //todo 무언가 더 해야 함
-            var multipleDaysString = multipleDays.joinToString(" -\n") { it.longDateString }
+            val multipleDaysString = multipleDays.joinToString(" -\n") { it.longDateString }
             //binding.makeMoimSelectDateBtn.text = multipleDaysString
             //Log.d("PickedDates>>>", multipleDays.joinToString(" -\n") { it.longDateString })
 
             //일단은 여기다 날짜 저장 코드 실행.
-            var datestring: String = multipleDaysString
+            val dateString: String? = multipleDaysString
 
-            if (datestring != null && datestring?.length > 0) {
+            if ( dateString != null && dateString.isNotEmpty() ) {
                 //var datestring = "수요일, 11 5월 2022\n목요일, 12 5월 2022\n금요일, 13 5월 2022" //더미데이터
-                var dateline = datestring.split("\n")
-                var selectCount = dateline.count()
+                val dateline = dateString.split("\n")
+                val selectCount = dateline.count()
                 listOfDate = ArrayList<DateStruct>();
                 for (i: Int in 0 until selectCount) {
-                    var st = StringTokenizer(dateline[i], ",| ")
-                    var temp_dayofWeek: Char = st.nextToken().toString()[0]
-                    var temp_day: Int = st.nextToken().toInt()
-                    var temp_month: Int = st.nextToken().toString()[0].code
-                    var temp_year: Int = st.nextToken().toInt()
+                    val st = StringTokenizer(dateline[i], ",| ")
+                    val temp_dayofWeek: Char = st.nextToken().toString()[0]
+                    val temp_day: Int = st.nextToken().toInt()
+                    val temp_month: Int = st.nextToken().toString()[0].code
+                    val temp_year: Int = st.nextToken().toInt()
 
-                    var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayofWeek)
+                    val temp = DateStruct(temp_year, temp_month, temp_day, temp_dayofWeek)
                     listOfDate.add(temp)
                 }
                 //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
@@ -169,6 +179,5 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             .firstDayOfWeek(Calendar.SUNDAY)
             //.applyTheme(themeFactory) // applyTheme(themeFactory: ThemeFactory)
             .build()
-
     }
 }
