@@ -50,6 +50,20 @@
             />
 
         <Button
+            android:id="@+id/main_join_moim_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_base_main_btn"
+
+            android:text="@string/main_join_moim"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/notosans_kr_bold"
+            android:includeFontPadding="false"
+            />
+
+        <Button
             android:id="@+id/main_user_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
