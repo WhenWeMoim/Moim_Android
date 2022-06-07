@@ -21,7 +21,7 @@ class JoinMoimDialog(context : Context) {
     var listener: JoinMoimDialogClickListener? = null
 
     fun showJoinMoimDialog() {
-        dialog.window?.setBackgroundDrawableResource(android.R.color.darker_gray)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_join_moim)
         dialog.setCancelable(false)

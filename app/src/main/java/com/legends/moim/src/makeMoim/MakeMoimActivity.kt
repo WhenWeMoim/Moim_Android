@@ -4,10 +4,12 @@ import android.R.color
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.GridLayout
 import android.widget.GridLayout.UNDEFINED
 import android.widget.LinearLayout
+import android.widget.TableLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import com.aminography.primecalendar.civil.CivilCalendar
@@ -38,7 +40,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     private val makingMoim = Moim()
 
-    private lateinit var dateLayout: GridLayout
+    private lateinit var dateLayout: TableLayout
 
     private val gson = Gson()
 
@@ -46,7 +48,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         super.onCreate(savedInstanceState)
         binding = ActivityMakeMoimBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dateLayout = binding.makeMoimSelectDateGridLayout
+        dateLayout = binding.makeMoimSelectDateTableLayout
 
         initDatePickerDialog()
         initView()
@@ -163,7 +165,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 val dateline = dateString.split("\n")
                 val selectCount = dateline.count()
                 listOfDate = ArrayList<DateStruct>()
-                for (i: Int in 0 until selectCount) {
+                for ( i: Int in 0 until selectCount ) {
                     val st = StringTokenizer(dateline[i], ",| ")
                     val temp_dayOfWeek: Char = st.nextToken().toString()[0]
                     val temp_day: Int = st.nextToken().toInt()
@@ -173,34 +175,35 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                     var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayOfWeek)
                     listOfDate.add(temp)
                 }
+                Log.d("dateSelectTest>>>>>", listOfDate.toString())
                 //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
 
                 if( listOfDate.size <= 0 ) {
                     binding.makeMoimSelectDateBtn.visibility = View.VISIBLE
-                    binding.makeMoimSelectDateGridLayout.visibility = View.GONE
+                    binding.makeMoimSelectDateTableLayout.visibility = View.GONE
 
                 } else {
                     binding.makeMoimSelectDateBtn.visibility = View.GONE
-                    binding.makeMoimSelectDateGridLayout.visibility = View.VISIBLE
+                    binding.makeMoimSelectDateTableLayout.visibility = View.VISIBLE
 
-                    val tempDateString: String =
-                       listOfDate[0].month.toString() + "월, "+ listOfDate[0].day.toString() + "일"
+                    binding.makeMoimSelectDateTableLayout.removeAllViews()
+                    for ( i: Int in 0 until selectCount ) {
+                        val tempDateString: String =
+                            listOfDate[i].month.toString() + "월 "+ listOfDate[i].day.toString() + "일"
 
-//                    val dateBtnPm = GridLayout.LayoutParams()
-//                        dateBtnPm.height = 60
-//                        dateBtnPm.width = 0
-//                        dateBtnPm.columnSpec = GridLayout.spec(UNDEFINED, 0, 1f)
-//                        dateBtnPm.rowSpec = GridLayout.spec(UNDEFINED, 60, 1f)
+                    val dateBtnPm = TableLayout.LayoutParams(0, 60, 1f)
 
-                    val newDateBtn = AppCompatButton(this)
-                        newDateBtn.background = getDrawable(R.drawable.bg_base_main_stroke_btn)
-                        newDateBtn.text = tempDateString
-                        newDateBtn.textSize = 14f
-                        newDateBtn.includeFontPadding = false
-                        newDateBtn.setOnClickListener(dateClickListener())
+                        val newDateBtn = AppCompatButton(this)
+                            newDateBtn.background = getDrawable(R.drawable.bg_makemoim_date_stroke_btn)
+                            newDateBtn.layoutParams = dateBtnPm
+                            newDateBtn.text = tempDateString
+                            newDateBtn.textSize = 14f
+                            newDateBtn.includeFontPadding = false
+                            newDateBtn.setOnClickListener(dateClickListener())
 //                        newDateBtn.layoutParams = dateBtnPm
 
-                    binding.makeMoimSelectDateGridLayout.addView(newDateBtn)
+                        binding.makeMoimSelectDateTableLayout.addView(newDateBtn)
+                    }
                 }
 
 //                var tempDate: String =
