@@ -25,7 +25,7 @@ class MoimGroupActivity : BaseActivity() {
     }
 
     private fun initView() {
-        binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
+        //binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
     }
 
     private fun setInitialize() {
@@ -64,9 +64,10 @@ class MoimGroupActivity : BaseActivity() {
                 //todo 그룹 초대 링크 생성 -> 클립보드 붙여넣기
             }
             R.id.moim_group_participant_tv -> { //참가인원 조회, ~명 참여, 누르면 참가자 명단도 나오도록.
-                val dig = ParticipantsDialog(this)
-                dig.tvMessage.text = "박찬규" + ", " + "박민우"
-                dig.showTimeDialog()
+                //val dig = ParticipantsDialog(this)
+                //dig.tvMessage.text = "박찬규" + ", " + "박민우"
+                //dig.showTimeDialog()
+                Toast.makeText(this, "박찬규" + ", " + "박민우", Toast.LENGTH_SHORT).show()
 
             }
             R.id.moim_group_add_personal_btn -> { //개인 시간표 추가

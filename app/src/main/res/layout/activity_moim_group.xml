@@ -4,17 +4,27 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <View
+        android:id="@+id/nullView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <!--상단바 제거띠
     <include
         android:id="@+id/moim_group_topbar_layout"
         layout="@layout/layout_topbar"
         />
-
+    -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/moim_group_moim_info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        app:layout_constraintTop_toBottomOf="@id/moim_group_topbar_layout">
+        app:layout_constraintTop_toBottomOf="@id/nullView"
+        >
+        <!--app:layout_constraintTop_toBottomOf="@id/moim_group_topbar_layout"-->
         <TextView
             android:id="@+id/moim_group_moim_name_tv"
             android:layout_width="wrap_content"
