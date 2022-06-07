@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.view.View
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
 import com.legends.moim.src.makeMoim.MakeMoimActivity
+import com.legends.moim.src.makeMoim.dialog.TimeDialog
 import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener {
 
     lateinit var binding : ActivityMainBinding
 
@@ -27,6 +29,7 @@ class MainActivity : BaseActivity() {
         binding.mainMakeMoimBtn.setOnClickListener(this)
         binding.mainViewMoimBtn.setOnClickListener(this)
         binding.mainUserBtn.setOnClickListener(this)
+        binding.mainJoinMoimBtn.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -44,6 +47,21 @@ class MainActivity : BaseActivity() {
                 val intent = Intent(this, UserActivity::class.java)
                 startActivity(intent)
             }
+            R.id.main_join_moim_btn -> {
+                showJoinMoimDialog()
+            }
         }
+    }
+
+    private fun showJoinMoimDialog() {
+        val dig = JoinMoimDialog(this)
+        dig.listener = this
+        dig.showJoinMoimDialog()
+    }
+
+    override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: Int?) {
+        if ( moimIdx == null ) return
+
+        //TODO 모임 정보 서버로 전송 + 일치하면 모임 정보도 가져옴
     }
 }

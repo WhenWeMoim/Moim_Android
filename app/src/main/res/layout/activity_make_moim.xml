@@ -57,9 +57,6 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,10 +74,10 @@
                 android:layout_marginBottom="8dp"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/make_moim_select_date_btn"
-                android:layout_width="280dp"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_base_main_stroke_btn"
 
                 android:text="날짜 선택"
@@ -89,12 +86,49 @@
                 android:includeFontPadding="false"
                 android:gravity="center"
                 />
+
             <TableLayout
                 android:id="@+id/make_moim_select_date_tableLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:orientation="horizontal">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+<!--                    <androidx.appcompat.widget.AppCompatButton-->
+<!--                        android:background="@drawable/bg_makemoim_date_stroke_btn"-->
+<!--                        android:layout_weight="1"-->
+
+<!--                        android:text="날짜 선택"-->
+<!--                        android:textSize="16sp"-->
+<!--                        android:fontFamily="@font/notosans_kr_bold"-->
+<!--                        android:includeFontPadding="false"-->
+<!--                        android:gravity="center"-->
+<!--                        />-->
+
+                </TableRow>
 
             </TableLayout>
+
+            <TextView
+                android:id="@+id/make_moim_num_dates_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="0개 선택"
+                android:textColor="@color/black"
+                android:fontFamily="@font/notosans_kr_bold" />
+
+<!--            <GridLayout-->
+<!--                android:id="@+id/make_moim_select_date_gridLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:columnCount="3"-->
+<!--                android:rowCount="3">-->
+<!--            </GridLayout>-->
         </LinearLayout>
 
         <LinearLayout
@@ -114,7 +148,7 @@
                 android:layout_marginBottom="8dp"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/make_moim_select_time_btn"
                 android:layout_width="280dp"
                 android:layout_height="60dp"

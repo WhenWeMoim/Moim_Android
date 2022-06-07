@@ -2,6 +2,8 @@ package com.legends.moim.src.groupMoim
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
@@ -10,10 +12,22 @@ class MoimPersonalActivity: BaseActivity() {
 
     lateinit var binding: ActivityMoimPersonalBinding
 
+    private lateinit var fragmentManager: FragmentManager
+    private lateinit var transaction: FragmentTransaction
+    private lateinit var personalScheduleFragment: PersonalScheduleFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMoimPersonalBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        fragmentManager = supportFragmentManager
+        transaction = fragmentManager.beginTransaction()
+        personalScheduleFragment = PersonalScheduleFragment()
+
+        transaction
+            .replace(R.id.moim_personal_schedule_fragment, personalScheduleFragment)
+            .commitAllowingStateLoss()
 
         initView()
     }
@@ -52,7 +66,7 @@ class MoimPersonalActivity: BaseActivity() {
                 selectedBtnFunc = 4
             }
             R.id.moim_personal_reset_btn -> { //Table 초기화
-                //todo 테이블 초기화
+                personalScheduleFragment.resetScheduleTable()
             }
         }
     }
