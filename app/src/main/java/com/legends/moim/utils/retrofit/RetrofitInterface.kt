@@ -1,42 +1,43 @@
 package com.legends.moim.utils.retrofit
 
+import com.legends.moim.src.makeMoim.model.MoimReq
 import retrofit2.Call
 import retrofit2.http.*
 
 interface RetrofitInterface {
 
     //회원가입(카카오) - 최초 앱 실행 1회
-    @POST("/app/course/{userIdx}")
-    fun postSignup(@Body token : String): Call<PostLoginResponse>
+    @POST("/users/signup")
+    fun postSignup(@Body token : String): Call<PostUserResponse>
 
     //로그인 - 앱 삭제 후 앱 실행
-    @POST("/app/course/{userIdx}")
-    fun postLogin(@Body token : String): Call<PostLoginResponse>
+    @POST("/users/login")
+    fun postLogin(@Body token : String): Call<PostUserResponse>
 
     //모임 참가
     @POST("/app/course/{userIdx}")
-    fun postJoinMoim(@Body moimIdx: Int, @Body moimPw: Int): Call<PostLoginResponse>
+    fun postJoinMoim(@Body moimIdx: Int, @Body moimPw: Int): Call<PostUserResponse>
 
     //나의 모임들 조회
-    @GET("/app/trip/{userIdx}/{tripIdx}/courses")
-    fun getMyMoims(@Path("userIdx") userIdx: Int, @Path("tripIdx") tripIdx: String): Call<GetMyMoimsResponse>
+    @GET("/moims/{userIdx}")
+    fun getMoims(@Path("userIdx") userIdx: Int): Call<GetMoimsResponse>
 
     //모임 생성(전송)
-    @POST("/app/course/{userIdx}")
-    fun postMoim(@Path("userIdx")userIdx : Int, @Body schedule : String): Call<PostPersonalScheduleResponse>
+    @POST("/moims")
+    fun postMoim(@Body moimReq: MoimReq): Call<PostMoimResponse>
+
+    //모임의 그룹 시간표 정보 가져오기
+    @GET("/moims/{moimIdx}")
+    fun getMoimSchedule(@Path("moimIdx") moimIdx: Int): Call<GetMoimScheduleResponse>
 
     //모임 개인 시간표 적용(전송)
     @POST("/app/course/{userIdx}")
     fun postPersonalSchedule(@Path("userIdx")userIdx : Int, @Body schedule : String): Call<PostPersonalScheduleResponse>
     //Gson 객체로 바꿔서 서버로 보내는 어노테이션 : @Body
 
-    //모임의 그룹 시간표 정보 가져오기
-    @GET("/app/trip/{userIdx}/{tripIdx}/courses")
-    fun getGroupSchedule(@Path("userIdx") userIdx: Int, @Path("tripIdx") tripIdx: String): Call<GetGroupScheduleResponse>
-
     //모임 개인 시간표 수정
-    @PATCH("/app/course/courseTitle/{userIdx}/{courseIdx}")
-    fun patchPersonalSchedule(@Path("userIdx") userIdx : Int, @Path("moimIdx") moimIdx:Int, @Body params : HashMap<String, Any> ) : Call<ServerDefaultResponse>
+    @PATCH("/moims/{moimIdx}/{userIdx}/schedule")
+    fun patchPersonalSchedule(@Path("moimIdx") moimIdx:Int, @Path("userIdx") userIdx : Int, @Body params : HashMap<String, Any> ) : Call<ServerDefaultResponse>
 
     /*----- 아직 구현 안됨 -----*/
 
