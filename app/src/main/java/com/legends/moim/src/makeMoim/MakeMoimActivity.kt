@@ -1,14 +1,24 @@
 package com.legends.moim.src.makeMoim
 
+import android.R.color
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.GridLayout
+import android.widget.GridLayout.UNDEFINED
+import android.widget.LinearLayout
+import android.widget.TableLayout
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.BaseDialog
 import com.legends.moim.config.baseModel.DateStruct
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
@@ -21,7 +31,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     companion object {
         //var multipleDaysString :String? = null //전역변수로 날짜 데이터 관리.
-        var listOfDate = ArrayList<DateStruct>(); //전역변수로 날짜 데이터 관리. DateStruct는 최하단의 클래스 코드 참조.
+        var listOfDate = ArrayList<DateStruct>() //전역변수로 날짜 데이터 관리. DateStruct는 최하단의 클래스 코드 참조.
     }
 
     lateinit var binding: ActivityMakeMoimBinding
@@ -30,16 +40,29 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     private val makingMoim = Moim()
 
+    private lateinit var dateLayout: TableLayout
+
     private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMakeMoimBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dateLayout = binding.makeMoimSelectDateTableLayout
 
         initDatePickerDialog()
         initView()
 //        setInitialize()
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        showDialog("모임 생성 취소", "모임 생성을 취소하시겠습니까?\n입력된 정보는 사라집니다.", "확인")
+    }
+
+    override fun onOKClicked() {
+        super.onOKClicked()
+        finish()
     }
 
     override fun onClick(v: View?) {
@@ -130,33 +153,62 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         val today = CivilCalendar()
 
         val callback = MultipleDaysPickCallback{ multipleDays ->
-            //todo 무언가 더 해야 함
-            var multipleDaysString = multipleDays.joinToString(" -\n") { it.longDateString }
+            val multipleDaysString = multipleDays.joinToString(" -\n") { it.longDateString }
             //binding.makeMoimSelectDateBtn.text = multipleDaysString
             //Log.d("PickedDates>>>", multipleDays.joinToString(" -\n") { it.longDateString })
 
             //일단은 여기다 날짜 저장 코드 실행.
-            var datestring: String = multipleDaysString
+            val dateString: String? = multipleDaysString
 
-            if (datestring != null && datestring?.length > 0) {
+            if ( dateString != null && dateString.isNotEmpty() ) {
                 //var datestring = "수요일, 11 5월 2022\n목요일, 12 5월 2022\n금요일, 13 5월 2022" //더미데이터
-                var dateline = datestring.split("\n")
-                var selectCount = dateline.count()
-                listOfDate = ArrayList<DateStruct>();
-                for (i: Int in 0 until selectCount) {
-                    var st = StringTokenizer(dateline[i], ",| ")
-                    var temp_dayOfWeek: Char = st.nextToken().toString()[0]
-                    var temp_day: Int = st.nextToken().toInt()
-                    var temp_month: Int = st.nextToken().toString()[0]-'0'
-                    var temp_year: Int = st.nextToken().toInt()
+                val dateline = dateString.split("\n")
+                val selectCount = dateline.count()
+                listOfDate = ArrayList<DateStruct>()
+                for ( i: Int in 0 until selectCount ) {
+                    val st = StringTokenizer(dateline[i], ",| ")
+                    val temp_dayOfWeek: Char = st.nextToken().toString()[0]
+                    val temp_day: Int = st.nextToken().toInt()
+                    val temp_month: Int = st.nextToken().toString()[0]-'0'
+                    val temp_year: Int = st.nextToken().toInt()
 
                     var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayOfWeek)
                     listOfDate.add(temp)
                 }
+                Log.d("dateSelectTest>>>>>", listOfDate.toString())
                 //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
-                var tempDate: String =
-                    listOfDate[0].year.toString() + " " + listOfDate[0].month.toString() + "월, "+ listOfDate[0].day.toString() + "일, " + listOfDate[0].dayOfWeek.toString()
-                binding.makeMoimSelectDateBtn.text = tempDate
+
+                if( listOfDate.size <= 0 ) {
+                    binding.makeMoimSelectDateBtn.visibility = View.VISIBLE
+                    binding.makeMoimSelectDateTableLayout.visibility = View.GONE
+
+                } else {
+                    binding.makeMoimSelectDateBtn.visibility = View.GONE
+                    binding.makeMoimSelectDateTableLayout.visibility = View.VISIBLE
+
+                    binding.makeMoimSelectDateTableLayout.removeAllViews()
+                    for ( i: Int in 0 until selectCount ) {
+                        val tempDateString: String =
+                            listOfDate[i].month.toString() + "월 "+ listOfDate[i].day.toString() + "일"
+
+                    val dateBtnPm = TableLayout.LayoutParams(0, 60, 1f)
+
+                        val newDateBtn = AppCompatButton(this)
+                            newDateBtn.background = getDrawable(R.drawable.bg_makemoim_date_stroke_btn)
+                            newDateBtn.layoutParams = dateBtnPm
+                            newDateBtn.text = tempDateString
+                            newDateBtn.textSize = 14f
+                            newDateBtn.includeFontPadding = false
+                            newDateBtn.setOnClickListener(dateClickListener())
+//                        newDateBtn.layoutParams = dateBtnPm
+
+                        binding.makeMoimSelectDateTableLayout.addView(newDateBtn)
+                    }
+                }
+
+//                var tempDate: String =
+//                    listOfDate[0].year.toString() + " " + listOfDate[0].month.toString() + "월, "+ listOfDate[0].day.toString() + "일, " + listOfDate[0].dayOfWeek.toString()
+//                binding.makeMoimSelectDateBtn.text = tempDate
                 //여기까지 날짜저장. listOfDate 에 있음.
             }
 
@@ -169,6 +221,13 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             .firstDayOfWeek(Calendar.SUNDAY)
             //.applyTheme(themeFactory) // applyTheme(themeFactory: ThemeFactory)
             .build()
+    }
+
+    private inner class dateClickListener: View.OnClickListener {
+        override fun onClick(v: View?) {
+            initDatePickerDialog()
+            datePicker.show(supportFragmentManager, "SOME_TAG")
+        }
 
     }
 }

@@ -76,12 +76,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/moim_personal_like_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:background="@drawable/bg_choice_like_btn"
+            android:background="@drawable/bg_schedule_choice1_like_btn"
             />
 
         <Button
