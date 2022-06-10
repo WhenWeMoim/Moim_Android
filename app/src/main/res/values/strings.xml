@@ -53,4 +53,6 @@
     //moim_personal
     <string name="personal_load">불러오기</string>
     <string name="personal_notice">선택하지 않으면 기본 선택은 \'가능\'이 됩니다.</string>
+    <string name="personal_reset">시간표 초기화</string>
+    <string name="personal_choice">Choice</string>
 </resources>

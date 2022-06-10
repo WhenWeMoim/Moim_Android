@@ -67,54 +67,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:elevation="5dp"
-        android:layout_marginVertical="120dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/moim_personal_like_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:background="@drawable/bg_schedule_choice1_like_btn"
-            />
-
-        <Button
-            android:id="@+id/moim_personal_possible_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_choice_possible_btn"
-            android:backgroundTint="@color/choice_possible"
-            />
-
-        <Button
-            android:id="@+id/moim_personal_dislike_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_choice_dislike_btn"
-            />
-
-        <Button
-            android:id="@+id/moim_personal_impossible_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_choice_impossible_btn"
-            />
-
-        <Button
-            android:id="@+id/moim_personal_reset_btn"
-            android:text="스케줄표 초기화"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black"
-            />
-    </LinearLayout>
-
     <ScrollView
         android:id="@+id/moim_personal_schedule_layout"
         android:layout_width="match_parent"
@@ -134,5 +86,188 @@
             app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout" />
 
     </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/moim_personal_reset_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_personal_reset_btn"
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+
+        android:text="@string/personal_reset"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:fontFamily="@font/notosans_kr_bold"
+        android:includeFontPadding="false"
+
+        app:layout_constraintBottom_toTopOf="@id/moim_personal_bottomBar_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/moim_personal_bottomBar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:elevation="5dp"
+        android:background="@color/moim_main_1"
+        android:padding="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="9dp"
+
+            android:text="@string/personal_choice"
+            android:textSize="13sp"
+            android:textColor="@color/white"
+            android:layout_gravity="start"
+            android:fontFamily="@font/notosans_kr_bold"
+            android:includeFontPadding="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="15dp"
+            android:background="@drawable/bg_personal_choice_layout">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foregroundGravity="center"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/moim_personal_like_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/bg_schedule_choice1_like_btn"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/moim_personal_possible_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/bg_schedule_choice2_possible_btn"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foregroundGravity="center"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/moim_personal_dislike_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/bg_schedule_choice3_dislike_btn"
+                    />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foregroundGravity="center"
+                >
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/moim_personal_impossible_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:background="@drawable/bg_schedule_choice4_impossible_btn"
+                    />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                android:text="@string/choice_like"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:includeFontPadding="false"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                android:text="@string/choice_possible"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:includeFontPadding="false"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                android:text="@string/choice_dislike"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:includeFontPadding="false"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                android:text="@string/choice_impossible"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:includeFontPadding="false"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

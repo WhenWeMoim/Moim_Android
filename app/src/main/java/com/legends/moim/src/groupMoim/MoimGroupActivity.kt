@@ -39,8 +39,8 @@ class MoimGroupActivity : BaseActivity() {
 
         thisMoim = gson.fromJson(intent.getStringExtra("moimInfo"), Moim::class.java)
 
-        binding.moimGroupMoimNameTv.text = thisMoim.title
-        binding.moimGroupMoimExplainTv.text = thisMoim.explain
+        binding.moimGroupMoimNameTv.text = thisMoim.moimTitle
+        binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
         val participantDummy = "8"
         binding.moimGroupParticipantTv.text = participantDummy + "명 참여"
 

@@ -59,7 +59,7 @@ class PersonalScheduleFragment: Fragment() {
         }
         numOfDays = thisMoim.dates.size
 
-        scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
+        scheduleData = Array(size = numOfTimes, init = { IntArray( size = numOfDays, init = { 2 } ) } )
     }
 
     private fun initScheduleTable(v: View) {

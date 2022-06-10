@@ -93,9 +93,9 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     private fun getMakingMoimInfo() {
         if( binding.makeMoimTitleEt.text.isNotEmpty() )
-            makingMoim.title = binding.makeMoimTitleEt.text.toString()
+            makingMoim.moimTitle = binding.makeMoimTitleEt.text.toString()
         if( binding.makeMoimExplainEt.text.isNotEmpty() )
-            makingMoim.explain = binding.makeMoimExplainEt.text.toString()
+            makingMoim.moimDescription = binding.makeMoimExplainEt.text.toString()
         //testValue 삽입 함수
         addTestDummyData()
     }

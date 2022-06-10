@@ -2,7 +2,7 @@
 <!--Impossible-->
 <shape xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <solid android:color="@color/red500" />
+    <solid android:color="@color/choice_impossible" />
 
     <stroke
         android:width="0.5dp"

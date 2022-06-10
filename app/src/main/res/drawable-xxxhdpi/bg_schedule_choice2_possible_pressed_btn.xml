@@ -3,6 +3,11 @@
     android:shape="oval">
 
     <solid
-        android:color="@color/choice_like"/>
+        android:color="@color/choice_possible"/>
+
+    <stroke
+        android:width="2dp"
+        android:color="@color/black"
+        />
 
 </shape>

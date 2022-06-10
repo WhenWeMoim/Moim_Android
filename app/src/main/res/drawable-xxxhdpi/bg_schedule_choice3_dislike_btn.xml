@@ -3,8 +3,7 @@
 
     <item
         android:state_pressed="false"
-        android:state_selected="false"
-        android:drawable="@drawable/bg_schedule_choice1_like_unpressed_btn">
+        android:drawable="@drawable/bg_schedule_choice3_dislike_unpressed_btn">
         <scale
             android:scaleWidth="40dp"
             android:scaleHeight="40dp"/>
@@ -12,8 +11,7 @@
 
     <item
         android:state_pressed="true"
-        android:state_selected="true"
-        android:drawable="@drawable/bg_schedule_choice1_like_pressed_btn">
+        android:drawable="@drawable/bg_schedule_choice3_dislike_pressed_btn">
         <scale
             android:scaleWidth="40dp"
             android:scaleHeight="40dp"/>
