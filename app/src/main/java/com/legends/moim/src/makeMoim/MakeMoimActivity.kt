@@ -101,10 +101,10 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun addTestDummyData() {
-        val dummyDayVal1= DateStruct(2022, 6, 4, '월')
-        val dummyDayVal2= DateStruct(2022, 8, 13, '수')
-        val dummyDayVal3= DateStruct(2022, 11, 4, '목')
-        val dummyDayVal4= DateStruct(2022, 12, 31, '토')
+        val dummyDayVal1= DateStruct(2022, 6, 4, "월")
+        val dummyDayVal2= DateStruct(2022, 8, 13, "수")
+        val dummyDayVal3= DateStruct(2022, 11, 4, "목")
+        val dummyDayVal4= DateStruct(2022, 12, 31, "토")
 
         makingMoim.dates.add(dummyDayVal1)
         makingMoim.dates.add(dummyDayVal2)
@@ -167,7 +167,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 listOfDate = ArrayList<DateStruct>()
                 for ( i: Int in 0 until selectCount ) {
                     val st = StringTokenizer(dateline[i], ",| ")
-                    val temp_dayOfWeek: Char = st.nextToken().toString()[0]
+                    val temp_dayOfWeek: String = st.nextToken().toString()
                     val temp_day: Int = st.nextToken().toInt()
                     val temp_month: Int = st.nextToken().toString()[0]-'0'
                     val temp_year: Int = st.nextToken().toInt()

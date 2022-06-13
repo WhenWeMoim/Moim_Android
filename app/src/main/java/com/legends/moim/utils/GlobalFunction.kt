@@ -8,7 +8,7 @@ import java.time.format.TextStyle
 import java.util.*
 
 public fun dateStructureConverter(dateStructArray: Array<DateStruct>): Array<String> {
-    var resultDateArray = Array<String>( dateStructArray.size) {""}
+    val resultDateArray = Array<String>( dateStructArray.size) {""}
 
     for ( i: Int in dateStructArray.indices ) {
         val dateString = String.format("%d-%d-%d", dateStructArray[i].year, dateStructArray[i].month, dateStructArray[i].day)
