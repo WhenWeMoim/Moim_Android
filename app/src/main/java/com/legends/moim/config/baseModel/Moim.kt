@@ -1,7 +1,7 @@
 package com.legends.moim.config.baseModel
 
 data class Moim(
-    private var moimIndex : Int = -1,
+    var moimIdx : Int = -1,
 
     var moimTitle: String = "임시 모임",
     var moimDescription: String = "임시로 생성된 모임",

@@ -6,8 +6,9 @@ import com.legends.moim.config.baseModel.DateStruct
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
+import kotlin.collections.ArrayList
 
-public fun dateStructureConverter(dateStructArray: Array<DateStruct>): Array<String> {
+public fun dateStructureConverter(dateStructArray: ArrayList<DateStruct>): Array<String> {
     val resultDateArray = Array<String>( dateStructArray.size) {""}
 
     for ( i: Int in dateStructArray.indices ) {

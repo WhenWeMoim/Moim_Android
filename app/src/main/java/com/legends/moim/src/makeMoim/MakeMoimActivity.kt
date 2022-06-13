@@ -1,17 +1,12 @@
 package com.legends.moim.src.makeMoim
 
-import android.R.color
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.GridLayout
-import android.widget.GridLayout.UNDEFINED
-import android.widget.LinearLayout
 import android.widget.TableLayout
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
@@ -25,9 +20,16 @@ import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
+import com.legends.moim.src.makeMoim.model.MoimReq
+import com.legends.moim.utils.dateStructureConverter
+import com.legends.moim.utils.getUserIdx
+import com.legends.moim.utils.retrofit.PostMoimView
+import com.legends.moim.utils.retrofit.RetrofitInterface
+import com.legends.moim.utils.retrofit.RetrofitService
 import java.util.*
 
-class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
+class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener,
+    PostMoimView {
 
     companion object {
         //var multipleDaysString :String? = null //전역변수로 날짜 데이터 관리.
@@ -83,10 +85,9 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             R.id.make_moim_complete_btn -> {
                 getMakingMoimInfo()
 
-                val intent = Intent(this, MoimGroupActivity::class.java)
-                intent.putExtra("moimInfo", gson.toJson(makingMoim))
-                startActivity(intent)
-                finish()
+                postMoim( makingMoim )
+
+
             }
         }
     }
@@ -228,6 +229,42 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             initDatePickerDialog()
             datePicker.show(supportFragmentManager, "SOME_TAG")
         }
+    }
 
+    private fun postMoim(moim: Moim) {
+        val dateStringArray = dateStructureConverter(moim.dates)
+
+        val serverMoimStruct = MoimReq(
+            userIdx = getUserIdx(),
+            moimTitle = moim.moimTitle,
+            moimDescription = moim.moimDescription,
+            startTime = moim.startTimeHour,
+            endTime = moim.endTimeHour,
+            dates = dateStringArray
+        )
+
+        val retrofitService = RetrofitService()
+        retrofitService.setPostMoimView(this)
+
+        Log.d("postMoim Active>>>", "sending Model : $serverMoimStruct")
+        retrofitService.postMoim(serverMoimStruct)
+    }
+
+    override fun onPostMoimLoading() {
+
+    }
+
+    override fun onPostMoimSuccess(result: Int) {
+        Toast.makeText(this, "모임 생성 성공.", Toast.LENGTH_SHORT).show()
+        makingMoim.moimIdx =  result
+
+        val intent = Intent(this, MoimGroupActivity::class.java)
+        intent.putExtra("moimInfo", gson.toJson(makingMoim))
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onPostMoimFailure(code: Int, message: String) {
+        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
     }
 }
