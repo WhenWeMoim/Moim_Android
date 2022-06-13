@@ -18,5 +18,5 @@ data class DateStruct (
     var year : Int,
     var month : Int,
     var day : Int,
-    var dayOfWeek : Char
+    var dayOfWeek : String
 )
