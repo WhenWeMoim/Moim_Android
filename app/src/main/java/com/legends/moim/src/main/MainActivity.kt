@@ -3,17 +3,26 @@ package com.legends.moim.src.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
+import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.MakeMoimActivity
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
+import com.legends.moim.src.makeMoim.model.MoimReq
 import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
+import com.legends.moim.utils.dateStructureConverter
+import com.legends.moim.utils.getUserIdx
+import com.legends.moim.utils.retrofit.RetrofitService
+import com.legends.moim.utils.retrofit.ServerView
 
-class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener {
+class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener, ServerView {
 
     lateinit var binding : ActivityMainBinding
 
@@ -59,9 +68,36 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener 
         dig.showJoinMoimDialog()
     }
 
-    override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: Int?) {
+    override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: String?) {
         if ( moimIdx == null ) return
 
-        //TODO 모임 정보 서버로 전송 + 일치하면 모임 정보도 가져옴
+        val joinMoimInfo = JoinMoimReq(moimIdx = moimIdx, userIdx = getUserIdx(), passwd = moimPw )
+
+        postJoinMoim( joinMoimInfo )
+    }
+
+    private fun postJoinMoim( joinMoimReq: JoinMoimReq ) {
+
+        val retrofitService = RetrofitService()
+        retrofitService.setServerView(this)
+
+        Log.d("postJoinMoim Active>>>", "sending Model : $joinMoimReq")
+        retrofitService.postJoinMoim( joinMoimReq )
+    }
+
+    override fun onServerLoading() {
+        //todo loding Effect
+    }
+
+    override fun onServerSuccess() {
+        val intent = Intent(this, MoimGroupActivity::class.java)
+
+        //todo group 데이터 받아서 MoimGroup으로 전송 후 시간표 구성
+
+        startActivity(intent)
+    }
+
+    override fun onServerFailure(code: Int, message: String) {
+        Toast.makeText(this, "message", Toast.LENGTH_SHORT).show()
     }
 }

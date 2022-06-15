@@ -1,5 +1,6 @@
 package com.legends.moim.utils.retrofit
 
+import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.model.MoimReq
 import retrofit2.Call
 import retrofit2.http.*
@@ -15,8 +16,8 @@ interface RetrofitInterface {
     fun postLogin(@Body token : String): Call<PostUserResponse>
 
     //모임 참가
-    @POST("/app/course/{userIdx}")
-    fun postJoinMoim(@Body moimIdx: Int, @Body moimPw: Int): Call<PostUserResponse>
+    @POST("/moimUsers")
+    fun postJoinMoim(@Body joinMoimReq: JoinMoimReq): Call<ServerDefaultResponse>
 
     //나의 모임들 조회
     @GET("/moims/{userIdx}")
