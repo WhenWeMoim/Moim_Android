@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApplicationClass : Application() {
     companion object {
         const val TAG: String = "MOIM-APP"
-        const val BASE_URL = "https://www.tripbook.shop"
+        const val BASE_URL = "https://unjemoim.shop"
 
         lateinit var mSharedPreferences: SharedPreferences
         lateinit var retrofit: Retrofit
@@ -19,7 +19,7 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        KakaoSdk.init(this, "d04b5837217105d4b2a2b16ced721572")
+        //KakaoSdk.init(this, "d04b5837217105d4b2a2b16ced721572")
 
 //        val clientWithoutAccessToken: OkHttpClient = OkHttpClient.Builder()
 //            .readTimeout(10000, TimeUnit.MILLISECONDS)

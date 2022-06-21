@@ -24,6 +24,12 @@ class RetrofitService{
         this.getMoimsView = getMoimsView
     }
 
+    //특정 모임 정보를 가져왔을때
+    private lateinit var getMoimView: GetMoimView
+    fun setGetMoimView(getMoimView: GetMoimView) {
+        this.getMoimView = getMoimView
+    }
+
     private lateinit var postPersonalScheduleView : PostPersonalScheduleView
     fun setCardsView(postPersonalScheduleView : PostPersonalScheduleView) {
         this.postPersonalScheduleView = postPersonalScheduleView
@@ -71,33 +77,33 @@ class RetrofitService{
     /**
      * 1-3. 서버에서 Moim + GroupSchedule 정보 가져오기
      */
-    fun getMoimSchedule( moimIdx: Int ){
+    fun getMoim( moimIdx: Int ){
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
 
-        postMoimScheduleView.onPostMoimScheduleLoading()
+        getMoimView.onGetMoimLoading()
 
-        retrofitService.getMoimSchedule(moimIdx).enqueue(object : Callback<GetMoimScheduleResponse> {
+        retrofitService.getMoim(moimIdx).enqueue(object : Callback<GetMoimScheduleResponse> {
             override fun onResponse(call: Call<GetMoimScheduleResponse>, response: Response<GetMoimScheduleResponse>) {
-                Log.d("들어오는지 확인", "Retrofit-getMoimSchdule")
+                Log.d("들어오는지 확인", "Retrofit-getMoim")
                 if (response.isSuccessful) {
                     val res = response.body()!!
                     Log.d("__res", response.body()!!.toString())
                     when (res.code) {
                         1000 -> {
-                            Log.d("Retrofit-getMoimSchdule", res.toString())
-                            postMoimScheduleView.onPostMoimScheduleSuccess(res.result)
+                            Log.d("Retrofit-getMoim", res.toString())
+                            getMoimView.onGetMoimSuccess(res.result)
                         }
 
                         else -> {
-                            Log.d("Retrofit-getMoimSchdule", res.toString())
-                            postMoimScheduleView.onPostMoimScheduleFailure(res.code, res.message)
+                            Log.d("Retrofit-getMoim", res.toString())
+                            getMoimView.onGetMoimFailure(res.code, res.message)
                         }
                     }
                 }
             }
             override fun onFailure(call: Call<GetMoimScheduleResponse>, t: Throwable) {
                 Log.d("들어오는지 확인", "CardService-getTrip-onFailure")
-                postMoimScheduleView.onPostMoimScheduleFailure(400, t.message.toString())
+                getMoimView.onGetMoimFailure(400, t.message.toString())
             }
         })
     }
@@ -173,7 +179,7 @@ class RetrofitService{
     }
 
     /**
-     * 내가 소속된 모임들 가져오기
+     * 2. 내가 소속된 모임들 가져오기
      */
     fun getMoims(){
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
@@ -183,25 +189,23 @@ class RetrofitService{
 
         retrofitService.getMoims(userIdx).enqueue(object : Callback<GetMoimsResponse> {
             override fun onResponse(call: Call<GetMoimsResponse>, response: Response<GetMoimsResponse>) {
-                Log.d("들어오는지 확인", "Retrofit-getMoims")
                 if (response.isSuccessful) {
                     val res = response.body()!!
                     Log.d("__res", response.body()!!.toString())
                     when (res.code) {
                         1000 -> {
                             Log.d("Retrofit-getMoims", res.toString())
-                            getMoimsView.onGetMoimsSuccess(res.result)
+                            getMoimsView.onGetMoimsSuccess( res.result )
                         }
 
                         else -> {
                             Log.d("Retrofit-getMoims", res.toString())
-                            getMoimsView.onGetMoimsFailure(res.code, res.message)
+                            getMoimsView.onGetMoimsFailure( res.code, res.message )
                         }
                     }
                 }
             }
             override fun onFailure(call: Call<GetMoimsResponse>, t: Throwable) {
-                Log.d("들어오는지 확인", "CardService-getTrip-onFailure")
                 postMoimScheduleView.onPostMoimScheduleFailure(400, t.message.toString())
             }
         })

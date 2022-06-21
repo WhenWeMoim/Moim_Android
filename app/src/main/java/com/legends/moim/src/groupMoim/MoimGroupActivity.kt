@@ -2,6 +2,7 @@ package com.legends.moim.src.groupMoim
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.gson.Gson
@@ -10,8 +11,15 @@ import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.main.MainActivity
 import com.legends.moim.config.baseModel.Moim
+import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.main.model.JoinMoimReq
+import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
+import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
+import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
+import com.legends.moim.utils.retrofit.GetMoimView
+import com.legends.moim.utils.retrofit.RetrofitService
 
-class MoimGroupActivity : BaseActivity() {
+class MoimGroupActivity : BaseActivity(), GetMoimView {
 
     private lateinit var binding : ActivityMoimGroupBinding
 
@@ -26,23 +34,41 @@ class MoimGroupActivity : BaseActivity() {
 
     private fun initView() {
         binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
+
+        binding.moimGroupMoimNameTv.text = thisMoim.moimTitle
+        binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
+
+        val participantDummy = "8"
+        binding.moimGroupParticipantTv.text = participantDummy + "명 참여"
     }
 
     private fun setInitialize() {
         binding = ActivityMoimGroupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if( intent.getStringExtra("moimInfo").isNullOrBlank() ) {
-            Toast.makeText(this, "모임 생성 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
-            finish()
+        when( intent.getIntExtra("startDivideFlag", -1) ) {
+            FLAG_ACTIVITY_MAIN -> { //main에서 진입 : 새로 모임에 참가
+                val moimIdx = intent.getIntExtra("moimIdx", -1)
+                if( moimIdx == -1 ) {
+                    Toast.makeText(this, "모임 참가 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+                    finish()
+                }
+
+                getMoim( moimIdx )
+            }
+            FLAG_ACTIVITY_MAKEMOIM, FLAG_ACTIVITY_VIEWMOIM -> { // make moim에서 진입 : 모임 생성 & View moim에서 진입 : 다시 조회
+                if( intent.getStringExtra("moimInfo").isNullOrBlank() ) {
+                    Toast.makeText(this, "모임 생성 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+                    finish()
+                }
+
+                thisMoim = gson.fromJson(intent.getStringExtra("moimInfo"), Moim::class.java)
+            }
+            -1 -> {
+                showDialog("에러 발생", "그룹 시간표 생성중 문제가 발생했습니다.\n다시 시도해 주세요.", "확인")
+                finish()
+            }
         }
-
-        thisMoim = gson.fromJson(intent.getStringExtra("moimInfo"), Moim::class.java)
-
-        binding.moimGroupMoimNameTv.text = thisMoim.moimTitle
-        binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
-        val participantDummy = "8"
-        binding.moimGroupParticipantTv.text = participantDummy + "명 참여"
 
         //~ 명 참여 초기화 필요. 인원 파악 데이터 필요. 일단은 더미로 설정.
 
@@ -76,5 +102,26 @@ class MoimGroupActivity : BaseActivity() {
             //모드 1, 2로 한눈에 보기 시간표 보여주기 fragment
             //인원 상세보기 - 색칠된 시간표의 해당 멤버들 보여주기 기능
         }
+    }
+
+    private fun getMoim( moimIdx: Int ) {
+
+        val retrofitService = RetrofitService()
+        retrofitService.setGetMoimView(this)
+
+        Log.d("postGetMoim Active>>>", "sending moimIdx : $moimIdx")
+        retrofitService.getMoim( moimIdx )
+    }
+
+    override fun onGetMoimLoading() {
+        //todo 로딩바 생성
+    }
+
+    override fun onGetMoimSuccess(result: GroupScheduleRes) {
+        //todo GroupSchedule 적용해야함
+    }
+
+    override fun onGetMoimFailure(code: Int, message: String) {
+        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
     }
 }

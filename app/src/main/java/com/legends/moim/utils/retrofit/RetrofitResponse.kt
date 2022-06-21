@@ -1,6 +1,8 @@
 package com.legends.moim.utils.retrofit
 
 import com.google.gson.annotations.SerializedName
+import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.viewMoim.model.GetMoimsRes
 
 data class ServerDefaultResponse(
     @SerializedName("isSuccess") val isSuccess: Boolean,
@@ -29,14 +31,14 @@ data class GetMoimScheduleResponse(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: String //userIdx 받아야 함
+    @SerializedName("result") val result: GroupScheduleRes
 )
 
 data class GetMoimsResponse(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: String //todo 변경
+    @SerializedName("result") val result: GetMoimsRes //todo 변경
 )
 
 data class PostPersonalScheduleResponse(

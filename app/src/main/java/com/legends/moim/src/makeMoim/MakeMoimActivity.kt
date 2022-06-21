@@ -21,6 +21,8 @@ import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
 import com.legends.moim.src.makeMoim.model.MoimReq
+import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
+import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
 import com.legends.moim.utils.dateStructureConverter
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.PostMoimView
@@ -195,7 +197,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                     val dateBtnPm = TableLayout.LayoutParams(0, 60, 1f)
 
                         val newDateBtn = AppCompatButton(this)
-                            newDateBtn.background = getDrawable(R.drawable.bg_makemoim_date_stroke_btn)
+                            newDateBtn.background = resources.getDrawable(R.drawable.bg_makemoim_date_stroke_btn, null)
                             newDateBtn.layoutParams = dateBtnPm
                             newDateBtn.text = tempDateString
                             newDateBtn.textSize = 14f
@@ -259,6 +261,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         makingMoim.moimIdx =  result
 
         val intent = Intent(this, MoimGroupActivity::class.java)
+        intent.putExtra("startDivideFlag", FLAG_ACTIVITY_MAKEMOIM)
         intent.putExtra("moimInfo", gson.toJson(makingMoim))
         startActivity(intent)
         finish()

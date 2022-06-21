@@ -17,6 +17,7 @@ import com.legends.moim.src.makeMoim.dialog.TimeDialog
 import com.legends.moim.src.makeMoim.model.MoimReq
 import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
+import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
 import com.legends.moim.utils.dateStructureConverter
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.RetrofitService
@@ -25,6 +26,8 @@ import com.legends.moim.utils.retrofit.ServerView
 class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener, ServerView {
 
     lateinit var binding : ActivityMainBinding
+
+    private var moimIdx = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,9 +74,10 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
     override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: String?) {
         if ( moimIdx == null ) return
 
-        val joinMoimInfo = JoinMoimReq(moimIdx = moimIdx, userIdx = getUserIdx(), passwd = moimPw )
+        val joinMoimInfo = JoinMoimReq( moimIdx = moimIdx, userIdx = getUserIdx(), passwd = moimPw )
 
         postJoinMoim( joinMoimInfo )
+        this.moimIdx = moimIdx
     }
 
     private fun postJoinMoim( joinMoimReq: JoinMoimReq ) {
@@ -93,6 +97,8 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
         val intent = Intent(this, MoimGroupActivity::class.java)
 
         //todo group 데이터 받아서 MoimGroup으로 전송 후 시간표 구성
+        intent.putExtra("startDivideFlag", FLAG_ACTIVITY_MAIN)
+        intent.putExtra("moimIdx", moimIdx)
 
         startActivity(intent)
     }

@@ -27,9 +27,9 @@ interface RetrofitInterface {
     @POST("/moims")
     fun postMoim(@Body moimReq: MoimReq): Call<PostMoimResponse>
 
-    //모임의 그룹 시간표 정보 가져오기
+    //모임의 모임정보, 모임 시간표 가져오기
     @GET("/moims/{moimIdx}")
-    fun getMoimSchedule(@Path("moimIdx") moimIdx: Int): Call<GetMoimScheduleResponse>
+    fun getMoim(@Path("moimIdx") moimIdx: Int): Call<GetMoimScheduleResponse>
 
     //모임 개인 시간표 적용(전송)
     @POST("/app/course/{userIdx}")
