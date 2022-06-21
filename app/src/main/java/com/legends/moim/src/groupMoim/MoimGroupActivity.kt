@@ -117,7 +117,6 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
             }
             R.id.moim_group_participant_tv -> { //참가인원 조회, ~명 참여, 누르면 참가자 명단도 나오도록.
                 val dig = ParticipantsDialog(this)
-                dig.tvMessage.text = "박찬규" + ", " + "박민우"
                 dig.showTimeDialog()
 
             }

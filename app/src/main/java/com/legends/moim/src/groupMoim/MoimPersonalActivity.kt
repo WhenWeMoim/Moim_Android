@@ -94,13 +94,10 @@ class MoimPersonalActivity: BaseActivity() {
         selectedBtnFunc = choiceNum
 
         for( i in choiceButtons.indices ) {
-            if ( i+1 == choiceNum ){
-                choiceButtons[i].isPressed = true
+            if ( i+1 == choiceNum ) {
                 choiceButtons[i].isSelected = true
-                break
+                continue
             }
-
-            choiceButtons[i].isPressed = false
             choiceButtons[i].isSelected = false
         }
     }

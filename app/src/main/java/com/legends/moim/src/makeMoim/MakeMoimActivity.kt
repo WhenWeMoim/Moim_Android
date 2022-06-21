@@ -80,6 +80,10 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 showSettingDialog()
             }
             R.id.make_moim_complete_btn -> {
+
+                if( dates.isEmpty() ) {
+                    //todo date 선택 안하면 못넘어가게
+                }
                 getMakingMoimInfo()
 
                 //Test Function todo delete
