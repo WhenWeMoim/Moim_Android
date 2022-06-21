@@ -2,10 +2,11 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
+    <!-- 사이즈는 각자 선택하게 해봅시다.
     <size
         android:width="260dp"
         android:height="50dp"/>
-
+    -->
     <solid
         android:color="@color/moim_main_1" />
 
