@@ -177,6 +177,52 @@
                     android:includeFontPadding="false"
                     android:layout_margin="2dp"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="2dp"
+
+                    />
 
             </LinearLayout>
 
