@@ -2,7 +2,6 @@ package com.legends.moim.src.groupMoim
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,9 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
-import com.legends.moim.databinding.FragmentSchedulePersonalBinding
+import com.legends.moim.config.baseModel.Moim
+import com.legends.moim.src.groupMoim.model.selectedBtnFunc
+import com.legends.moim.src.groupMoim.model.thisMoim
 
 /**
  * 한 개 행(row) : 한 시간대
@@ -19,7 +20,7 @@ import com.legends.moim.databinding.FragmentSchedulePersonalBinding
  * 배열은 두개가 들어감. 관리를 위한 실제 버튼 배열(buttons), 스케줄 결과가 들어가는 배열(resultSchedule)
  */
 
-class PersonalScheduleFragment: Fragment() {
+class PersonalScheduleFragment(private val moim: Moim): Fragment() {
 
     private var numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
     private var numOfTimes = 12 //임시데이터 -> todo makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
@@ -46,20 +47,20 @@ class PersonalScheduleFragment: Fragment() {
     }
 
     private fun getData() {
-        val interval: Int = thisMoim.endTimeHour - thisMoim.startTimeHour
+        val interval: Int = moim.endTimeHour - moim.startTimeHour
         if( interval <= 0 ) {
             Toast.makeText(context, "시간 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
             return
         }
         numOfTimes = interval
 
-        if( thisMoim.dates.isEmpty() ) {
+        if( moim.dates.isEmpty() ) {
             Toast.makeText(context, "날짜 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
             return
         }
-        numOfDays = thisMoim.dates.size
+        numOfDays = moim.dates.size
 
-        scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
+        scheduleData = Array(size = numOfTimes, init = { IntArray( size = numOfDays, init = { 2 } ) } )
     }
 
     private fun initScheduleTable(v: View) {
@@ -75,7 +76,7 @@ class PersonalScheduleFragment: Fragment() {
         while( i <= numOfTimes ) {
             timeText = TextView(context)
             timeText.layoutParams = timeTextPm
-            timeText.text = String.format("%d시", thisMoim.startTimeHour + i )
+            timeText.text = String.format("%d시", moim.startTimeHour + i )
             timeText.textSize = 10F
             timeText.setTextColor(
                 ContextCompat.getColor(
@@ -104,7 +105,8 @@ class PersonalScheduleFragment: Fragment() {
         while( i < numOfDays ) {
             dateText = TextView(context)
             dateText.layoutParams = dateTextPm
-            dateText.text = String.format("%d월\n%d일\n(%c)", thisMoim.dates[i].month, thisMoim.dates[i].day, thisMoim.dates[i].dayOfWeek)
+//            dateText.text = String.format("%d월\n%d일\n(%c)", moim.dates[i].month, moim.dates[i].day, moim.dates[i].dayOfWeek)
+            dateText.text = String.format("${moim.dates[i].month}월\n${moim.dates[i].day}\n(${moim.dates[i].dayOfWeek})")
 
             dateText.setTextColor(
                 ContextCompat.getColor(
