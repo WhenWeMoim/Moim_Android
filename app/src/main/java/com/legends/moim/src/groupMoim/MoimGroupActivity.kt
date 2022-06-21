@@ -50,14 +50,14 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
     }
 
     private fun initView() {
-        binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
+        //binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
 
         binding.moimGroupMoimNameTv.text = thisMoim.moimTitle
         binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
 
         val participantDummy = "8"
         binding.moimGroupParticipantTv.text = participantDummy + "명 참여"
-    }
+        }
 
     private fun setInitialize() {
         binding = ActivityMoimGroupBinding.inflate(layoutInflater)
@@ -79,7 +79,7 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
 
         //~ 명 참여 초기화 필요. 인원 파악 데이터 필요. 일단은 더미로 설정.
 
-        binding.moimGroupHomeBtn.setOnClickListener(this)
+        //binding.moimGroupHomeBtn.setOnClickListener(this)
         binding.moimGroupInviteBtn.setOnClickListener(this)
         binding.moimGroupParticipantTv.setOnClickListener(this)
         binding.moimGroupAddPersonalBtn.setOnClickListener(this)
@@ -108,10 +108,12 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
         super.onClick(v)
         when(v!!.id) {
 
+            /*
             R.id.moim_group_home_btn -> { //홈으로 돌아가기. 모임 저장은 생성 및 적용(개인쪽)시에 구현.
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
+            */
             R.id.moim_group_invite_btn -> { //모임원 초대. 카카오톡 링크로 고민중.
                 //todo 그룹 초대 링크 생성 -> 클립보드 붙여넣기
             }

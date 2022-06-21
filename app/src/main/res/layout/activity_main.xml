@@ -22,8 +22,8 @@
 
         <Button
             android:id="@+id/main_make_moim_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_base_main_btn"
 
@@ -36,8 +36,8 @@
 
         <Button
             android:id="@+id/main_view_moim_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_base_main_btn"
             android:layout_marginVertical="15dp"
@@ -51,8 +51,8 @@
 
         <Button
             android:id="@+id/main_join_moim_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_base_main_btn"
 
