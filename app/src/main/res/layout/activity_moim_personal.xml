@@ -76,9 +76,9 @@
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
 
+<!--        class="com.legends.moim.src.groupMoim.PersonalScheduleFragment"-->
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/moim_personal_schedule_fragment"
-            class="com.legends.moim.src.groupMoim.PersonalScheduleFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
 

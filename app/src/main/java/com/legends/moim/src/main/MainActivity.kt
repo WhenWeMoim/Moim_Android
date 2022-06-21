@@ -1,24 +1,19 @@
 package com.legends.moim.src.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
-import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.MakeMoimActivity
-import com.legends.moim.src.makeMoim.dialog.TimeDialog
-import com.legends.moim.src.makeMoim.model.MoimReq
 import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
 import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
-import com.legends.moim.utils.dateStructureConverter
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.retrofit.ServerView
@@ -47,7 +42,7 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v!!.id) {
-            R.id.main_make_moim_btn -> { //MmakeMoimActivity로 이동
+            R.id.main_make_moim_btn -> { //MakeMoimActivity로 이동
                 val intent = Intent(this, MakeMoimActivity::class.java)
                 startActivity(intent)
             }
@@ -97,7 +92,7 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
         val intent = Intent(this, MoimGroupActivity::class.java)
 
         //todo group 데이터 받아서 MoimGroup으로 전송 후 시간표 구성
-        intent.putExtra("startDivideFlag", FLAG_ACTIVITY_MAIN)
+        intent.putExtra("startActivityFlag", FLAG_ACTIVITY_MAIN)
         intent.putExtra("moimIdx", moimIdx)
 
         startActivity(intent)

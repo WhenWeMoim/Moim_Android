@@ -20,8 +20,24 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityViewMoimBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        getMoims()
+        //dummy test Function todo delete
+        getDummyMoims()
+
+        //getMoims()
+    }
+
+    private fun getDummyMoims() {
+        val dummyGetMoimsRes = arrayOf(
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 1", moimDescription = "모임 1에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 2", moimDescription = "모임 2에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 3", moimDescription = "모임 3에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 4", moimDescription = "모임 4에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 5", moimDescription = "모임 5에 대한 설명")
+        )
+
+        initRVMoimsAdapter(dummyGetMoimsRes)
     }
 
     private fun getMoims() {
@@ -36,16 +52,22 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView {
     }
 
     override fun onGetMoimsSuccess( result: GetMoimsRes ) {
-        val moimRVAdapter = RVMoimsAdapter( result.moimInfo )
+        initRVMoimsAdapter(result.moimsInfo)
+    }
+
+    private fun initRVMoimsAdapter(moimsInfo: Array<ListMoimInfo>) {
+        val moimRVAdapter = RVMoimsAdapter(moimsInfo)
 
         binding.viewMoimRV.adapter = moimRVAdapter
-        binding.viewMoimRV.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        moimRVAdapter.setMoimClickListener(object : RVMoimsAdapter.MoimClickListener{
-            override fun onItemClick( moimInfo: ListMoimInfo ) {
+        binding.viewMoimRV.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        moimRVAdapter.setMoimClickListener(object : RVMoimsAdapter.MoimClickListener {
+            override fun onItemClick(listMoimInfo: ListMoimInfo) {
                 val intent = Intent(applicationContext, MoimGroupActivity::class.java)
 
-                intent.putExtra("startDivideFlag", FLAG_ACTIVITY_VIEWMOIM)
-                intent.putExtra("moimIdx", moimInfo.moimIdx)
+                intent.putExtra("startActivityFlag", FLAG_ACTIVITY_VIEWMOIM)
+                intent.putExtra("moimIdx", listMoimInfo.moimIdx)
                 //TODO("해당한 position의 moim 정보를 intent에 넣어서 보내주든, 서버에서 받아오든 해야 함")
 
                 startActivity(intent)

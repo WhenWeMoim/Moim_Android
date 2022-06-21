@@ -75,8 +75,8 @@
             app:layout_constraintEnd_toStartOf="@id/moim_group_home_btn"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--    class="com.legends.moim.src.groupMoim.GroupScheduleFragment"-->
     <androidx.fragment.app.FragmentContainerView
-        class="com.legends.moim.src.groupMoim.GroupScheduleFragment"
         android:id="@+id/moim_group_schedule_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"

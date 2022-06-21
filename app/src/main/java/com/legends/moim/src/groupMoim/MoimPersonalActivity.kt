@@ -2,13 +2,14 @@ package com.legends.moim.src.groupMoim
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
+import com.legends.moim.src.groupMoim.model.selectedBtnFunc
+import com.legends.moim.src.groupMoim.model.thisMoim
 
 class MoimPersonalActivity: BaseActivity() {
 
@@ -22,23 +23,26 @@ class MoimPersonalActivity: BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setInitialize()
-        initView()
-    }
-
-    private fun setInitialize() {
-
         binding = ActivityMoimPersonalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setInitialize()
+        initView()
+
+        setPersonalScheduleFragment()
+    }
+
+    private fun setPersonalScheduleFragment() {
         fragmentManager = supportFragmentManager
         transaction = fragmentManager.beginTransaction()
-        personalScheduleFragment = PersonalScheduleFragment()
+        personalScheduleFragment = PersonalScheduleFragment(thisMoim)
 
         transaction
             .replace(R.id.moim_personal_schedule_fragment, personalScheduleFragment)
             .commitAllowingStateLoss()
+    }
 
+    private fun setInitialize() {
         choiceButtons = arrayOf(
             findViewById(R.id.moim_personal_like_btn),
             findViewById(R.id.moim_personal_possible_btn),
