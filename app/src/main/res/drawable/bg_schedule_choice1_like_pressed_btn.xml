@@ -5,4 +5,9 @@
     <solid
         android:color="@color/choice_like"/>
 
+    <stroke
+        android:width="2dp"
+        android:color="@color/black"
+        />
+
 </shape>

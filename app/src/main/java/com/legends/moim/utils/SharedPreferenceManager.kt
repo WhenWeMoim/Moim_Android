@@ -8,7 +8,8 @@ fun saveUserIdx(userIdx: Int) {
     editor.apply()
 }
 
-fun getUserIdx(): Int = mSharedPreferences.getInt("userIdx", 0)
+//fun getUserIdx(): Int = mSharedPreferences.getInt("userIdx", 0)
+fun getUserIdx(): Int = 3 //dummy user
 
 fun saveNickname(name: String) {
     val editor = mSharedPreferences.edit()

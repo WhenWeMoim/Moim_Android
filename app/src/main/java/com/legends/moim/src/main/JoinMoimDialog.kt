@@ -35,9 +35,9 @@ class JoinMoimDialog(context : Context) {
             if( moimIdxEt.text.isNotEmpty() )
                 moimIdx = moimIdxEt.text.toString().toInt()
 
-            var moimPw: Int? = null
+            var moimPw: String? = null
             if( moimPwEt.text.isNotEmpty() )
-                moimPw = moimIdxEt.text.toString().toInt()
+                moimPw = moimIdxEt.text.toString()
 
             listener!!.onJoinMoimDialogOKClicked( moimIdx, moimPw )
 
@@ -47,6 +47,6 @@ class JoinMoimDialog(context : Context) {
     }
 
     interface JoinMoimDialogClickListener {
-        fun onJoinMoimDialogOKClicked( moimIdx: Int?, moimPw: Int? )
+        fun onJoinMoimDialogOKClicked( moimIdx: Int?, moimPw: String? )
     }
 }

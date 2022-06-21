@@ -1,6 +1,8 @@
 package com.legends.moim.utils.retrofit
 
 import android.util.Log
+import com.legends.moim.src.main.model.JoinMoimReq
+import com.legends.moim.src.makeMoim.model.MoimReq
 import com.legends.moim.utils.ApplicationClass.Companion.retrofit
 import com.legends.moim.utils.getUserIdx
 import retrofit2.*
@@ -12,148 +14,96 @@ class RetrofitService{
         this.serverView = serverView
     }
 
+    private lateinit var postMoimView: PostMoimView
+    fun setPostMoimView(postMoimView: PostMoimView) {
+        this.postMoimView = postMoimView
+    }
+
+    private lateinit var getMoimsView: GetMoimsView
+    fun setGetMoimsView(getMoimsView: GetMoimsView) {
+        this.getMoimsView = getMoimsView
+    }
+
+    //특정 모임 정보를 가져왔을때
+    private lateinit var getMoimView: GetMoimView
+    fun setGetMoimView(getMoimView: GetMoimView) {
+        this.getMoimView = getMoimView
+    }
+
     private lateinit var postPersonalScheduleView : PostPersonalScheduleView
     fun setCardsView(postPersonalScheduleView : PostPersonalScheduleView) {
         this.postPersonalScheduleView = postPersonalScheduleView
     }
 
-    private lateinit var postGroupScheduleView : PostGroupScheduleView
-    fun setCardsView(postGroupScheduleView : PostGroupScheduleView) {
-        this.postGroupScheduleView = postGroupScheduleView
+    private lateinit var postMoimScheduleView : PostMoimScheduleView
+    fun setPostMoimScheduleView(postMoimScheduleView : PostMoimScheduleView) {
+        this.postMoimScheduleView = postMoimScheduleView
     }
 
     /**
-     * PersonalSchedule 서버로 전송
+     * 1-1. Moim 생성 -> 서버로 전송
      */
-    fun postPersonalSchedule(schedule: String){
-        Log.d("CheckPoint : ", "CardService-postCard Activated")
-        postPersonalScheduleView.onPostPersonalScheduleLoading()
+    fun postMoim( moimReq: MoimReq ){
+        Log.d("CheckPoint : ", "RetrofitService-postMoim Activated")
+        postMoimView.onPostMoimLoading()
 
-        val userIdx = getUserIdx()
+        moimReq.userIdx = getUserIdx()
 
-        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.postPersonalSchedule(userIdx, schedule).enqueue(object : Callback<PostPersonalScheduleResponse> {
-            override fun onResponse(call: Call<PostPersonalScheduleResponse>, response: Response<PostPersonalScheduleResponse>){
+        val retrofitService = retrofit.create(RetrofitInterface::class.java)
+        retrofitService.postMoim(moimReq).enqueue(object : Callback<PostMoimResponse> {
+            override fun onResponse(call: Call<PostMoimResponse>, response: Response<PostMoimResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!
                     Log.d("__res", response.body()!!.toString())
                     when (res.code) {
                         1000 -> { //성공
-                            Log.d("CardService-postCard", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
-                            postPersonalScheduleView.onPostPersonalScheduleSuccess(res.result)
+                            Log.d("Retrofit-postMoim", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
+                            postMoimView.onPostMoimSuccess( res.result.moimIdx )
                         }
                         else -> { //의도된 실패
-                            Log.d("CardService-postCard", res.code.toString() + " : " + res.message)
-                            postPersonalScheduleView.onPostPersonalScheduleFailure(res.code, res.message)
+                            Log.d("Retrofit-postMoim", res.code.toString() + " : " + res.message)
+                            postMoimView.onPostMoimFailure(res.code, res.message)
                         }
                     }
                 }
             }
-            override fun onFailure(call: Call<PostPersonalScheduleResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PostMoimResponse>, t: Throwable) {
                 postPersonalScheduleView.onPostPersonalScheduleFailure(400, t.message.toString())
-                Log.d("CardService-postCard", t.toString()) //네트워크 실패
+                Log.d("Retrofit-postMoim", t.toString()) //네트워크 실패
             }
         })
     }
 
     /**
-     * 서버에서 GroupSchedule 정보 가져오기
+     * 1-3. 서버에서 Moim + GroupSchedule 정보 가져오기
      */
-    fun getGroupSchedule(tripIdx : String){
-        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
+    fun getMoim( moimIdx: Int ){
+        val retrofitService = retrofit.create(RetrofitInterface::class.java)
 
-        val userIdx = getUserIdx()
-        postGroupScheduleView.onPostGroupScheduleLoading()
+        getMoimView.onGetMoimLoading()
 
-        cardRetrofitService.getGroupSchedule(userIdx, tripIdx).enqueue(object : Callback<GetGroupScheduleResponse> {
-            override fun onResponse(call: Call<GetGroupScheduleResponse>, response: Response<GetGroupScheduleResponse>) {
-                Log.d("들어오는지 확인", "CardService-getTrip-onResponse")
+        retrofitService.getMoim(moimIdx).enqueue(object : Callback<GetMoimScheduleResponse> {
+            override fun onResponse(call: Call<GetMoimScheduleResponse>, response: Response<GetMoimScheduleResponse>) {
+                Log.d("들어오는지 확인", "Retrofit-getMoim")
                 if (response.isSuccessful) {
                     val res = response.body()!!
                     Log.d("__res", response.body()!!.toString())
                     when (res.code) {
                         1000 -> {
-                            Log.d("REST API TEST 성공", res.toString())
-                            postGroupScheduleView.onPostGroupScheduleSuccess(res.result)
+                            Log.d("Retrofit-getMoim", res.toString())
+                            getMoimView.onGetMoimSuccess(res.result)
                         }
 
                         else -> {
-                            Log.d("통신 실패 : ", res.toString())
-                            postGroupScheduleView.onPostGroupScheduleFailure(res.code, res.message)
+                            Log.d("Retrofit-getMoim", res.toString())
+                            getMoimView.onGetMoimFailure(res.code, res.message)
                         }
                     }
                 }
             }
-            override fun onFailure(call: Call<GetGroupScheduleResponse>, t: Throwable) {
+            override fun onFailure(call: Call<GetMoimScheduleResponse>, t: Throwable) {
                 Log.d("들어오는지 확인", "CardService-getTrip-onFailure")
-                postGroupScheduleView.onPostGroupScheduleFailure(400, t.message.toString())
-            }
-        })
-    }
-
-    /**
-     * 서버에서 모임 삭제
-     */
-    fun deleteMoim(moimIdx: Int) {
-        Log.d("CheckPoint : ", "CardService-deleteTrip Activated")
-
-        val userIdx = getUserIdx()
-
-        serverView.onServerLoading()
-
-        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.deleteMoim(userIdx, moimIdx).enqueue(object : Callback<ServerDefaultResponse> {
-            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
-                if (response.isSuccessful) {
-                    val res = response.body()!!
-                    Log.d("__res", response.body()!!.toString())
-                    when (res.code) {
-                        1000 -> { //성공
-                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
-                            serverView.onServerSuccess()
-                        }
-                        else -> { //의도된 실패
-                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
-                            serverView.onServerFailure(res.code, res.message)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
-                serverView.onServerFailure(400, t.message.toString())
-                Log.d("CardService-deleteTrip", t.toString()) //네트워크 실패
-            }
-        })
-    }
-
-    fun deleteCard(courseIdx : String) {
-        Log.d("CheckPoint : ", "CardService-deleteCard Activated")
-
-        val userIdx = getUserIdx()
-
-        serverView.onServerLoading()
-
-        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.deleteCard(userIdx, courseIdx).enqueue(object : Callback<ServerDefaultResponse> {
-            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
-                if (response.isSuccessful) {
-                    val res = response.body()!!
-                    Log.d("__res", response.body()!!.toString())
-                    when (res.code) {
-                        1000 -> { //성공
-                            Log.d("CardService-deleteCard", res.code.toString() + " : " + res.message)
-                            serverView.onServerSuccess()
-                        }
-                        else -> { //의도된 실패
-                            Log.d("CardService-deleteCard", res.code.toString() + " : " + res.message)
-                            serverView.onServerFailure(res.code, res.message)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
-                serverView.onServerFailure(400, t.message.toString())
-                Log.d("CardService-patchTitle", t.toString()) //네트워크 실패
+                getMoimView.onGetMoimFailure(400, t.message.toString())
             }
         })
     }
@@ -193,4 +143,139 @@ class RetrofitService{
             }
         })
     }
+
+    /**
+     * PersonalSchedule 전송
+     */
+    fun postPersonalSchedule( schedule: String ){
+        Log.d("CheckPoint : ", "CardService-postCard Activated")
+        postPersonalScheduleView.onPostPersonalScheduleLoading()
+
+        val userIdx = getUserIdx()
+
+        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
+        cardRetrofitService.postPersonalSchedule(userIdx, schedule).enqueue(object : Callback<PostPersonalScheduleResponse> {
+            override fun onResponse(call: Call<PostPersonalScheduleResponse>, response: Response<PostPersonalScheduleResponse>){
+                if (response.isSuccessful) {
+                    val res = response.body()!!
+                    Log.d("__res", response.body()!!.toString())
+                    when (res.code) {
+                        1000 -> { //성공
+                            Log.d("CardService-postCard", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
+                            postPersonalScheduleView.onPostPersonalScheduleSuccess(res.result)
+                        }
+                        else -> { //의도된 실패
+                            Log.d("CardService-postCard", res.code.toString() + " : " + res.message)
+                            postPersonalScheduleView.onPostPersonalScheduleFailure(res.code, res.message)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<PostPersonalScheduleResponse>, t: Throwable) {
+                postPersonalScheduleView.onPostPersonalScheduleFailure(400, t.message.toString())
+                Log.d("CardService-postCard", t.toString()) //네트워크 실패
+            }
+        })
+    }
+
+    /**
+     * 2. 내가 소속된 모임들 가져오기
+     */
+    fun getMoims(){
+        val retrofitService = retrofit.create(RetrofitInterface::class.java)
+
+        val userIdx = getUserIdx()
+        getMoimsView.onGetMoimsLoading()
+
+        retrofitService.getMoims(userIdx).enqueue(object : Callback<GetMoimsResponse> {
+            override fun onResponse(call: Call<GetMoimsResponse>, response: Response<GetMoimsResponse>) {
+                if (response.isSuccessful) {
+                    val res = response.body()!!
+                    Log.d("__res", response.body()!!.toString())
+                    when (res.code) {
+                        1000 -> {
+                            Log.d("Retrofit-getMoims", res.toString())
+                            getMoimsView.onGetMoimsSuccess( res.result )
+                        }
+
+                        else -> {
+                            Log.d("Retrofit-getMoims", res.toString())
+                            getMoimsView.onGetMoimsFailure( res.code, res.message )
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<GetMoimsResponse>, t: Throwable) {
+                postMoimScheduleView.onPostMoimScheduleFailure(400, t.message.toString())
+            }
+        })
+    }
+
+    /**
+     *  가져오기
+     */
+    fun deleteMoim(moimIdx: Int) {
+        Log.d("CheckPoint : ", "CardService-deleteTrip Activated")
+
+        val userIdx = getUserIdx()
+
+        serverView.onServerLoading()
+
+        val retrofitService = retrofit.create(RetrofitInterface::class.java)
+        retrofitService.deleteMoim(userIdx, moimIdx).enqueue(object : Callback<ServerDefaultResponse> {
+            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
+                if (response.isSuccessful) {
+                    val res = response.body()!!
+                    Log.d("__res", response.body()!!.toString())
+                    when (res.code) {
+                        1000 -> { //성공
+                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
+                            serverView.onServerSuccess()
+                        }
+                        else -> { //의도된 실패
+                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
+                            serverView.onServerFailure(res.code, res.message)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
+                serverView.onServerFailure(400, t.message.toString())
+                Log.d("CardService-deleteTrip", t.toString()) //네트워크 실패
+            }
+        })
+    }
+
+    /**
+     * 3-1. 모임 참가
+     */
+    fun postJoinMoim( JoinMoimReq: JoinMoimReq){
+        Log.d("CheckPoint ::: ", "RetrofitService-postJoinMoim Activated")
+        serverView.onServerLoading()
+
+        val retrofitService = retrofit.create(RetrofitInterface::class.java)
+        retrofitService.postJoinMoim(JoinMoimReq).enqueue(object : Callback<ServerDefaultResponse> {
+            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>){
+                if (response.isSuccessful) {
+                    val res = response.body()!!
+                    Log.d("__res", response.body()!!.toString())
+                    when (res.code) {
+                        1000 -> { //성공
+                            Log.d("Retrofit-postJoinMoim", res.code.toString() + " : " + res.message)
+                            serverView.onServerSuccess()
+                        }
+                        else -> { //의도된 실패
+                            Log.d("Retrofit-postJoinMoim", res.code.toString() + " : " + res.message)
+                            serverView.onServerFailure(res.code, res.message)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
+                serverView.onServerFailure(400, t.message.toString())
+                Log.d("Retrofit-postJoinMoim", t.toString()) //네트워크 실패
+            }
+        })
+    }
+
 }

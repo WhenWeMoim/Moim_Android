@@ -16,21 +16,11 @@ class SplashActivity: AppCompatActivity()  {
 
         Handler(Looper.getMainLooper()).postDelayed({
             //액티비티 이동
-            test_startMainActivity()
+            startLoginActivity()
         },DURATION)
     }
     companion object {
         private const val DURATION : Long = 3000
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    private fun test_startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun startLoginActivity() {

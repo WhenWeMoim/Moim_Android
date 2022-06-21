@@ -71,6 +71,8 @@
                 android:textSize="18sp"
                 android:textColor="@color/darkGray"
                 android:includeFontPadding="false"
+                android:inputType="number"
+                android:maxLength="6"
                 />
 
         </LinearLayout>
@@ -102,6 +104,8 @@
                 android:textSize="18sp"
                 android:textColor="@color/darkGray"
                 android:includeFontPadding="false"
+                android:inputType="numberPassword"
+                android:maxLength="4"
                 />
 
         </LinearLayout>

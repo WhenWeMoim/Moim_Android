@@ -1,17 +1,12 @@
 package com.legends.moim.src.makeMoim
 
-import android.R.color
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.GridLayout
-import android.widget.GridLayout.UNDEFINED
-import android.widget.LinearLayout
 import android.widget.TableLayout
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
@@ -25,23 +20,28 @@ import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
+import com.legends.moim.src.makeMoim.model.MoimReq
+import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
+import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
+import com.legends.moim.utils.dateStructureConverter
+import com.legends.moim.utils.getUserIdx
+import com.legends.moim.utils.retrofit.PostMoimView
+import com.legends.moim.utils.retrofit.RetrofitInterface
+import com.legends.moim.utils.retrofit.RetrofitService
 import java.util.*
 
-class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener {
+class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener,
+    PostMoimView {
 
     companion object {
-        //var multipleDaysString :String? = null //전역변수로 날짜 데이터 관리.
-        var listOfDate = ArrayList<DateStruct>() //전역변수로 날짜 데이터 관리. DateStruct는 최하단의 클래스 코드 참조.
+        var dates = ArrayList<DateStruct>() //전역변수로 날짜 데이터 관리. DateStruct는 최하단의 클래스 코드 참조.
     }
-
-    lateinit var binding: ActivityMakeMoimBinding
-
-    lateinit var datePicker: PrimeDatePicker
 
     private val makingMoim = Moim()
 
+    lateinit var binding: ActivityMakeMoimBinding
+    lateinit var datePicker: PrimeDatePicker
     private lateinit var dateLayout: TableLayout
-
     private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,6 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
         initDatePickerDialog()
         initView()
-//        setInitialize()
     }
 
     override fun onBackPressed() {
@@ -81,30 +80,36 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 showSettingDialog()
             }
             R.id.make_moim_complete_btn -> {
+
+                if( dates.isEmpty() ) {
+                    //todo date 선택 안하면 못넘어가게
+                }
                 getMakingMoimInfo()
 
-                val intent = Intent(this, MoimGroupActivity::class.java)
-                intent.putExtra("moimInfo", gson.toJson(makingMoim))
-                startActivity(intent)
-                finish()
+                //Test Function todo delete
+                startMoimGroupActivity( makingMoim )
+                //todo postMoim
+                //postMoim( makingMoim )
             }
         }
     }
 
     private fun getMakingMoimInfo() {
         if( binding.makeMoimTitleEt.text.isNotEmpty() )
-            makingMoim.title = binding.makeMoimTitleEt.text.toString()
+            makingMoim.moimTitle = binding.makeMoimTitleEt.text.toString()
         if( binding.makeMoimExplainEt.text.isNotEmpty() )
-            makingMoim.explain = binding.makeMoimExplainEt.text.toString()
+            makingMoim.moimDescription = binding.makeMoimExplainEt.text.toString()
+
+        makingMoim.dates = dates
         //testValue 삽입 함수
-        addTestDummyData()
+        //addTestDummyData()
     }
 
     private fun addTestDummyData() {
-        val dummyDayVal1= DateStruct(2022, 6, 4, '월')
-        val dummyDayVal2= DateStruct(2022, 8, 13, '수')
-        val dummyDayVal3= DateStruct(2022, 11, 4, '목')
-        val dummyDayVal4= DateStruct(2022, 12, 31, '토')
+        val dummyDayVal1= DateStruct(2022, 6, 4, "월")
+        val dummyDayVal2= DateStruct(2022, 8, 13, "수")
+        val dummyDayVal3= DateStruct(2022, 11, 4, "목")
+        val dummyDayVal4= DateStruct(2022, 12, 31, "토")
 
         makingMoim.dates.add(dummyDayVal1)
         makingMoim.dates.add(dummyDayVal2)
@@ -164,21 +169,21 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 //var datestring = "수요일, 11 5월 2022\n목요일, 12 5월 2022\n금요일, 13 5월 2022" //더미데이터
                 val dateline = dateString.split("\n")
                 val selectCount = dateline.count()
-                listOfDate = ArrayList<DateStruct>()
+                dates = ArrayList<DateStruct>()
                 for ( i: Int in 0 until selectCount ) {
                     val st = StringTokenizer(dateline[i], ",| ")
-                    val temp_dayOfWeek: Char = st.nextToken().toString()[0]
+                    val temp_dayOfWeek: String = st.nextToken().toString()
                     val temp_day: Int = st.nextToken().toInt()
                     val temp_month: Int = st.nextToken().toString()[0]-'0'
                     val temp_year: Int = st.nextToken().toInt()
 
                     var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayOfWeek)
-                    listOfDate.add(temp)
+                    dates.add(temp)
                 }
-                Log.d("dateSelectTest>>>>>", listOfDate.toString())
+                Log.d("dateSelectTest>>>>>", dates.toString())
                 //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
 
-                if( listOfDate.size <= 0 ) {
+                if( dates.size <= 0 ) {
                     binding.makeMoimSelectDateBtn.visibility = View.VISIBLE
                     binding.makeMoimSelectDateTableLayout.visibility = View.GONE
 
@@ -189,12 +194,12 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                     binding.makeMoimSelectDateTableLayout.removeAllViews()
                     for ( i: Int in 0 until selectCount ) {
                         val tempDateString: String =
-                            listOfDate[i].month.toString() + "월 "+ listOfDate[i].day.toString() + "일"
+                            dates[i].month.toString() + "월 "+ dates[i].day.toString() + "일"
 
                     val dateBtnPm = TableLayout.LayoutParams(0, 60, 1f)
 
                         val newDateBtn = AppCompatButton(this)
-                            newDateBtn.background = getDrawable(R.drawable.bg_makemoim_date_stroke_btn)
+                            newDateBtn.background = resources.getDrawable(R.drawable.bg_makemoim_date_stroke_btn, null)
                             newDateBtn.layoutParams = dateBtnPm
                             newDateBtn.text = tempDateString
                             newDateBtn.textSize = 14f
@@ -211,7 +216,6 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 //                binding.makeMoimSelectDateBtn.text = tempDate
                 //여기까지 날짜저장. listOfDate 에 있음.
             }
-
         }
 
         datePicker = PrimeDatePicker.dialogWith(today)
@@ -228,6 +232,47 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             initDatePickerDialog()
             datePicker.show(supportFragmentManager, "SOME_TAG")
         }
+    }
 
+    private fun postMoim(moim: Moim) {
+        val dateStringArray = dateStructureConverter(moim.dates)
+
+        val serverMoimStruct = MoimReq(
+            userIdx = getUserIdx(),
+            moimTitle = moim.moimTitle,
+            moimDescription = moim.moimDescription,
+            startTime = moim.startTimeHour,
+            endTime = moim.endTimeHour,
+            dates = dateStringArray
+        )
+
+        val retrofitService = RetrofitService()
+        retrofitService.setPostMoimView(this)
+
+        Log.d("postMoim Active>>>", "sending Model : $serverMoimStruct")
+        retrofitService.postMoim(serverMoimStruct)
+    }
+
+    override fun onPostMoimLoading() {
+        //todo Loading Effect
+    }
+
+    override fun onPostMoimSuccess(result: Int) {
+        Toast.makeText(this, "모임 생성 성공.", Toast.LENGTH_SHORT).show()
+        makingMoim.moimIdx =  result
+
+        startMoimGroupActivity( makingMoim )
+    }
+
+    override fun onPostMoimFailure(code: Int, message: String) {
+        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+    }
+
+    private fun startMoimGroupActivity(moim: Moim) {
+        val intent = Intent(this, MoimGroupActivity::class.java)
+        intent.putExtra("startActivityFlag", FLAG_ACTIVITY_MAKEMOIM)
+        intent.putExtra("moimInfo", gson.toJson(moim))
+        startActivity(intent)
+        finish()
     }
 }

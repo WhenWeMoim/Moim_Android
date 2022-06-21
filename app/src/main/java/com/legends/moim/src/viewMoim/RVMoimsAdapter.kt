@@ -4,22 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.legends.moim.databinding.ItemMoimBinding
-import com.legends.moim.src.viewMoim.model.Moim
-import com.legends.moim.src.viewMoim.model.Moims
-import com.legends.moim.src.viewMoim.model.currentMoimPosition
+import com.legends.moim.src.viewMoim.model.*
 
-class RVMoimsAdapter : RecyclerView.Adapter<RVMoimsAdapter.GroupViewHolder>() {
+class RVMoimsAdapter(private val moims: Array<ListMoimInfo>) : RecyclerView.Adapter<RVMoimsAdapter.GroupViewHolder>() {
 
     private lateinit var moimClickListener : MoimClickListener
 
     interface MoimClickListener{
-        fun onItemClick(moim: Moim) //실행해줄 함수(데이터 랜더링을 위해 앨범 정보를 받아왔음!)
+        fun onItemClick(listMoimInfo: ListMoimInfo) //실행해줄 함수(데이터 랜더링을 위해 앨범 정보를 받아왔음!)
     }
 
     inner class GroupViewHolder(val binding: ItemMoimBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(moim : Moim) {
-            binding.itemMoimTitleTv.text= moim.title
-            binding.itemMoimExplainTv.text= moim.explain
+        fun bind(moim: ListMoimInfo) {
+            binding.itemMoimTitleTv.text= moim.moimTitle
+            binding.itemMoimExplainTv.text= moim.moimDescription
         }
     }
 
@@ -30,14 +28,14 @@ class RVMoimsAdapter : RecyclerView.Adapter<RVMoimsAdapter.GroupViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RVMoimsAdapter.GroupViewHolder, position: Int) {
-        holder.bind(Moims[position])
+        holder.bind(moims[position])
         holder.itemView.setOnClickListener {
             currentMoimPosition = position
-            moimClickListener.onItemClick(Moims[position])
+            moimClickListener.onItemClick(moims[position])
         }
     }
 
-    override fun getItemCount(): Int = Moims.size
+    override fun getItemCount(): Int = moims.size
 
     fun setMoimClickListener(itemClickListener: MoimClickListener) {
         moimClickListener = itemClickListener
