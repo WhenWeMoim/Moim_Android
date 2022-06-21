@@ -9,14 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_layout_topbar"
+        android:fontFamily="@font/notosans_kr_bold"
         android:gravity="center"
-        android:paddingTop="12dp"
 
+        android:includeFontPadding="false"
+        android:paddingTop="12dp"
         android:text="@string/topbar_title"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:fontFamily="@font/notosans_kr_bold"
-        android:includeFontPadding="false"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
