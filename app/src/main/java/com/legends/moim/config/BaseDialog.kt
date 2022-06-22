@@ -47,7 +47,7 @@ open class BaseDialog(context: Context) {
         dialog.show()
     }
 
-    open fun show(title : String, message : String, okMessage : String, img : Int) {
+    open fun show(title : String, message : String, okMessage : String, okListener : BaseDialogClickListener?) {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_base)
@@ -58,13 +58,13 @@ open class BaseDialog(context: Context) {
 
         tvMessage = dialog.findViewById(R.id.dialog_base_message_tv)
         tvMessage.text = message
-        tvMessage.setCompoundDrawablesRelativeWithIntrinsicBounds(0,img,0,0)
 
         btnOK = dialog.findViewById(R.id.dialog_base_ok_btn_tv)
         btnOK.text = okMessage
+
         btnOK.setOnClickListener {
 
-            listener!!.onOKClicked()
+            okListener?.onOKClicked()
 
             dialog.dismiss()
         }

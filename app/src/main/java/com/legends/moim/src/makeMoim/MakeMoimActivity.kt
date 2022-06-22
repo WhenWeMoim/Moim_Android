@@ -82,7 +82,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             R.id.make_moim_complete_btn -> {
 
                 if( dates.isEmpty() ) {
-                    showDialog("모임 생성 오류", "날짜가 입력되지 않았습니다.", "확인")
+                    showDialog("모임 생성 오류", "날짜가 입력되지 않았습니다.", "확인", null)
+                    return
                 }
                 getMakingMoimInfo()
 
