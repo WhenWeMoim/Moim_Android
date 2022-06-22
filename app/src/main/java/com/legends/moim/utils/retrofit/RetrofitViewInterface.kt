@@ -34,12 +34,6 @@ interface GetMoimsView {
     fun onGetMoimsFailure(code : Int, message : String)
 }
 
-interface PostPersonalScheduleView {
-    fun onPostPersonalScheduleLoading()
-    fun onPostPersonalScheduleSuccess(result : String)
-    fun onPostPersonalScheduleFailure(code : Int, message : String)
-}
-
 interface PostMoimScheduleView {
     fun onPostMoimScheduleLoading()
     fun onPostMoimScheduleSuccess(result : String) //todo 데이터구조 변경 필요

@@ -34,12 +34,12 @@ interface RetrofitInterface {
 
     //모임 개인 시간표 적용(전송)
     @POST("/app/course/{userIdx}")
-    fun postPersonalSchedule(@Path("userIdx")userIdx : Int, @Body schedule : String): Call<PostPersonalScheduleResponse>
+    fun postPersonalSchedule(@Path("userIdx")userIdx : Int, @Body schedule : String): Call<ServerDefaultResponse>
     //Gson 객체로 바꿔서 서버로 보내는 어노테이션 : @Body
 
     //모임 개인 시간표 수정
     @PATCH("/moims/{moimIdx}/{userIdx}/schedule")
-    fun patchPersonalSchedule(@Path("moimIdx") moimIdx:Int, @Path("userIdx") userIdx : Int, @Body params : HashMap<String, Any> ) : Call<ServerDefaultResponse>
+    fun patchPersonalSchedule(@Path("moimIdx") moimIdx:Int, @Path("userIdx") userIdx : Int, @Body schedule : String ) : Call<ServerDefaultResponse>
 
     /*----- 아직 구현 안됨 -----*/
 
