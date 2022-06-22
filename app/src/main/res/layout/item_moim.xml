@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/bg_base_white"
+        android:background="@drawable/bg_base_main_stroke_btn"
         android:layout_marginVertical="8dp"
         android:layout_marginHorizontal="15dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="19dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -25,8 +25,9 @@
                 android:id="@+id/item_moim_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
                 android:text="모임 이름"
-                android:textSize="20sp"
+                android:textSize="21sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
 
@@ -34,11 +35,29 @@
                 android:id="@+id/item_moim_explain_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="모임 설명"
-                android:textSize="15sp"
+                android:text="임시로 만들어진 모임입니다"
+                android:fontFamily="@font/notosans_kr_bold"
+                android:textSize="14sp"
                 android:textColor="@color/black"
-                android:textStyle="normal"
-                android:layout_marginTop="8dp"/>
+                android:textStyle="bold"
+                />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="28dp"
+                android:layout_marginRight="19dp"
+                android:src="@drawable/heart_icon_non_selected"/>
+
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

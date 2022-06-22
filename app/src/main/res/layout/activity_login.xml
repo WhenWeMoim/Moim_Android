@@ -24,11 +24,11 @@
 
         <ImageButton
             android:id="@+id/kakao_login_button"
-            android:layout_width="260dp"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="fitCenter"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/kakao_login_medium_narrow"
+            android:src="@drawable/kakao_login_large_narrow"
             android:background="@android:color/transparent"
             android:elevation="20dp"
             />
