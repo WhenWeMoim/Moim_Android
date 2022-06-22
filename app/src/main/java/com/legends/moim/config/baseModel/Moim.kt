@@ -11,7 +11,9 @@ data class Moim(
     var startTimeHour : Int = 9,
     var endTimeHour: Int = 18,
 
-    var dates: ArrayList<DateStruct> = ArrayList<DateStruct>()
+    var dates: ArrayList<DateStruct> = ArrayList<DateStruct>(),
+
+    var password: String? = null
 )
 
 data class DateStruct (
