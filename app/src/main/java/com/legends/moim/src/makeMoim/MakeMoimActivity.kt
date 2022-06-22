@@ -13,20 +13,17 @@ import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
-import com.legends.moim.config.BaseDialog
 import com.legends.moim.config.baseModel.DateStruct
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
-import com.legends.moim.src.makeMoim.model.MoimReq
-import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
+import com.legends.moim.src.makeMoim.model.PostMoimReq
 import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
 import com.legends.moim.utils.dateStructureConverter
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.PostMoimView
-import com.legends.moim.utils.retrofit.RetrofitInterface
 import com.legends.moim.utils.retrofit.RetrofitService
 import java.util.*
 
@@ -82,7 +79,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             R.id.make_moim_complete_btn -> {
 
                 if( dates.isEmpty() ) {
-                    //todo date 선택 안하면 못넘어가게
+                    showDialog("모임 생성 오류", "날짜가 입력되지 않았습니다.", "확인", null)
+                    return
                 }
                 getMakingMoimInfo()
 
@@ -154,6 +152,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun initDatePickerDialog() {
+
+        dates.clear()
 
         val today = CivilCalendar()
 
@@ -237,7 +237,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     private fun postMoim(moim: Moim) {
         val dateStringArray = dateStructureConverter(moim.dates)
 
-        val serverMoimStruct = MoimReq(
+        val serverMoimStruct = PostMoimReq(
             userIdx = getUserIdx(),
             moimTitle = moim.moimTitle,
             moimDescription = moim.moimDescription,

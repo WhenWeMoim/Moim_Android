@@ -22,8 +22,8 @@ import com.legends.moim.src.groupMoim.model.thisMoim
 
 class PersonalScheduleFragment(private val moim: Moim): Fragment() {
 
-    private var numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
-    private var numOfTimes = 12 //임시데이터 -> todo makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
+    private var numOfDays = 7 //행 수 = 선택한 날짜 개수
+    private var numOfTimes = 12 //열 수 = 시간 구간 개수
 
     private lateinit var dateLayout: LinearLayout
     private lateinit var timeLayout: LinearLayout
@@ -39,20 +39,21 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val v: View = inflater.inflate(R.layout.fragment_schedule_personal, container, false)
 
-        getData()
+        getMoimData()
 
         initScheduleTable(v)
+
+        //todo 이미 데이터가 있는 경우, 스케줄표에 적용해야 함
 
         return v
     }
 
-    private fun getData() {
-        val interval: Int = moim.endTimeHour - moim.startTimeHour
-        if( interval <= 0 ) {
+    private fun getMoimData() {
+        val numOfTimes: Int = moim.endTimeHour - moim.startTimeHour
+        if( numOfTimes <= 0 ) {
             Toast.makeText(context, "시간 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
             return
         }
-        numOfTimes = interval
 
         if( moim.dates.isEmpty() ) {
             Toast.makeText(context, "날짜 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
@@ -149,7 +150,7 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
             while( j < numOfDays ) {
                 //TableRow 안에 Button(cell) 생성
                 scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_btn2)
-//                scheduleButtons[i][j].layoutParams = cellPm
+                scheduleButtons[i][j].layoutParams = cellPm
 
                 scheduleButtons[i][j].setOnClickListener(CellClickListener(scheduleData, i, j))
                 timeRows[i].addView(scheduleButtons[i][j])
@@ -172,6 +173,10 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
             i++
         }
     }
+
+    public fun getScheduleData(): Array<IntArray> = scheduleData
+    public fun getNumOfDays(): Int = numOfDays
+    public fun getNumOfTimes(): Int = numOfTimes
 }
 
 private open class CellClickListener(protected var scheduleResult: Array<IntArray>, protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GroupScheduleRes(
     @SerializedName("moimInfo")val moimInfo: MoimInfo,
-    @SerializedName("userSchedule")val userSchedule: UserSchedules
+    @SerializedName("userSchedule")val userSchedules: Array<UserSchedules>
 )
 
 data class MoimInfo (
@@ -17,10 +17,10 @@ data class MoimInfo (
 )
 data class UserSchedules (
     @SerializedName("userIdx") val userIdx: Int,
-    @SerializedName("moimPersonalSchedules") val asdf: Array<UserSchedule>
+    @SerializedName("schedules") val schedules: String
 )
 
-data class UserSchedule(
-    @SerializedName("dates") val dates: String, //"2022-05-03"
-    @SerializedName("schedules") val schedules: String //"112"
-)
+//data class UserSchedule(
+//    @SerializedName("dates") val dates: String, //"2022-05-03"
+//    @SerializedName("schedules") val schedules: String //"112"
+//)

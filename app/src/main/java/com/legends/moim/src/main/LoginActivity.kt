@@ -11,19 +11,29 @@ import com.kakao.sdk.common.model.AuthErrorCause.*
 import android.widget.ImageButton
 import android.util.Log
 import com.kakao.sdk.common.util.Utility
+import com.legends.moim.src.main.model.UserLoginReq
+import com.legends.moim.src.main.model.UserLoginRes
+import com.legends.moim.utils.retrofit.LoginView
+import com.legends.moim.utils.retrofit.RetrofitService
+import com.legends.moim.utils.saveNickname
+import com.legends.moim.utils.saveUserIdx
 
 private const val TAG = "LoginActivity"
 
-class LoginActivity: BaseActivity() {
+class LoginActivity: BaseActivity(), LoginView {
+
+    private val retrofitService = RetrofitService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        retrofitService.setLoginView(this)
+
         val loginBtn = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
 
         //dummy Function todo change to checkKakaoLoginInfo()
         loginBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            signinByKakaotalk()
         }
 
         // 키해시 값 찾기
@@ -34,6 +44,91 @@ class LoginActivity: BaseActivity() {
         // todo test 끝
         //checkKakaoLoginInfo(loginBtn)
     }
+
+    private fun signinByKakaotalk() {
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if (error != null) {
+                Log.e("LoginActivity", error.toString())
+            } else if (token != null) {
+                Log.d("LoginActivity", "signinByKakaoTalk()")
+                UserApiClient.instance.me { user, _ ->
+                    if (user!!.kakaoAccount?.emailNeedsAgreement == true) {
+                        requireEmailNeedsAgreement()
+                    } else {
+                        val userName = user.kakaoAccount!!.profile!!.nickname!!
+                        val userEmail = user.kakaoAccount!!.email!!
+                        saveNickname(userName)
+//                        saveKakaoAccessToken(token.accessToken)
+//                        saveKakaoRefreshToken(token.refreshToken)
+
+//                        val tokens = HashMap<String, String>()
+//                        tokens["kakaoAccessToken"] = token.accessToken
+//                        tokens["kakaoRefreshToken"] = token.refreshToken
+                        retrofitService.postLogin(UserLoginReq(userName = userName, loginToken = userEmail))
+                    }
+                }
+            }
+        }
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this@LoginActivity)) {
+            UserApiClient.instance.loginWithKakaoTalk(this@LoginActivity, callback = callback)
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(this@LoginActivity, callback = callback)
+        }
+    }
+
+    private fun requireEmailNeedsAgreement() {
+        val scopes = mutableListOf<String>()
+
+        scopes.add("account_email")
+        Log.d(TAG, "사용자에게 추가 동의를 받아야 합니다.")
+
+        UserApiClient.instance.loginWithNewScopes(this@LoginActivity, scopes) { token, error ->
+            if (error != null) {
+                Log.e(TAG, "사용자 추가 동의 실패", error)
+                Toast.makeText(this, "이메일 사용에 동의해주세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.d(TAG, "allowed scopes: ${token!!.scopes}")
+                UserApiClient.instance.me { user, error ->
+                    if (error != null) {
+                        Log.e(TAG, "사용자 정보 요청 실패", error)
+                    } else if (user != null) {
+                        val userName = user.kakaoAccount!!.profile!!.nickname!!
+                        val userEmail = user.kakaoAccount!!.email!!
+                        saveNickname(userName)
+//                        saveKakaoAccessToken(token.accessToken)
+//                        saveKakaoRefreshToken(token.refreshToken)
+
+//                        val tokens = HashMap<String, String>()
+//                        tokens["kakaoAccessToken"] = token.accessToken
+//                        tokens["kakaoRefreshToken"] = token.refreshToken
+                        retrofitService.postLogin(UserLoginReq(userName = userName, loginToken = userEmail))
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onLoginLoading() {
+        Log.d("LoginActivity", "LoginLoading")
+    }
+
+    override fun onLoginSuccess(result: UserLoginRes) {
+        saveUserIdx( result.userIdx )
+
+        startMainActivity()
+    }
+
+    override fun onLoginFailure(code: Int, message: String) {
+        Toast.makeText(this, "$code 로그인 실패 : $message", Toast.LENGTH_LONG).show()
+    }
+
+    /*---기존상태---*/
 
     private fun checkKakaoLoginInfo(kakao_login_button: ImageButton) {
         UserApiClient.instance.accessTokenInfo { tokenInfo, error ->

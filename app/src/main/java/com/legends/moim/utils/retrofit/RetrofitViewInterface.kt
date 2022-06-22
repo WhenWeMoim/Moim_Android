@@ -1,12 +1,19 @@
 package com.legends.moim.utils.retrofit
 
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.main.model.UserLoginRes
 import com.legends.moim.src.viewMoim.model.GetMoimsRes
 
 interface ServerView {
     fun onServerLoading()
     fun onServerSuccess()
     fun onServerFailure(code : Int, message : String)
+}
+
+interface LoginView {
+    fun onLoginLoading()
+    fun onLoginSuccess(result: UserLoginRes)
+    fun onLoginFailure(code : Int, message : String)
 }
 
 interface PostMoimView {
@@ -25,12 +32,6 @@ interface GetMoimsView {
     fun onGetMoimsLoading()
     fun onGetMoimsSuccess(result: GetMoimsRes)
     fun onGetMoimsFailure(code : Int, message : String)
-}
-
-interface PostPersonalScheduleView {
-    fun onPostPersonalScheduleLoading()
-    fun onPostPersonalScheduleSuccess(result : String)
-    fun onPostPersonalScheduleFailure(code : Int, message : String)
 }
 
 interface PostMoimScheduleView {

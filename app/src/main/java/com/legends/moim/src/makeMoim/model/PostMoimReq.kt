@@ -2,7 +2,7 @@ package com.legends.moim.src.makeMoim.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MoimReq(
+data class PostMoimReq(
     @SerializedName("userIdx") var userIdx: Int = -1,
     @SerializedName("moimTitle") var moimTitle: String = "임시 모임",
 
