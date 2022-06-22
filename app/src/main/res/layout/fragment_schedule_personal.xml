@@ -37,6 +37,7 @@
                 app:layout_constraintStart_toEndOf="@id/personal_schedule_time_linearLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:elevation="8dp"
                 android:padding="10dp" >
 
                 <androidx.constraintlayout.widget.ConstraintLayout

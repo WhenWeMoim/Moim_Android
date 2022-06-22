@@ -34,7 +34,12 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView {
             ListMoimInfo(moimIdx = -1, moimTitle = "모임 2", moimDescription = "모임 2에 대한 설명"),
             ListMoimInfo(moimIdx = -1, moimTitle = "모임 3", moimDescription = "모임 3에 대한 설명"),
             ListMoimInfo(moimIdx = -1, moimTitle = "모임 4", moimDescription = "모임 4에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 5", moimDescription = "모임 5에 대한 설명")
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 5", moimDescription = "모임 5에 대한 설명"), //연장시켜볼까?
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d6", moimDescription = "모임 6에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d7", moimDescription = "모임 7에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d8", moimDescription = "모임 8에 대한 설명"),
+            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d9", moimDescription = "모임 9에 대한 설명")
+
         )
 
         initRVMoimsAdapter(dummyGetMoimsRes)

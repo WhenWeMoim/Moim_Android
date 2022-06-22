@@ -69,10 +69,16 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
         timeLayout = v.findViewById(R.id.personal_schedule_time_linearLayout) as LinearLayout
 
         val timeTextPm = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 0, 1F)
-
+        timeTextPm.gravity = Gravity.RIGHT
         lateinit var timeText: TextView
 
         var i: Int = 0
+
+        timeText = TextView(context)
+        timeText.text = String.format("")
+        timeText.textSize = 44.197F
+        timeLayout.addView(timeText)
+
         while( i <= numOfTimes ) {
             timeText = TextView(context)
             timeText.layoutParams = timeTextPm
@@ -90,7 +96,10 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
             timeText.includeFontPadding = false
 
             timeLayout.addView(timeText)
-
+            timeText = TextView(context)
+            timeText.text = String.format("")
+            timeText.textSize = 24.619F
+            timeLayout.addView(timeText)
             i++
         }
 
