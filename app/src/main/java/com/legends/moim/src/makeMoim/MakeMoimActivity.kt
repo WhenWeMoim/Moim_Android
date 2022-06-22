@@ -265,7 +265,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     override fun onPostMoimFailure(code: Int, message: String) {
-        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
     }
 
     private fun startMoimGroupActivity(moim: Moim) {

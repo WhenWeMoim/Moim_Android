@@ -29,8 +29,8 @@ class ParticipantsDialog(context : Context) {
 
         participantsLayout = dialog.findViewById(R.id.dialog_participants_gridLayout)
 
-        tvTitle.text = "모임 참가자 명단"
-        tvMessage.text = "박재형" + ", " + "박민우"
+        tvTitle.text = "참가중인 인원" //모임 참가자 명단
+        tvMessage.text = "박재형" + ", " + "박민우" //임시 참가자 데이터. 그리드 레이아웃으로 구현할 생각 해야할지도, 아니면 String 집합으로 그냥?
 
         //btnOK = dialog.findViewById(R.id.dialog_base_ok_btn_tv)
 
