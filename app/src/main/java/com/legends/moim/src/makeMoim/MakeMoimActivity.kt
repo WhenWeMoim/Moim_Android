@@ -82,7 +82,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             R.id.make_moim_complete_btn -> {
 
                 if( dates.isEmpty() ) {
-                    //todo date 선택 안하면 못넘어가게
+                    showDialog("모임 생성 오류", "날짜가 입력되지 않았습니다.", "확인")
                 }
                 getMakingMoimInfo()
 
@@ -154,6 +154,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun initDatePickerDialog() {
+
+        dates.clear()
 
         val today = CivilCalendar()
 
