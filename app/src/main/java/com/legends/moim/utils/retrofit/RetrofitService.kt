@@ -2,7 +2,8 @@ package com.legends.moim.utils.retrofit
 
 import android.util.Log
 import com.legends.moim.src.main.model.JoinMoimReq
-import com.legends.moim.src.makeMoim.model.MoimReq
+import com.legends.moim.src.main.model.UserLoginReq
+import com.legends.moim.src.makeMoim.model.PostMoimReq
 import com.legends.moim.utils.ApplicationClass.Companion.retrofit
 import com.legends.moim.utils.getUserIdx
 import retrofit2.*
@@ -12,6 +13,11 @@ class RetrofitService{
     private lateinit var serverView: ServerView
     fun setServerView(serverView: ServerView) {
         this.serverView = serverView
+    }
+
+    private lateinit var loginView: LoginView
+    fun setLoginView(loginView: LoginView) {
+        this.loginView = loginView
     }
 
     private lateinit var postMoimView: PostMoimView
@@ -41,16 +47,50 @@ class RetrofitService{
     }
 
     /**
-     * 1-1. Moim 생성 -> 서버로 전송
+     * 1. 로그인
      */
-    fun postMoim( moimReq: MoimReq ){
+    fun postLogin( userLoginReq: UserLoginReq ){
+        Log.d("CheckPoint : ", "RetrofitService-postLogin Activated")
+        loginView.onLoginLoading()
+
+        val userIdx = getUserIdx()
+
+        val retrofitService = retrofit.create(RetrofitInterface::class.java)
+        retrofitService.postLogin( userLoginReq ).enqueue(object : Callback<PostLoginResponse> {
+            override fun onResponse(call: Call<PostLoginResponse>, response: Response<PostLoginResponse>){
+                if (response.isSuccessful) {
+                    val res = response.body()!!
+                    Log.d("__res", response.body()!!.toString())
+                    when (res.code) {
+                        1000 -> { //성공
+                            Log.d("Retrofit-postLogin", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
+                            loginView.onLoginSuccess(res.result)
+                        }
+                        else -> { //의도된 실패
+                            Log.d("Retrofit-postLogin", res.code.toString() + " : " + res.message)
+                            loginView.onLoginFailure(res.code, res.message)
+                        }
+                    }
+                }
+            }
+            override fun onFailure(call: Call<PostLoginResponse>, t: Throwable) {
+                loginView.onLoginFailure(400, t.message.toString())
+                Log.d("Retrofit-postLogin", t.toString()) //네트워크 실패
+            }
+        })
+    }
+
+    /**
+     * 2-1-1. Moim 생성 -> 서버로 전송
+     */
+    fun postMoim(postMoimReq: PostMoimReq ){
         Log.d("CheckPoint : ", "RetrofitService-postMoim Activated")
         postMoimView.onPostMoimLoading()
 
-        moimReq.userIdx = getUserIdx()
+        postMoimReq.userIdx = getUserIdx()
 
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
-        retrofitService.postMoim(moimReq).enqueue(object : Callback<PostMoimResponse> {
+        retrofitService.postMoim(postMoimReq).enqueue(object : Callback<PostMoimResponse> {
             override fun onResponse(call: Call<PostMoimResponse>, response: Response<PostMoimResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!
@@ -75,7 +115,7 @@ class RetrofitService{
     }
 
     /**
-     * 1-3. 서버에서 Moim + GroupSchedule 정보 가져오기
+     * 2-1-3. 서버에서 Moim + GroupSchedule 정보 가져오기
      */
     fun getMoim( moimIdx: Int ){
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
