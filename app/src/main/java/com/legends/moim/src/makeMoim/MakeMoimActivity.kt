@@ -203,8 +203,6 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                         }
 
                         if(j==0 && i!=0){
-                            print("j값---")
-                            println(j)
                             dates.add(0, temp)
                         }
                     }
