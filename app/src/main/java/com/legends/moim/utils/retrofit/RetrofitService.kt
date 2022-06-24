@@ -92,8 +92,6 @@ class RetrofitService{
 
 //        val params: HashMap<PostMoimReq> = HashMap()
 
-        postMoimReq.userIdx = getUserIdx()
-
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
         retrofitService.postMoim(postMoimReq).enqueue(object : Callback<PostMoimResponse> {
             override fun onResponse(call: Call<PostMoimResponse>, response: Response<PostMoimResponse>){

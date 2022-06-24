@@ -10,5 +10,5 @@ data class PostMoimReq(
     @SerializedName("startTime") var startTime : Int = 9,
     @SerializedName("endTime") var endTime: Int = 18,
 
-    @SerializedName("dates") var dates: Array<String>? = null
+    @SerializedName("dates") var dates: Array<Int>? = null
 )

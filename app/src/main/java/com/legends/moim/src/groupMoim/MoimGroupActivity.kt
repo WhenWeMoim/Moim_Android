@@ -37,7 +37,6 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
 
         setInitialize()
         initView()
-
     }
 
     private fun initView() {
