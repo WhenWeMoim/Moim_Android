@@ -1,5 +1,6 @@
 package com.legends.moim.utils.retrofit
 
+import com.legends.moim.src.groupMoim.model.PersonalScheduleReq
 import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.model.PostMoimReq
 import retrofit2.Call
@@ -37,8 +38,8 @@ interface RetrofitInterface {
     //Gson 객체로 바꿔서 서버로 보내는 어노테이션 : @Body
 
     //모임 개인 시간표 수정
-    @PATCH("/moims/{moimIdx}/{userIdx}/{schedule}")
-    fun patchPersonalSchedule(@Path("moimIdx") moimIdx:Int, @Path("userIdx") userIdx : Int, @Path("schedule")schedule : String ) : Call<ServerDefaultResponse>
+    @PATCH("/moims/schedule")
+    fun patchPersonalSchedule(@Body personalScheduleReq: PersonalScheduleReq) : Call<ServerDefaultResponse>
 
     /*----- 아직 구현 안됨 -----*/
 
