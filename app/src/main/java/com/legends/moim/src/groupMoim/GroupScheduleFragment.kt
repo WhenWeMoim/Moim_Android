@@ -1,7 +1,9 @@
 package com.legends.moim.src.groupMoim
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +13,8 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.config.baseModel.Moim
+import com.legends.moim.src.groupMoim.model.selectedBtnFunc
+import java.lang.StringBuilder
 
 /**
  * 한 개 행(row) : 한 시간대
@@ -146,6 +150,16 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
 
         i = 0
         var j: Int
+        //임시로 모임 schedules String 정의.
+        //todo schedules 스케줄데이터 가져오기.
+        var sb = StringBuilder()
+        for(temp_i:Int in 0 until numOfTimes*numOfDays){
+            sb.append(((temp_i%4)+1).toString())
+        }
+        //Log.d("SBCheckPoint : ", sb.toString())
+        var dummySchedulesData: String = sb.toString() //"111222333444"
+        var scheduleCount: Int = 0
+
         while ( i < numOfTimes ) {
             //TableRow 생성
             timeRows[i] = TableRow(v.context)
@@ -163,6 +177,42 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
                 j += 1
             }
             i += 1
+
         }
+        //여기서 모임 시간표 색깔 삽입.
+        j = 0
+        while ( j < numOfDays ){
+            i = 0
+            while ( i < numOfTimes ) {
+                var color = dummySchedulesData[scheduleCount]-'0'
+                //Log.d("SBCheckPoint : ", dummySchedulesData[scheduleCount].toString())
+                moimSceduleColor(scheduleButtons[i][j], color)
+                scheduleCount += 1
+                i += 1
+            }
+            j += 1
+        }
+    }
+
+    private fun moimSceduleColor(scheduleButtonsView: Button, color: Int){
+        //todo 여기서 숫자 몇에 어떤 색깔 쓸지 수정.
+        when(color) {
+            0 -> {
+                //default -> 아무것도 선택하지 않았을때, 생략
+            }
+            1 -> {
+                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice1_like_btn)
+            }
+            2 -> {
+                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
+            }
+            3 -> {
+                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice3_dislike_btn)
+            }
+            4 -> {
+                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice4_impossible_btn)
+            }
+        }
+
     }
 }

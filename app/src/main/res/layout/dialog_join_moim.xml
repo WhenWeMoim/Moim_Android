@@ -24,10 +24,11 @@
             android:id="@+id/dialog_join_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:text="@string/main_join_moim"
             android:includeFontPadding="false"
+            android:fontFamily="@font/notosans_kr_bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -112,8 +113,8 @@
 
         <TextView
             android:id="@+id/dialog_join_ok_btn_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="245dp"
+            android:layout_height="40dp"
             android:text="@string/dialog_base_ok"
             android:textColor="@color/white"
             android:textSize="12sp"

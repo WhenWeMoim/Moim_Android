@@ -5,65 +5,82 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include
-        android:id="@+id/moim_personal_topbar_layout"
-        layout="@layout/layout_topbar"
-        />
+
+    <ImageView
+        android:id="@+id/moim_personal_quarter_circle"
+        android:layout_width="176dp"
+        android:layout_height="144dp"
+        android:src="@drawable/left_top_quarter_circle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/moim_personal_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout">
+        app:layout_constraintTop_toTopOf="@id/moim_personal_quarter_circle">
+        <TextView
+            android:id="@+id/moim_personal_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="내 시간표"
+            android:fontFamily="@font/notosans_kr_bold"
+            android:includeFontPadding="false"
+            android:textColor="@color/black"
+            android:textSize="29sp"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <Button
             android:id="@+id/moim_personal_complete_btn"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
             android:background="@drawable/bg_base_main_btn"
-
+            android:gravity="center"
             android:text="@string/complete"
-            android:fontFamily="@font/notosans_kr_bold"
             android:includeFontPadding="false"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="13dp"
+            app:layout_constraintTop_toBottomOf="@+id/moim_personal_title_tv"
             app:layout_constraintEnd_toEndOf="parent"
             />
 
         <Button
             android:id="@+id/moim_personal_load_btn"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginEnd="10dp"
+            android:layout_height="40dp"
             android:background="@drawable/bg_base_main_btn"
-            android:visibility="gone"
-
             android:text="@string/personal_load"
-            android:fontFamily="@font/notosans_kr_bold"
             android:includeFontPadding="false"
             android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/moim_personal_complete_btn"
+            android:layout_marginRight="15dp"
+            app:layout_constraintTop_toTopOf="@+id/moim_personal_complete_btn"
+            app:layout_constraintRight_toLeftOf="@+id/moim_personal_complete_btn"
             />
 
         <TextView
             android:id="@+id/moim_personal_notice_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="42dp"
             android:layout_marginStart="8dp"
-
+            android:gravity="center"
             android:text="@string/personal_notice"
             android:fontFamily="@font/notosans_kr_bold"
             android:includeFontPadding="false"
             android:textColor="@color/darkGray"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+
+            app:layout_constraintTop_toBottomOf="@+id/moim_personal_complete_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,7 +88,7 @@
         android:id="@+id/moim_personal_schedule_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/moim_personal_bottomBar_layout"
         app:layout_constraintTop_toBottomOf="@id/moim_personal_toolbar_layout"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp">
@@ -82,8 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/moim_personal_topbar_layout" />
+            app:layout_constraintBottom_toTopOf="@+id/moim_personal_bottomBar_layout"
+            app:layout_constraintTop_toBottomOf="@id/moim_personal_toolbar_layout" />
 
     </ScrollView>
 
@@ -131,6 +148,7 @@
             android:includeFontPadding="false"/>
 
         <LinearLayout
+            android:id="@+id/moim_personal_choice_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

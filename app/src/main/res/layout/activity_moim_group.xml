@@ -35,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-
             android:text="모임 이름"
             android:fontFamily="@font/notosans_kr_bold"
             android:includeFontPadding="false"
@@ -66,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="멤버 초대 +"
+            android:letterSpacing = "0"
             android:textStyle="bold"
             android:textSize="14sp"
             android:textColor="@color/black"
@@ -176,6 +176,52 @@
                     android:fontFamily="@font/notosans_kr_bold"
                     android:includeFontPadding="false"
                     android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="박재형"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/notosans_kr_bold"
+                    android:includeFontPadding="false"
+                    android:layout_margin="2dp"
+                    />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="7dp"
+                    android:layout_margin="2dp"
+
                     />
 
             </LinearLayout>
