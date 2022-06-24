@@ -7,7 +7,7 @@ data class GetMoimsRes(
 )
 
 data class ListMoimInfo(
-    @SerializedName("moimInfo") val moimIdx: Int,
+    @SerializedName("moimIdx") val moimIdx: Int,
     @SerializedName("moimTitle") val moimTitle: String,
     @SerializedName("moimDescription") val moimDescription: String
 )

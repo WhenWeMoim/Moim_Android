@@ -20,7 +20,7 @@ interface RetrofitInterface {
     fun postJoinMoim(@Body joinMoimReq: JoinMoimReq): Call<ServerDefaultResponse>
 
     //나의 모임들 조회
-    @GET("/moims/{userIdx}")
+    @GET("/moims/moims/{userIdx}")
     fun getMoims(@Path("userIdx") userIdx: Int): Call<GetMoimsResponse>
 
     //모임 생성(전송)

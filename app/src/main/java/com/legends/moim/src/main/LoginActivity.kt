@@ -122,7 +122,7 @@ class LoginActivity: BaseActivity(), LoginView {
     }
 
     override fun onLoginSuccess(result: Int) {
-        Toast.makeText(this, "userIdx : $result", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "userIdx : $result", Toast.LENGTH_SHORT).show()
         saveUserIdx( result )
         startMainActivity()
     }

@@ -138,7 +138,7 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
     }
 
     private fun showInviteDialog() {
-        val dig = InviteDialog(this, thisMoim.moimIdx, thisMoim.password!!)
+        val dig = InviteDialog(this, thisMoim.moimIdx, "없어용~")
         dig.showInviteDialog()
     }
 
