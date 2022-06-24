@@ -32,7 +32,7 @@ class InviteDialog(context : Context, val moimIdx: Int, val pw: String) {
         moimIdxTv.text = moimIdx.toString()
         moimPwTv.text = pw
 
-        btnOK = dialog.findViewById(R.id.dialog_join_ok_btn_tv)
+        btnOK = dialog.findViewById(R.id.dialog_invite_ok_btn_tv)
         btnOK.setOnClickListener {
             dialog.dismiss()
         }

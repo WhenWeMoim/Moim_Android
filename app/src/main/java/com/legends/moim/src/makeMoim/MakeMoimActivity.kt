@@ -21,7 +21,7 @@ import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
 import com.legends.moim.src.makeMoim.model.PostMoimReq
 import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
-import com.legends.moim.utils.dateStructureConverter
+import com.legends.moim.utils.dateStructure2Int
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.PostMoimView
 import com.legends.moim.utils.retrofit.RetrofitService
@@ -84,35 +84,19 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 }
                 getMakingMoimInfo()
 
-                //Test Function todo delete
-                startMoimGroupActivity( makingMoim )
                 //todo postMoim
-                //postMoim( makingMoim )
+                postMoim( makingMoim )
             }
         }
     }
 
     private fun getMakingMoimInfo() {
-        if( binding.makeMoimTitleEt.text.isNotEmpty() )
+        if (binding.makeMoimTitleEt.text.isNotEmpty())
             makingMoim.moimTitle = binding.makeMoimTitleEt.text.toString()
-        if( binding.makeMoimExplainEt.text.isNotEmpty() )
+        if (binding.makeMoimExplainEt.text.isNotEmpty())
             makingMoim.moimDescription = binding.makeMoimExplainEt.text.toString()
 
         makingMoim.dates = dates
-        //testValue 삽입 함수
-        //addTestDummyData()
-    }
-
-    private fun addTestDummyData() {
-        val dummyDayVal1= DateStruct(2022, 6, 4, "월")
-        val dummyDayVal2= DateStruct(2022, 8, 13, "수")
-        val dummyDayVal3= DateStruct(2022, 11, 4, "목")
-        val dummyDayVal4= DateStruct(2022, 12, 31, "토")
-
-        makingMoim.dates.add(dummyDayVal1)
-        makingMoim.dates.add(dummyDayVal2)
-        makingMoim.dates.add(dummyDayVal3)
-        makingMoim.dates.add(dummyDayVal4)
     }
 
     private fun showTimeDialog(makingMoim: Moim) {
@@ -235,7 +219,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun postMoim(moim: Moim) {
-        val dateStringArray = dateStructureConverter(moim.dates)
+        val dateIntArray = dateStructure2Int( moim.dates )
 
         val serverMoimStruct = PostMoimReq(
             userIdx = getUserIdx(),
@@ -243,7 +227,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             moimDescription = moim.moimDescription,
             startTime = moim.startTimeHour,
             endTime = moim.endTimeHour,
-            dates = dateStringArray
+            dates = dateIntArray
         )
 
         val retrofitService = RetrofitService()

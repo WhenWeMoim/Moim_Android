@@ -2,7 +2,6 @@ package com.legends.moim.utils.retrofit
 
 import android.util.Log
 import com.legends.moim.src.main.model.JoinMoimReq
-import com.legends.moim.src.main.model.UserLoginReq
 import com.legends.moim.src.makeMoim.model.PostMoimReq
 import com.legends.moim.utils.ApplicationClass.Companion.retrofit
 import com.legends.moim.utils.getUserIdx
@@ -38,34 +37,26 @@ class RetrofitService{
         this.getMoimView = getMoimView
     }
 
-    private lateinit var postPersonalScheduleView : PostPersonalScheduleView
-    fun setPostPersonalScheduleView(postPersonalScheduleView : PostPersonalScheduleView) {
-        this.postPersonalScheduleView = postPersonalScheduleView
-    }
-
-    private lateinit var postMoimScheduleView : PostMoimScheduleView
-    fun setPostMoimScheduleView(postMoimScheduleView : PostMoimScheduleView) {
-        this.postMoimScheduleView = postMoimScheduleView
-    }
-
     /**
      * 1. 로그인
      */
-    fun postLogin( userLoginReq: UserLoginReq ){
+    fun postLogin( userName: String, userEmail: String ){
         Log.d("CheckPoint : ", "RetrofitService-postLogin Activated")
         loginView.onLoginLoading()
 
-        val userIdx = getUserIdx()
+        val params: HashMap<String, String> = HashMap()
+        params["userName"] = userName
+        params["kakaoToken"] = userEmail
 
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
-        retrofitService.postLogin( userLoginReq ).enqueue(object : Callback<PostLoginResponse> {
+        retrofitService.postLogin( params ).enqueue(object : Callback<PostLoginResponse> {
             override fun onResponse(call: Call<PostLoginResponse>, response: Response<PostLoginResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!
                     Log.d("__res", response.body()!!.toString())
                     when (res.code) {
                         1000 -> { //성공
-                            Log.d("Retrofit-postLogin", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
+                            Log.d("Retrofit-postLogin", res.code.toString() + " : " + res.message+ "  userIdx : "+ res.result)
                             loginView.onLoginSuccess(res.result)
                         }
                         else -> { //의도된 실패
@@ -85,11 +76,11 @@ class RetrofitService{
     /**
      * 2-1-1. Moim 생성 -> 서버로 전송
      */
-    fun postMoim(postMoimReq: PostMoimReq ){
+    fun postMoim( postMoimReq: PostMoimReq ){
         Log.d("CheckPoint : ", "RetrofitService-postMoim Activated")
         postMoimView.onPostMoimLoading()
 
-        postMoimReq.userIdx = getUserIdx()
+//        val params: HashMap<PostMoimReq> = HashMap()
 
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
         retrofitService.postMoim(postMoimReq).enqueue(object : Callback<PostMoimResponse> {
@@ -182,7 +173,7 @@ class RetrofitService{
                 }
             }
             override fun onFailure(call: Call<GetMoimsResponse>, t: Throwable) {
-                postMoimScheduleView.onPostMoimScheduleFailure(400, t.message.toString())
+                getMoimsView.onGetMoimsFailure(400, t.message.toString())
             }
         })
     }
@@ -226,14 +217,14 @@ class RetrofitService{
     /**
      * 2-3-2. PersonalSchedule 전송
      */
-    fun postPersonalSchedule( schedule: String ){
+    fun postPersonalSchedule( moimIdx: Int, schedule: String ){
         Log.d("CheckPoint : ", "CardService-postCard Activated")
         serverView.onServerLoading()
 
         val userIdx = getUserIdx()
 
         val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.postPersonalSchedule(userIdx, schedule).enqueue(object : Callback<ServerDefaultResponse> {
+        cardRetrofitService.patchPersonalSchedule(userIdx, moimIdx, schedule).enqueue(object : Callback<ServerDefaultResponse> {
             override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!

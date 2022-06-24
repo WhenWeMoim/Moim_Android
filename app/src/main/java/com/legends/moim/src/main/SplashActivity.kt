@@ -16,10 +16,13 @@ class SplashActivity: AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        selectActivity()
+
+        //Handler(Looper.getMainLooper()).postDelayed({
             //액티비티 이동
-            startLoginActivity()
-        },DURATION)
+
+//            startLoginActivity()
+        //},DURATION)
     }
     companion object {
         private const val DURATION : Long = 1500
@@ -34,7 +37,7 @@ class SplashActivity: AppCompatActivity()  {
 //                "\nKRT: " + getKakaoRefreshToken()
         )
         val userIdx = getUserIdx()
-        if (userIdx != -1) { //로그인이 안된상태
+        if (userIdx == -1) { //로그인이 안된상태
             startLoginActivity()
         } else { //로그인이 된 상태
             startMainActivity()

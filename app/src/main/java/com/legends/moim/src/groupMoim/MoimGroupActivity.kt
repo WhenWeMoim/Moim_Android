@@ -2,6 +2,7 @@ package com.legends.moim.src.groupMoim
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -32,12 +33,15 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
 
     private val gson = Gson()
 
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setInitialize()
         initView()
-
     }
 
     private fun initView() {
@@ -134,7 +138,7 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
     }
 
     private fun showInviteDialog() {
-        val dig = InviteDialog(this, thisMoim.moimIdx, thisMoim.password!!)
+        val dig = InviteDialog(this, thisMoim.moimIdx, "없어용~")
         dig.showInviteDialog()
     }
 

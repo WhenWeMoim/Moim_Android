@@ -23,9 +23,9 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView {
         setContentView(binding.root)
 
         //dummy test Function todo delete
-        getDummyMoims()
+        //getDummyMoims()
 
-        //getMoims()
+        getMoims()
     }
 
     private fun getDummyMoims() {
@@ -76,6 +76,6 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView {
     }
 
     override fun onGetMoimsFailure(code: Int, message: String) {
-        Toast.makeText(this, "$code 모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "$code 모임 조회 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
     }
 }

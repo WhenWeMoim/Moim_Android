@@ -8,20 +8,49 @@ import java.time.format.TextStyle
 import java.util.*
 import kotlin.collections.ArrayList
 
-public fun dateStructureConverter(dateStructArray: ArrayList<DateStruct>): Array<String> {
-    val resultDateArray = Array<String>( dateStructArray.size) {""}
+public fun dateStructure2Int(dateStructArray: ArrayList<DateStruct>): Array<Int> {
+    val resultDateArray = Array<Int>( dateStructArray.size) {0}
 
     for ( i: Int in dateStructArray.indices ) {
-        val dateString = String.format("%d-%d-%d", dateStructArray[i].year, dateStructArray[i].month, dateStructArray[i].day)
+        val dateInt = dateStructArray[i].year * 10000 + dateStructArray[i].month * 100 + dateStructArray[i].day
 
-        resultDateArray[i] = dateString
+        resultDateArray[i] = dateInt
     }
 
     Log.d("dateStructureConverter", "Active::: $resultDateArray")
     return resultDateArray
 }
 
-public fun dateStringConverter(dateStringArray: Array<String>): Array<DateStruct> {
+public fun dateInt2Structure(dateIntArray: Array<Int>): Array<DateStruct> {
+    val resultDateArray = Array<DateStruct>( dateIntArray.size) { DateStruct(2000, 0, 0, "월") }
+
+    var rawIntDate: Int
+    var year: Int
+    var month: Int
+    var day: Int
+    var dayOfWeek: String
+
+    for ( i:Int in resultDateArray.indices ) {
+        rawIntDate = dateIntArray[i]
+        year = rawIntDate/10000
+
+        rawIntDate %= 10000
+        month = rawIntDate/100
+
+        day = rawIntDate %100
+
+        dayOfWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LocalDate.of( year, month, day ).dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN)
+        } else {
+            "?"
+        }
+        resultDateArray[i] = DateStruct( year = year, month = month, day = day, dayOfWeek = dayOfWeek )
+    }
+
+    return resultDateArray
+}
+
+public fun dateString2Structure(dateStringArray: Array<String>): Array<DateStruct> {
     val resultStructureArray = Array<DateStruct>( dateStringArray.size) { DateStruct(2000, 0, 0, "월") }
 
     var dateStringTokens = StringTokenizer(dateStringArray[0], "-")
