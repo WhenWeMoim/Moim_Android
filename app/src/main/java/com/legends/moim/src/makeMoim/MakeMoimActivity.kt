@@ -84,8 +84,6 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 }
                 getMakingMoimInfo()
 
-                //Test Function todo delete
-                startMoimGroupActivity( makingMoim )
                 //todo postMoim
                 postMoim( makingMoim )
             }

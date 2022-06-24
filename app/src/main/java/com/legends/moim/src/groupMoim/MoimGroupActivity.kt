@@ -2,6 +2,7 @@ package com.legends.moim.src.groupMoim
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -31,6 +32,10 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
     private lateinit var fragmentManager: FragmentManager
 
     private val gson = Gson()
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

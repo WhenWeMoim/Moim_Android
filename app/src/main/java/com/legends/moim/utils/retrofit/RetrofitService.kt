@@ -227,14 +227,14 @@ class RetrofitService{
     /**
      * 2-3-2. PersonalSchedule 전송
      */
-    fun postPersonalSchedule( schedule: String ){
+    fun postPersonalSchedule( moimIdx: Int, schedule: String ){
         Log.d("CheckPoint : ", "CardService-postCard Activated")
         serverView.onServerLoading()
 
         val userIdx = getUserIdx()
 
         val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.postPersonalSchedule(userIdx, schedule).enqueue(object : Callback<ServerDefaultResponse> {
+        cardRetrofitService.patchPersonalSchedule(userIdx, moimIdx, schedule).enqueue(object : Callback<ServerDefaultResponse> {
             override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!

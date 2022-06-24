@@ -111,15 +111,15 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
         val numOfTimes = personalScheduleFragment.getNumOfTimes()
 
         var resultString = ""
-        for(i in 0..numOfTimes) {
-            for( j in 0..numOfDays) {
+        for(i in 0 until numOfDays) {
+            for( j in 0 until numOfTimes) {
                 resultString += scheduleData[j][i].toString()
             }
         }
 
         val retrofitService = RetrofitService()
         retrofitService.setServerView(this)
-        retrofitService.postPersonalSchedule( resultString )
+        retrofitService.postPersonalSchedule( thisMoim.moimIdx, resultString )
     }
 
     override fun onServerLoading() {

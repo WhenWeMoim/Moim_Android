@@ -18,7 +18,8 @@ class SplashActivity: AppCompatActivity()  {
 
         Handler(Looper.getMainLooper()).postDelayed({
             //액티비티 이동
-            startLoginActivity()
+            selectActivity()
+//            startLoginActivity()
         },DURATION)
     }
     companion object {
@@ -34,7 +35,7 @@ class SplashActivity: AppCompatActivity()  {
 //                "\nKRT: " + getKakaoRefreshToken()
         )
         val userIdx = getUserIdx()
-        if (userIdx != -1) { //로그인이 안된상태
+        if (userIdx == -1) { //로그인이 안된상태
             startLoginActivity()
         } else { //로그인이 된 상태
             startMainActivity()

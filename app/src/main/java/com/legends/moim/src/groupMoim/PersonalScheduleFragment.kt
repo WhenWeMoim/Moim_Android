@@ -2,6 +2,7 @@ package com.legends.moim.src.groupMoim
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +23,8 @@ import com.legends.moim.src.groupMoim.model.thisMoim
 
 class PersonalScheduleFragment(private val moim: Moim): Fragment() {
 
-    private var numOfDays = 7 //행 수 = 선택한 날짜 개수
-    private var numOfTimes = 12 //열 수 = 시간 구간 개수
+    private var numOfDays = moim.dates.size //행 수 = 선택한 날짜 개수
+    private var numOfTimes = moim.endTimeHour - moim.startTimeHour //열 수 = 시간 구간 개수
 
     private lateinit var dateLayout: LinearLayout
     private lateinit var timeLayout: LinearLayout
@@ -49,7 +50,7 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
     }
 
     private fun getMoimData() {
-        val numOfTimes: Int = moim.endTimeHour - moim.startTimeHour
+        //val numOfTimes: Int = moim.endTimeHour - moim.startTimeHour
         if( numOfTimes <= 0 ) {
             Toast.makeText(context, "시간 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
             return
@@ -59,9 +60,10 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
             Toast.makeText(context, "날짜 시간표 생성 중 오류가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_LONG).show()
             return
         }
-        numOfDays = moim.dates.size
+        //numOfDays = moim.dates.size
 
         scheduleData = Array(size = numOfTimes, init = { IntArray( size = numOfDays, init = { 2 } ) } )
+        Log.d("AAAAAAAAA>>>>>", "numOfTimes : $numOfTimes, numOfDays : $numOfDays")
     }
 
     private fun initScheduleTable(v: View) {
