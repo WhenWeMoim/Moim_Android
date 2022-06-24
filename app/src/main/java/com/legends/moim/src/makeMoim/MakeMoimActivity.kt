@@ -13,20 +13,17 @@ import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
-import com.legends.moim.config.BaseDialog
 import com.legends.moim.config.baseModel.DateStruct
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
-import com.legends.moim.src.makeMoim.model.MoimReq
-import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
+import com.legends.moim.src.makeMoim.model.PostMoimReq
 import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
-import com.legends.moim.utils.dateStructureConverter
+import com.legends.moim.utils.dateStructure2Int
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.PostMoimView
-import com.legends.moim.utils.retrofit.RetrofitInterface
 import com.legends.moim.utils.retrofit.RetrofitService
 import java.util.*
 
@@ -83,39 +80,24 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             R.id.make_moim_complete_btn -> {
 
                 if( dates.isEmpty() ) {
-                    //todo date 선택 안하면 못넘어가게
+                    showDialog("모임 생성 오류", "날짜가 입력되지 않았습니다.", "확인", null)
+                    return
                 }
                 getMakingMoimInfo()
 
-                //Test Function todo delete
-                startMoimGroupActivity( makingMoim )
                 //todo postMoim
-                //postMoim( makingMoim )
+                postMoim( makingMoim )
             }
         }
     }
 
     private fun getMakingMoimInfo() {
-        if( binding.makeMoimTitleEt.text.isNotEmpty() )
+        if (binding.makeMoimTitleEt.text.isNotEmpty())
             makingMoim.moimTitle = binding.makeMoimTitleEt.text.toString()
-        if( binding.makeMoimExplainEt.text.isNotEmpty() )
+        if (binding.makeMoimExplainEt.text.isNotEmpty())
             makingMoim.moimDescription = binding.makeMoimExplainEt.text.toString()
 
         makingMoim.dates = dates
-        //testValue 삽입 함수
-        //addTestDummyData()
-    }
-
-    private fun addTestDummyData() {
-        val dummyDayVal1= DateStruct(2022, 6, 4, "월")
-        val dummyDayVal2= DateStruct(2022, 8, 13, "수")
-        val dummyDayVal3= DateStruct(2022, 11, 4, "목")
-        val dummyDayVal4= DateStruct(2022, 12, 31, "토")
-
-        makingMoim.dates.add(dummyDayVal1)
-        makingMoim.dates.add(dummyDayVal2)
-        makingMoim.dates.add(dummyDayVal3)
-        makingMoim.dates.add(dummyDayVal4)
     }
 
     private fun showTimeDialog(makingMoim: Moim) {
@@ -155,6 +137,8 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun initDatePickerDialog() {
+
+        dates.clear()
 
         val today = CivilCalendar()
 
@@ -262,15 +246,15 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun postMoim(moim: Moim) {
-        val dateStringArray = dateStructureConverter(moim.dates)
+        val dateIntArray = dateStructure2Int( moim.dates )
 
-        val serverMoimStruct = MoimReq(
+        val serverMoimStruct = PostMoimReq(
             userIdx = getUserIdx(),
             moimTitle = moim.moimTitle,
             moimDescription = moim.moimDescription,
             startTime = moim.startTimeHour,
             endTime = moim.endTimeHour,
-            dates = dateStringArray
+            dates = dateIntArray
         )
 
         val retrofitService = RetrofitService()

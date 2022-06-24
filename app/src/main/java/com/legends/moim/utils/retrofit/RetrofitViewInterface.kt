@@ -9,6 +9,12 @@ interface ServerView {
     fun onServerFailure(code : Int, message : String)
 }
 
+interface LoginView {
+    fun onLoginLoading()
+    fun onLoginSuccess(result: Int)
+    fun onLoginFailure(code : Int, message : String)
+}
+
 interface PostMoimView {
     fun onPostMoimLoading()
     fun onPostMoimSuccess(result: Int)
@@ -25,12 +31,6 @@ interface GetMoimsView {
     fun onGetMoimsLoading()
     fun onGetMoimsSuccess(result: GetMoimsRes)
     fun onGetMoimsFailure(code : Int, message : String)
-}
-
-interface PostPersonalScheduleView {
-    fun onPostPersonalScheduleLoading()
-    fun onPostPersonalScheduleSuccess(result : String)
-    fun onPostPersonalScheduleFailure(code : Int, message : String)
 }
 
 interface PostMoimScheduleView {

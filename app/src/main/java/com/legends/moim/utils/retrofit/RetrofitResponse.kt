@@ -2,6 +2,7 @@ package com.legends.moim.utils.retrofit
 
 import com.google.gson.annotations.SerializedName
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.makeMoim.model.PostMoimRes
 import com.legends.moim.src.viewMoim.model.GetMoimsRes
 
 data class ServerDefaultResponse(
@@ -10,14 +11,18 @@ data class ServerDefaultResponse(
     @SerializedName("message") val message: String
 )
 
+data class PostLoginResponse(
+    @SerializedName("isSuccess") val isSuccess: Boolean,
+    @SerializedName("code") val code: Int,
+    @SerializedName("message") val message: String,
+    @SerializedName("result") val result: Int
+)
+
 data class PostMoimResponse(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
-    @SerializedName("result") val result: MoimIdxResultCode
-)
-data class MoimIdxResultCode(
-    val moimIdx: Int
+    @SerializedName("result") val result: PostMoimRes
 )
 
 data class PostUserResponse(

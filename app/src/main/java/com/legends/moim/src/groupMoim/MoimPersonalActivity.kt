@@ -2,6 +2,7 @@ package com.legends.moim.src.groupMoim
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -10,8 +11,10 @@ import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
 import com.legends.moim.src.groupMoim.model.selectedBtnFunc
 import com.legends.moim.src.groupMoim.model.thisMoim
+import com.legends.moim.utils.retrofit.RetrofitService
+import com.legends.moim.utils.retrofit.ServerView
 
-class MoimPersonalActivity: BaseActivity() {
+class MoimPersonalActivity: BaseActivity(), ServerView {
 
     lateinit var binding: ActivityMoimPersonalBinding
 
@@ -65,6 +68,7 @@ class MoimPersonalActivity: BaseActivity() {
         super.onClick(v)
         when(v!!.id) {
             R.id.moim_personal_complete_btn -> {
+                postPersonalSchedule(personalScheduleFragment.getScheduleData())
                 //todo 서버로 전송
                 //todo 그룹 시간표에 적용
                 finish()
@@ -100,5 +104,34 @@ class MoimPersonalActivity: BaseActivity() {
             }
             choiceButtons[i].isSelected = false
         }
+    }
+
+    private fun postPersonalSchedule(scheduleData: Array<IntArray>) {
+        val numOfDays = personalScheduleFragment.getNumOfDays()
+        val numOfTimes = personalScheduleFragment.getNumOfTimes()
+
+        var resultString = ""
+        for(i in 0 until numOfDays) {
+            for( j in 0 until numOfTimes) {
+                resultString += scheduleData[j][i].toString()
+            }
+        }
+
+        val retrofitService = RetrofitService()
+        retrofitService.setServerView(this)
+        retrofitService.postPersonalSchedule( thisMoim.moimIdx, resultString )
+    }
+
+    override fun onServerLoading() {
+        // todo Loding Effect
+    }
+
+    override fun onServerSuccess() {
+        Toast.makeText(this, "개인 스케줄 저장을 완료하였습니다.", Toast.LENGTH_SHORT).show()
+        finish()
+    }
+
+    override fun onServerFailure(code: Int, message: String) {
+        Toast.makeText(this, "$code Error\n에러가 발생했습니다. $message", Toast.LENGTH_SHORT).show()
     }
 }

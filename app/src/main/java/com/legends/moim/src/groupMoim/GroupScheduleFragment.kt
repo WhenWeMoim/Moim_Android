@@ -171,7 +171,7 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
             while ( j < numOfDays ) {
                 //TableRow 안에 Button(cell) 생성
                 scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_btn2)
-//                scheduleButtons[i][j].layoutParams = cellPm
+                scheduleButtons[i][j].layoutParams = cellPm
 
 //                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
                 timeRows[i].addView(scheduleButtons[i][j])
