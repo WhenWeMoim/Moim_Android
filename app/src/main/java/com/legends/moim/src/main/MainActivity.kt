@@ -5,24 +5,32 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.groupMoim.model.GroupScheduleRes
 import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.MakeMoimActivity
 import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
 import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
+import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
+import com.legends.moim.utils.dateInt2Structure
 import com.legends.moim.utils.getUserIdx
+import com.legends.moim.utils.retrofit.GetMoimView
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.retrofit.ServerView
 
-class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener, ServerView {
+class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener, ServerView, GetMoimView {
 
     lateinit var binding : ActivityMainBinding
 
     private var moimIdx = -1
+
+    private val retrofitService = RetrofitService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,36 +77,66 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
     override fun onJoinMoimDialogOKClicked(moimIdx: Int?, moimPw: String?) {
         if ( moimIdx == null ) return
 
-        val joinMoimInfo = JoinMoimReq( moimIdx = moimIdx, userIdx = getUserIdx(), passwd = moimPw )
-
-        postJoinMoim( joinMoimInfo )
+        Log.d(">>>>>>>>>>>>>>>>>>>>", "moimIdx : $moimIdx, moimPw : $moimPw")
         this.moimIdx = moimIdx
+        postJoinMoim( JoinMoimReq( moimIdx = moimIdx, userIdx = getUserIdx(), passwd = moimPw ) )
     }
 
     private fun postJoinMoim( joinMoimReq: JoinMoimReq ) {
-
-        val retrofitService = RetrofitService()
         retrofitService.setServerView(this)
 
         Log.d("postJoinMoim Active>>>", "sending Model : $joinMoimReq")
         retrofitService.postJoinMoim( joinMoimReq )
     }
 
+    private fun getMoim( moimIdx: Int ) {
+        retrofitService.setGetMoimView(this)
+
+        Log.d("postGetMoim Active>>>", "sending moimIdx : $moimIdx")
+        retrofitService.getMoim( moimIdx )
+    }
+
+
     override fun onServerLoading() {
         //todo loding Effect
     }
 
     override fun onServerSuccess() {
+        Log.d("postGetMoim Success>>>", "nowMoimIdx: $moimIdx")
+        getMoim(moimIdx)
+    }
+
+    override fun onServerFailure(code: Int, message: String) {
+        Toast.makeText(this, "$code $message\n모임 불러오기 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onGetMoimLoading() {
+        //TODO("Not yet implemented")
+    }
+
+    override fun onGetMoimSuccess(result: GroupScheduleRes) {
+        val dates = dateInt2Structure(result.dates)
+        val thisMoim = Moim(
+            moimIdx = result.moimInfo.moimIdx,
+            moimTitle = result.moimInfo.moimTitle,
+            moimDescription = result.moimInfo.moimDescription,
+            masterUserIdx = result.moimInfo.masterUserIdx,
+            startTimeHour = result.moimInfo.startTime.toInt(),
+            endTimeHour = result.moimInfo.endTime.toInt(),
+            dates = dates
+        )
+
         val intent = Intent(this, MoimGroupActivity::class.java)
 
-        //todo group 데이터 받아서 MoimGroup으로 전송 후 시간표 구성
+        val gson = Gson()
         intent.putExtra("startActivityFlag", FLAG_ACTIVITY_MAIN)
-        intent.putExtra("moimIdx", moimIdx)
+        intent.putExtra("moimInfo",  gson.toJson(thisMoim))
+        intent.putExtra("moimSchedule", gson.toJson(result.userSchedules))
 
         startActivity(intent)
     }
 
-    override fun onServerFailure(code: Int, message: String) {
-        Toast.makeText(this, "message", Toast.LENGTH_SHORT).show()
+    override fun onGetMoimFailure(code: Int, message: String) {
+        Toast.makeText(this, "$code 모임 불러오기 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
     }
 }

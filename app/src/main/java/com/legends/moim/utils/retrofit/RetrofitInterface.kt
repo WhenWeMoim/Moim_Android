@@ -17,7 +17,7 @@ interface RetrofitInterface {
     fun postLogin(@Body params : HashMap<String, String>): Call<PostLoginResponse>
 
     //모임 참가
-    @POST("/moimUsers")
+    @POST("/moimUsers/moim")
     fun postJoinMoim(@Body joinMoimReq: JoinMoimReq): Call<ServerDefaultResponse>
 
     //나의 모임들 조회

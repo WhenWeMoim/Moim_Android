@@ -250,12 +250,12 @@ class RetrofitService{
     /**
      * 3-1. 모임 참가
      */
-    fun postJoinMoim( JoinMoimReq: JoinMoimReq){
+    fun postJoinMoim( joinMoimReq: JoinMoimReq ){
         Log.d("CheckPoint ::: ", "RetrofitService-postJoinMoim Activated")
         serverView.onServerLoading()
 
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
-        retrofitService.postJoinMoim(JoinMoimReq).enqueue(object : Callback<ServerDefaultResponse> {
+        retrofitService.postJoinMoim( joinMoimReq ).enqueue(object : Callback<ServerDefaultResponse> {
             override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!
