@@ -174,6 +174,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 } else {
                     binding.makeMoimSelectDateBtn.visibility = View.GONE
                     binding.makeMoimSelectDateTableLayout.visibility = View.VISIBLE
+                    binding.makeMoimSelectDateTv.text = dates.size.toString() + "개 선택"
 
                     binding.makeMoimSelectDateTableLayout.removeAllViews()
                     for ( i: Int in 0 until selectCount ) {

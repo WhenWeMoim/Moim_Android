@@ -2,6 +2,7 @@ package com.legends.moim.utils
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import com.legends.moim.config.baseModel.DateStruct
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -21,8 +22,8 @@ public fun dateStructure2Int(dateStructArray: ArrayList<DateStruct>): Array<Int>
     return resultDateArray
 }
 
-public fun dateInt2Structure(dateIntArray: Array<Int>): Array<DateStruct> {
-    val resultDateArray = Array<DateStruct>( dateIntArray.size) { DateStruct(2000, 0, 0, "월") }
+public fun dateInt2Structure(dateIntArray: Array<Int>): ArrayList<DateStruct> {
+    val resultDateArrayList = ArrayList<DateStruct>()
 
     var rawIntDate: Int
     var year: Int
@@ -30,8 +31,9 @@ public fun dateInt2Structure(dateIntArray: Array<Int>): Array<DateStruct> {
     var day: Int
     var dayOfWeek: String
 
-    for ( i:Int in resultDateArray.indices ) {
+    for ( i:Int in dateIntArray.indices ) {
         rawIntDate = dateIntArray[i]
+        Log.d("AAAAAAAAAAAAAAAAA", "rawIntDate : $rawIntDate")
         year = rawIntDate/10000
 
         rawIntDate %= 10000
@@ -39,15 +41,17 @@ public fun dateInt2Structure(dateIntArray: Array<Int>): Array<DateStruct> {
 
         day = rawIntDate %100
 
+        Log.d("AAAAAAAAAAAAAAAAA", "rawIntDate : $rawIntDate year : $year month : $month, day : $day")
+
         dayOfWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate.of( year, month, day ).dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN)
         } else {
             "?"
         }
-        resultDateArray[i] = DateStruct( year = year, month = month, day = day, dayOfWeek = dayOfWeek )
+        resultDateArrayList.add(DateStruct( year = year, month = month, day = day, dayOfWeek = dayOfWeek ))
     }
 
-    return resultDateArray
+    return resultDateArrayList
 }
 
 public fun dateString2Structure(dateStringArray: Array<String>): Array<DateStruct> {

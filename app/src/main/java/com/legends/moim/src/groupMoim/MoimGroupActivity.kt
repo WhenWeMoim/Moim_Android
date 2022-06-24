@@ -14,6 +14,7 @@ import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.groupMoim.model.UserSchedules
 import com.legends.moim.src.groupMoim.model.thisMoim
 import com.legends.moim.src.main.JoinMoimDialog
 import com.legends.moim.src.main.MainActivity
@@ -24,7 +25,7 @@ import com.legends.moim.utils.retrofit.GetMoimView
 import com.legends.moim.utils.retrofit.RetrofitService
 
 
-class MoimGroupActivity : BaseActivity(), GetMoimView {
+class MoimGroupActivity : BaseActivity() {
 
     private lateinit var binding : ActivityMoimGroupBinding
     private lateinit var groupScheduleFragment: GroupScheduleFragment
@@ -33,9 +34,8 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
 
     private val gson = Gson()
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-    }
+    private lateinit var userSchedules: Array<UserSchedules>
+    private var participant = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +50,7 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
         binding.moimGroupMoimNameTv.text = thisMoim.moimTitle
         binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
 
-        val participantDummy = "8"
-        binding.moimGroupParticipantTv.text = participantDummy + "명 참여"
+        binding.moimGroupParticipantTv.text = participant.toString() + "명 참여"
         }
 
     private fun setInitialize() {
@@ -60,8 +59,16 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
 
         when( intent.getIntExtra("startActivityFlag", -1) ) {
             FLAG_ACTIVITY_MAIN, FLAG_ACTIVITY_VIEWMOIM -> { //main에서 진입 : 새로 모임에 참가 & View moim에서 진입 : 다시 조회
-                getMoimInfoFromServer()
+                //getMoimInfoFromServer()
                 //todo 서버에서 GroupSchedule 데이터 가져와서 적용
+                thisMoim = getMoimInfoFromMakeMoim()
+                Log.d("MoimGroupActivity", "thisMoim Info : $thisMoim" )
+
+                if (intent.getStringExtra("moimSchedule").isNullOrBlank()) {
+                    userSchedules = gson.fromJson(intent.getStringExtra("moimSchedule"), Array<UserSchedules>::class.java)
+                    participant = userSchedules.size
+                }
+                setGroupScheduleFragment()
             }
             FLAG_ACTIVITY_MAKEMOIM -> { // make moim에서 진입 : 모임 생성
                 thisMoim = getMoimInfoFromMakeMoim()
@@ -73,8 +80,6 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
                 finish()
             }
         }
-
-        //~ 명 참여 초기화 필요. 인원 파악 데이터 필요. 일단은 더미로 설정.
 
         //binding.moimGroupHomeBtn.setOnClickListener(this)
         binding.moimGroupInviteBtn.setOnClickListener(this)
@@ -98,16 +103,6 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
             finish()
         }
         return gson.fromJson(intent.getStringExtra("moimInfo"), Moim::class.java)
-    }
-
-    private fun getMoimInfoFromServer() {
-        val moimIdx = intent.getIntExtra("moimIdx", -1)
-        if (moimIdx == -1) {
-            Toast.makeText(this, "모임 참가 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
-            finish()
-        }
-
-        getMoim(moimIdx)
     }
 
     override fun onClick(v: View?) {
@@ -140,34 +135,5 @@ class MoimGroupActivity : BaseActivity(), GetMoimView {
     private fun showInviteDialog() {
         val dig = InviteDialog(this, thisMoim.moimIdx, "없어용~")
         dig.showInviteDialog()
-    }
-
-    private fun getMoim( moimIdx: Int ) {
-
-        val retrofitService = RetrofitService()
-        retrofitService.setGetMoimView(this)
-
-        Log.d("postGetMoim Active>>>", "sending moimIdx : $moimIdx")
-        retrofitService.getMoim( moimIdx )
-    }
-
-    override fun onGetMoimLoading() {
-        //todo 로딩바 생성
-    }
-
-    override fun onGetMoimSuccess(result: GroupScheduleRes) {
-        thisMoim.moimIdx = result.moimInfo.moimIdx
-        thisMoim.moimTitle = result.moimInfo.moimTitle
-        thisMoim.moimDescription = result.moimInfo.moimDescription
-        thisMoim.masterUserIdx = result.moimInfo.masterUserIdx
-        thisMoim.startTimeHour = result.moimInfo.startTime.toInt() //todo 에러 발생 가능
-        thisMoim.endTimeHour = result.moimInfo.endTime.toInt() //todo 에러 발생 가능
-
-        //todo date도 추가 필요
-        //todo password 추가 필요 : thisMoim.password
-    }
-
-    override fun onGetMoimFailure(code: Int, message: String) {
-        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
     }
 }

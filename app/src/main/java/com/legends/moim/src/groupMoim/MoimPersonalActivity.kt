@@ -116,6 +116,7 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
                 resultString += scheduleData[j][i].toString()
             }
         }
+        Toast.makeText(this, "Schedule: $resultString", Toast.LENGTH_SHORT).show()
 
         val retrofitService = RetrofitService()
         retrofitService.setServerView(this)

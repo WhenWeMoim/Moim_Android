@@ -20,17 +20,16 @@ import com.legends.moim.config.baseModel.Moim
 
 class GroupScheduleFragment(private val moim: Moim): Fragment() {
 
-    private var numOfDays = 7 //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
-    private var numOfTimes = 12 //makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
+    private var numOfDays = moim.dates.size //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
+    private var numOfTimes = moim.endTimeHour - moim.startTimeHour //makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
 
     private lateinit var dateLayout: LinearLayout
     private lateinit var timeLayout: LinearLayout
     private lateinit var scheduleLayout: TableLayout
-
     private lateinit var timeRows: Array<TableRow>
     private lateinit var scheduleButtons: Array<Array<Button>>
 
-    private lateinit var scheduleData: Array<IntArray>
+    private var scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -14,6 +14,10 @@ import com.legends.moim.R
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.src.groupMoim.model.selectedBtnFunc
 import com.legends.moim.src.groupMoim.model.thisMoim
+import com.legends.moim.utils.CHOICE_DISLIKE
+import com.legends.moim.utils.CHOICE_IMPOSSIBLE
+import com.legends.moim.utils.CHOICE_LIKE
+import com.legends.moim.utils.CHOICE_POSSIBLE
 
 /**
  * 한 개 행(row) : 한 시간대
@@ -63,7 +67,6 @@ class PersonalScheduleFragment(private val moim: Moim): Fragment() {
         //numOfDays = moim.dates.size
 
         scheduleData = Array(size = numOfTimes, init = { IntArray( size = numOfDays, init = { 2 } ) } )
-        Log.d("AAAAAAAAA>>>>>", "numOfTimes : $numOfTimes, numOfDays : $numOfDays")
     }
 
     private fun initScheduleTable(v: View) {
@@ -189,19 +192,19 @@ private open class CellClickListener(protected var scheduleResult: Array<IntArra
             }
             1 -> {
                 v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice1_like_btn)
-                scheduleResult[xAxis][yAxis] = 1
+                scheduleResult[xAxis][yAxis] = CHOICE_LIKE
             }
             2 -> {
                 v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
-                scheduleResult[xAxis][yAxis] = 2
+                scheduleResult[xAxis][yAxis] = CHOICE_POSSIBLE
             }
             3 -> {
                 v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice3_dislike_btn)
-                scheduleResult[xAxis][yAxis] = 3
+                scheduleResult[xAxis][yAxis] = CHOICE_DISLIKE
             }
             4 -> {
                 v!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice4_impossible_btn)
-                scheduleResult[xAxis][yAxis] = 4
+                scheduleResult[xAxis][yAxis] = CHOICE_IMPOSSIBLE
             }
         }
     }
