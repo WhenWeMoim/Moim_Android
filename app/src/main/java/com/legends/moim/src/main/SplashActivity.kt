@@ -16,11 +16,13 @@ class SplashActivity: AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Handler(Looper.getMainLooper()).postDelayed({
+        selectActivity()
+
+        //Handler(Looper.getMainLooper()).postDelayed({
             //액티비티 이동
-            selectActivity()
+
 //            startLoginActivity()
-        },DURATION)
+        //},DURATION)
     }
     companion object {
         private const val DURATION : Long = 1500

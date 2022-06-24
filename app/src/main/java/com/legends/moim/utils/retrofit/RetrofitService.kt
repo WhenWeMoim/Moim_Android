@@ -37,16 +37,6 @@ class RetrofitService{
         this.getMoimView = getMoimView
     }
 
-//    private lateinit var postPersonalScheduleView : PostPersonalScheduleView
-//    fun setPostPersonalScheduleView(postPersonalScheduleView : PostPersonalScheduleView) {
-//        this.postPersonalScheduleView = postPersonalScheduleView
-//    }
-//
-//    private lateinit var postMoimScheduleView : PostMoimScheduleView
-//    fun setPostMoimScheduleView(postMoimScheduleView : PostMoimScheduleView) {
-//        this.postMoimScheduleView = postMoimScheduleView
-//    }
-
     /**
      * 1. 로그인
      */
@@ -66,7 +56,7 @@ class RetrofitService{
                     Log.d("__res", response.body()!!.toString())
                     when (res.code) {
                         1000 -> { //성공
-                            Log.d("Retrofit-postLogin", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
+                            Log.d("Retrofit-postLogin", res.code.toString() + " : " + res.message+ "  userIdx : "+ res.result)
                             loginView.onLoginSuccess(res.result)
                         }
                         else -> { //의도된 실패

@@ -10,6 +10,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import android.widget.ImageButton
 import android.util.Log
+import com.legends.moim.databinding.ActivityLoginBinding
 import com.legends.moim.utils.retrofit.LoginView
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.saveNickname
@@ -19,6 +20,7 @@ private const val TAG = "LoginActivity"
 
 class LoginActivity: BaseActivity(), LoginView {
 
+    private lateinit var binding: ActivityLoginBinding
     private val retrofitService = RetrofitService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,13 +28,21 @@ class LoginActivity: BaseActivity(), LoginView {
         setContentView(R.layout.activity_login)
         retrofitService.setLoginView(this)
 
-        val loginBtn = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+
+        //val loginBtn = findViewById<ImageButton>(R.id.kakao_login_button) // 로그인 버튼
+
+
+
+        binding.loginCompleteBtn.setOnClickListener {
+            loginDummy(binding.loginNameEt.text.toString(), binding.loginPwEt.toString())
+        }
 
         //dummy Function todo change to checkKakaoLoginInfo()
-        loginBtn.setOnClickListener {
+//        loginBtn.setOnClickListener {
             loginDummy("박재형", "11111")
-            //signinByKakaotalk() todo 카카오 로그인으로 수정
-        }
+//            //signinByKakaotalk() todo 카카오 로그인으로 수정
+//        }
 
         // 키해시 값 찾기
         //var keyHash = Utility.getKeyHash(this)
