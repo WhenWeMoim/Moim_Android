@@ -13,7 +13,7 @@ data class Moim(
 
     var dates: ArrayList<DateStruct> = ArrayList<DateStruct>(),
 
-    var password: String? = null
+    var password: String? = "1111" //todo 임시 비밀번호
 )
 
 data class DateStruct (

@@ -34,7 +34,7 @@ class MoimGroupActivity : BaseActivity() {
 
     private val gson = Gson()
 
-    private lateinit var userSchedules: Array<UserSchedules>
+    private var userSchedules: Array<UserSchedules>? = null
     private var participant = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +64,10 @@ class MoimGroupActivity : BaseActivity() {
                 thisMoim = getMoimInfoFromMakeMoim()
                 Log.d("MoimGroupActivity", "thisMoim Info : $thisMoim" )
 
-                if (intent.getStringExtra("moimSchedule").isNullOrBlank()) {
+                if (!(intent.getStringExtra("moimSchedule").isNullOrBlank())) {
                     userSchedules = gson.fromJson(intent.getStringExtra("moimSchedule"), Array<UserSchedules>::class.java)
-                    participant = userSchedules.size
+                    Log.d("userSchedules>>>>>>>", "userSchedules : $userSchedules" )
+                    participant = userSchedules!!.size
                 }
                 setGroupScheduleFragment()
             }
@@ -120,7 +121,7 @@ class MoimGroupActivity : BaseActivity() {
             }
             R.id.moim_group_participant_tv -> { //참가인원 조회, ~명 참여, 누르면 참가자 명단도 나오도록.
                 val dig = ParticipantsDialog(this)
-                dig.showTimeDialog()
+                dig.showTimeDialog(userSchedules)
 
             }
             R.id.moim_group_add_personal_btn -> { //개인 시간표 추가
@@ -133,7 +134,13 @@ class MoimGroupActivity : BaseActivity() {
     }
 
     private fun showInviteDialog() {
-        val dig = InviteDialog(this, thisMoim.moimIdx, "없어용~")
-        dig.showInviteDialog()
+        if( thisMoim.password != null) {
+            val dig = InviteDialog(this, thisMoim.moimIdx, thisMoim.password!!)
+            dig.showInviteDialog()
+        }
+        else {
+            val dig = InviteDialog(this, thisMoim.moimIdx, null)
+            dig.showInviteDialog()
+        }
     }
 }

@@ -110,6 +110,8 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
     }
 
     override fun onGetMoimSuccess(result: GroupScheduleRes) {
+        Log.d("onGetMoimSuccess>>>>>>>", "result : $result")
+
         val intent = Intent(this, MoimGroupActivity::class.java)
 
         intent.putExtra("startActivityFlag", FLAG_ACTIVITY_VIEWMOIM)

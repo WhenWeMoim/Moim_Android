@@ -18,7 +18,7 @@ public fun dateStructure2Int(dateStructArray: ArrayList<DateStruct>): Array<Int>
         resultDateArray[i] = dateInt
     }
 
-    Log.d("dateStructureConverter", "Active::: $resultDateArray")
+//    Log.d("dateStructureConverter", "Active::: $resultDateArray")
     return resultDateArray
 }
 
@@ -33,7 +33,7 @@ public fun dateInt2Structure(dateIntArray: Array<Int>): ArrayList<DateStruct> {
 
     for ( i:Int in dateIntArray.indices ) {
         rawIntDate = dateIntArray[i]
-        Log.d("AAAAAAAAAAAAAAAAA", "rawIntDate : $rawIntDate")
+//        Log.d("AAAAAAAAAAAAAAAAA", "rawIntDate : $rawIntDate")
         year = rawIntDate/10000
 
         rawIntDate %= 10000
@@ -41,7 +41,7 @@ public fun dateInt2Structure(dateIntArray: Array<Int>): ArrayList<DateStruct> {
 
         day = rawIntDate %100
 
-        Log.d("AAAAAAAAAAAAAAAAA", "rawIntDate : $rawIntDate year : $year month : $month, day : $day")
+//        Log.d("AAAAAAAAAAAAAAAAA", "rawIntDate : $rawIntDate year : $year month : $month, day : $day")
 
         dayOfWeek = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate.of( year, month, day ).dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN)
@@ -81,6 +81,6 @@ public fun dateString2Structure(dateStringArray: Array<String>): Array<DateStruc
         dateStringTokens = StringTokenizer(dateStringArray[i], "-")
     }
 
-    Log.d("dateStringConverter", "Active::: $resultStructureArray")
+//    Log.d("dateStringConverter", "Active::: $resultStructureArray")
     return resultStructureArray
 }

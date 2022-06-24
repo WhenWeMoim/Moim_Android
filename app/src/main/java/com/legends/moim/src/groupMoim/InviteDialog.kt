@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.legends.moim.R
 import com.legends.moim.config.baseModel.Moim
 
-class InviteDialog(context : Context, val moimIdx: Int, val pw: String) {
+class InviteDialog(context : Context, val moimIdx: Int, val pw: String?) {
 
     private val dialog = Dialog(context)
 
@@ -30,7 +30,8 @@ class InviteDialog(context : Context, val moimIdx: Int, val pw: String) {
         moimPwTv = dialog.findViewById<EditText>(R.id.dialog_invite_moimPw_tv)
 
         moimIdxTv.text = moimIdx.toString()
-        moimPwTv.text = pw
+        if(pw != null ) moimPwTv.text = pw
+        else moimPwTv.text = "없음"
 
         btnOK = dialog.findViewById(R.id.dialog_invite_ok_btn_tv)
         btnOK.setOnClickListener {
