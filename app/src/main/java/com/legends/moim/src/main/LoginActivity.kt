@@ -10,9 +10,6 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import android.widget.ImageButton
 import android.util.Log
-import com.kakao.sdk.common.util.Utility
-import com.legends.moim.src.main.model.UserLoginReq
-import com.legends.moim.src.main.model.UserLoginRes
 import com.legends.moim.utils.retrofit.LoginView
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.saveNickname
@@ -33,7 +30,8 @@ class LoginActivity: BaseActivity(), LoginView {
 
         //dummy Function todo change to checkKakaoLoginInfo()
         loginBtn.setOnClickListener {
-            signinByKakaotalk()
+            loginDummy("박재형", "11111")
+            //signinByKakaotalk() todo 카카오 로그인으로 수정
         }
 
         // 키해시 값 찾기
@@ -43,6 +41,11 @@ class LoginActivity: BaseActivity(), LoginView {
         // 로그인 정보 확인
         // todo test 끝
         //checkKakaoLoginInfo(loginBtn)
+    }
+
+    private fun loginDummy(userName: String, userEmail: String) {
+        retrofitService.postLogin(userName = userName, userEmail = userEmail)
+        saveNickname(userName)
     }
 
     private fun signinByKakaotalk() {
@@ -64,7 +67,7 @@ class LoginActivity: BaseActivity(), LoginView {
 //                        val tokens = HashMap<String, String>()
 //                        tokens["kakaoAccessToken"] = token.accessToken
 //                        tokens["kakaoRefreshToken"] = token.refreshToken
-                        retrofitService.postLogin(UserLoginReq(userName = userName, loginToken = userEmail))
+                        retrofitService.postLogin(userName = userName, userEmail = userEmail)
                     }
                 }
             }
@@ -101,7 +104,7 @@ class LoginActivity: BaseActivity(), LoginView {
 //                        val tokens = HashMap<String, String>()
 //                        tokens["kakaoAccessToken"] = token.accessToken
 //                        tokens["kakaoRefreshToken"] = token.refreshToken
-                        retrofitService.postLogin(UserLoginReq(userName = userName, loginToken = userEmail))
+                        retrofitService.postLogin(userName = userName, userEmail = userEmail)
                     }
                 }
             }
@@ -118,8 +121,8 @@ class LoginActivity: BaseActivity(), LoginView {
         Log.d("LoginActivity", "LoginLoading")
     }
 
-    override fun onLoginSuccess(result: UserLoginRes) {
-        saveUserIdx( result.userIdx )
+    override fun onLoginSuccess(result: Int) {
+        saveUserIdx( result )
 
         startMainActivity()
     }

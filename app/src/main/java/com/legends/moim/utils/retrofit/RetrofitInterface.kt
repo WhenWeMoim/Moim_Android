@@ -1,7 +1,6 @@
 package com.legends.moim.utils.retrofit
 
 import com.legends.moim.src.main.model.JoinMoimReq
-import com.legends.moim.src.main.model.UserLoginReq
 import com.legends.moim.src.makeMoim.model.PostMoimReq
 import retrofit2.Call
 import retrofit2.http.*
@@ -14,7 +13,7 @@ interface RetrofitInterface {
 
     //로그인 - 앱 삭제 후 앱 실행
     @POST("/users/login")
-    fun postLogin(@Body userLoginReq: UserLoginReq): Call<PostLoginResponse>
+    fun postLogin(@Body params : HashMap<String, String>): Call<PostLoginResponse>
 
     //모임 참가
     @POST("/moimUsers")
