@@ -46,6 +46,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         binding = ActivityMakeMoimBinding.inflate(layoutInflater)
         setContentView(binding.root)
         dateLayout = binding.makeMoimSelectDateTableLayout
+        dates.clear()
 
         initDatePickerDialog()
         initView()
@@ -162,7 +163,33 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                     val temp_year: Int = st.nextToken().toInt()
 
                     var temp = DateStruct(temp_year, temp_month, temp_day, temp_dayOfWeek)
-                    dates.add(temp)
+
+                    if(i==0)
+                        dates.add(temp)
+                    //add 전에 순서 따지고 넣기.
+
+                    for(j: Int in dates.size-1 downTo 0){
+                        if(temp.year>dates[j].year){
+                            dates.add(j+1, temp)
+                            break
+                        }
+                        else if(temp.year==dates[j].year){
+                            if(temp.month>dates[j].month){
+                                dates.add(j+1, temp)
+                                break
+                            }
+                            else if(temp.month==dates[j].month){
+                                if(temp.day>dates[j].day){
+                                    dates.add(j+1, temp)
+                                    break
+                                }
+                            }
+                        }
+
+                        if(j==0 && i!=0){
+                            dates.add(0, temp)
+                        }
+                    }
                 }
                 Log.d("dateSelectTest>>>>>", dates.toString())
                 //이건 그냥 검증용. 버튼에 리스트 첫번째 애로 text 바꾸기 해봄.
@@ -249,7 +276,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     override fun onPostMoimFailure(code: Int, message: String) {
-        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "모임 생성 실패. 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
     }
 
     private fun startMoimGroupActivity(moim: Moim) {

@@ -13,7 +13,7 @@
 
     //join moim
     <string name="join_moimIdx">모임 번호</string>
-    <string name="join_moimPw">모임 비밀번호</string>
+    <string name="join_moimPw">비밀번호</string>
 
     <string name="join_moim_info">숫자만 입력</string>
 
