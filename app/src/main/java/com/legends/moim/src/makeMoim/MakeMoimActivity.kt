@@ -212,12 +212,12 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                         val tempDateString: String =
                             dates[i].month.toString() + "월 "+ dates[i].day.toString() + "일"
 
-//                        val dateBtnPm = GridLayout.LayoutParams()
-//                            dateBtnPm.setMargins(4, 4, 4, 4)
+                        val dateBtnPm = GridLayout.LayoutParams()
+                            dateBtnPm.setMargins(4, 4, 4, 4)
 
                         val newDateBtn = AppCompatButton(this)
                             newDateBtn.background = resources.getDrawable(R.drawable.bg_makemoim_date_stroke_btn, null)
-//                            newDateBtn.layoutParams = dateBtnPm
+                            newDateBtn.layoutParams = dateBtnPm
                             newDateBtn.text = tempDateString
                             newDateBtn.textSize = 14f
                             newDateBtn.includeFontPadding = false

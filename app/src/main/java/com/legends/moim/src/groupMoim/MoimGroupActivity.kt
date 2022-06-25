@@ -21,6 +21,7 @@ import com.legends.moim.src.main.MainActivity
 import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
 import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
 import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
+import com.legends.moim.utils.getNickname
 import com.legends.moim.utils.retrofit.GetMoimView
 import com.legends.moim.utils.retrofit.RetrofitService
 
@@ -44,6 +45,11 @@ class MoimGroupActivity : BaseActivity() {
         initView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        setGroupScheduleFragment()
+    }
+
     private fun initView() {
         //binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
 
@@ -60,7 +66,6 @@ class MoimGroupActivity : BaseActivity() {
         when( intent.getIntExtra("startActivityFlag", -1) ) {
             FLAG_ACTIVITY_MAIN, FLAG_ACTIVITY_VIEWMOIM -> { //main에서 진입 : 새로 모임에 참가 & View moim에서 진입 : 다시 조회
                 //getMoimInfoFromServer()
-                //todo 서버에서 GroupSchedule 데이터 가져와서 적용
                 thisMoim = getMoimInfoFromMakeMoim()
                 Log.d("MoimGroupActivity", "thisMoim Info : $thisMoim" )
 
@@ -126,6 +131,14 @@ class MoimGroupActivity : BaseActivity() {
             }
             R.id.moim_group_add_personal_btn -> { //개인 시간표 추가
                 val intent = Intent(this, MoimPersonalActivity::class.java)
+                val myName = getNickname()
+                if ( userSchedules != null) {
+                    for(i in userSchedules!!.indices) {
+                        if( userSchedules!![i].userName == myName )
+                            intent.putExtra("mySchedule", userSchedules!![i].schedules)
+                    }
+                }
+
                 startActivity(intent)
             }
             //모드 1, 2로 한눈에 보기 시간표 보여주기 fragment
