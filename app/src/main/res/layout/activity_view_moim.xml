@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="invisible"
 
         android:text="@string/nonMoim_msg"
         android:textColor="@color/moim_main_1"
@@ -48,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/view_moim_tv"
         android:layout_marginTop="90dp"
