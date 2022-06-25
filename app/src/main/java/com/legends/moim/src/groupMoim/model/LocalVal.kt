@@ -12,6 +12,4 @@ lateinit var thisMoim: Moim
 
 var selectedBtnFunc: Int = 0
 
-//var myThisSchedule = Array(
-//    size = thisMoim.endTimeHour- thisMoim.startTimeHour,
-//    init = { IntArray( size = thisMoim.dates.size, init = { CHOICE_POSSIBLE } ) } )
+var mySchedule: String? = null

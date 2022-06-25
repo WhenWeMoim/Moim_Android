@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
+import com.legends.moim.src.groupMoim.model.mySchedule
 import com.legends.moim.src.groupMoim.model.selectedBtnFunc
 import com.legends.moim.src.groupMoim.model.thisMoim
 import com.legends.moim.utils.*
@@ -118,6 +119,8 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
             }
         }
         Log.d("postPersonalSchedule", "resultString : $resultString")
+
+        mySchedule = resultString
 
         val retrofitService = RetrofitService()
         retrofitService.setServerView(this)
