@@ -15,12 +15,14 @@ import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
 import com.legends.moim.src.groupMoim.model.UserSchedules
+import com.legends.moim.src.groupMoim.model.mySchedule
 import com.legends.moim.src.groupMoim.model.thisMoim
 import com.legends.moim.src.main.JoinMoimDialog
 import com.legends.moim.src.main.MainActivity
 import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
 import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
 import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
+import com.legends.moim.utils.getNickname
 import com.legends.moim.utils.retrofit.GetMoimView
 import com.legends.moim.utils.retrofit.RetrofitService
 
@@ -37,11 +39,18 @@ class MoimGroupActivity : BaseActivity() {
     private var userSchedules: Array<UserSchedules>? = null
     private var participant = 1
 
+    val myName = getNickname()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setInitialize()
         initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //setGroupScheduleFragment() //todo 사용자가 방금 입력한 사간표 반영
     }
 
     private fun initView() {
@@ -60,13 +69,16 @@ class MoimGroupActivity : BaseActivity() {
         when( intent.getIntExtra("startActivityFlag", -1) ) {
             FLAG_ACTIVITY_MAIN, FLAG_ACTIVITY_VIEWMOIM -> { //main에서 진입 : 새로 모임에 참가 & View moim에서 진입 : 다시 조회
                 //getMoimInfoFromServer()
-                //todo 서버에서 GroupSchedule 데이터 가져와서 적용
                 thisMoim = getMoimInfoFromMakeMoim()
-                Log.d("MoimGroupActivity", "thisMoim Info : $thisMoim" )
 
                 if (!(intent.getStringExtra("moimSchedule").isNullOrBlank())) {
                     userSchedules = gson.fromJson(intent.getStringExtra("moimSchedule"), Array<UserSchedules>::class.java)
-                    Log.d("userSchedules>>>>>>>", "userSchedules : $userSchedules" )
+
+                    for(i in userSchedules!!.indices) {
+                        if( userSchedules!![i].userName == myName )
+                            mySchedule = userSchedules!![i].schedules
+                    }
+
                     participant = userSchedules!!.size
                 }
                 setGroupScheduleFragment()
@@ -126,6 +138,7 @@ class MoimGroupActivity : BaseActivity() {
             }
             R.id.moim_group_add_personal_btn -> { //개인 시간표 추가
                 val intent = Intent(this, MoimPersonalActivity::class.java)
+                intent.putExtra("mySchedule", mySchedule)
                 startActivity(intent)
             }
             //모드 1, 2로 한눈에 보기 시간표 보여주기 fragment

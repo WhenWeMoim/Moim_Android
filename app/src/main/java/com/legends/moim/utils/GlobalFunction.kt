@@ -54,6 +54,19 @@ public fun dateInt2Structure(dateIntArray: Array<Int>): ArrayList<DateStruct> {
     return resultDateArrayList
 }
 
+public fun scheduleString2IntArray(rawSchedule: String, numOfRow: Int, numOfColumns: Int): Array<IntArray> {
+    val resultIntArray = Array(size = numOfRow, init = { IntArray( size = numOfColumns, init = { 2 } ) } )
+
+    for( i in 0 until numOfColumns ) {
+        for( j in 0 until numOfRow ) {
+            resultIntArray[j][i] = rawSchedule[numOfRow*i+j].digitToInt(10)
+            Log.d("AAAAAAAAAAAAAAAAA", "WTFISTHIS:: ${resultIntArray[j][i]}")
+        }
+    }
+    Log.d("AAAAAAAAAAAAAAAAA", "resultIntArray:: $resultIntArray")
+    return resultIntArray
+}
+
 public fun dateString2Structure(dateStringArray: Array<String>): Array<DateStruct> {
     val resultStructureArray = Array<DateStruct>( dateStringArray.size) { DateStruct(2000, 0, 0, "월") }
 

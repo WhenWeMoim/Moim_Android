@@ -7,11 +7,14 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
+import com.legends.moim.src.groupMoim.model.mySchedule
 import com.legends.moim.src.groupMoim.model.selectedBtnFunc
 import com.legends.moim.src.groupMoim.model.thisMoim
+import com.legends.moim.utils.*
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.retrofit.ServerView
 
@@ -22,7 +25,6 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var transaction: FragmentTransaction
     private lateinit var personalScheduleFragment: PersonalScheduleFragment
-
     private lateinit var choiceButtons: Array<AppCompatButton>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,18 +34,6 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
 
         setInitialize()
         initView()
-
-        setPersonalScheduleFragment()
-    }
-
-    private fun setPersonalScheduleFragment() {
-        fragmentManager = supportFragmentManager
-        transaction = fragmentManager.beginTransaction()
-        personalScheduleFragment = PersonalScheduleFragment(thisMoim)
-
-        transaction
-            .replace(R.id.moim_personal_schedule_fragment, personalScheduleFragment)
-            .commitAllowingStateLoss()
     }
 
     private fun setInitialize() {
@@ -53,6 +43,19 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
             findViewById(R.id.moim_personal_dislike_btn),
             findViewById(R.id.moim_personal_impossible_btn)
         )
+
+        fragmentManager = supportFragmentManager
+        transaction = fragmentManager.beginTransaction()
+
+        if( !(intent.getStringExtra("mySchedule").isNullOrEmpty()) ) {
+            val gson = Gson()
+            val intScheduleArray = scheduleString2IntArray(intent.getStringExtra("mySchedule")!!, thisMoim.endTimeHour - thisMoim.startTimeHour, thisMoim.dates.size)
+            personalScheduleFragment = PersonalScheduleFragment(thisMoim, intScheduleArray)
+        } else
+            personalScheduleFragment = PersonalScheduleFragment(thisMoim, null)
+        transaction
+            .replace(R.id.moim_personal_schedule_fragment, personalScheduleFragment)
+            .commitAllowingStateLoss()
     }
 
     private fun initView() {
@@ -76,16 +79,16 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
                 binding.moimPersonalLoadBtn.visibility = View.INVISIBLE
             }
             R.id.moim_personal_like_btn -> {
-                choiceButtonSelect(1)
+                choiceButtonSelect(CHOICE_LIKE)
             }
             R.id.moim_personal_possible_btn -> {
-                choiceButtonSelect(2)
+                choiceButtonSelect(CHOICE_POSSIBLE)
             }
             R.id.moim_personal_dislike_btn -> {
-                choiceButtonSelect(3)
+                choiceButtonSelect(CHOICE_DISLIKE)
             }
             R.id.moim_personal_impossible_btn -> {
-                choiceButtonSelect(4)
+                choiceButtonSelect(CHOICE_IMPOSSIBLE)
             }
             R.id.moim_personal_reset_btn -> { //Table 초기화
                 personalScheduleFragment.resetScheduleTable()
@@ -116,6 +119,8 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
             }
         }
         Log.d("postPersonalSchedule", "resultString : $resultString")
+
+        mySchedule = resultString
 
         val retrofitService = RetrofitService()
         retrofitService.setServerView(this)
