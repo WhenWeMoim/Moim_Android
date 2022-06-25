@@ -49,6 +49,8 @@
     <string name="choice_dislike">비선호</string>
     <string name="choice_impossible">불가능</string>
 
+    //view_moim
+    <string name="nonMoim_msg">현재 참가중인 모임이 없습니다.\n여기를 눌러 모임을 생성해보세요.</string>
 
     //moim_personal
     <string name="personal_load">불러오기</string>

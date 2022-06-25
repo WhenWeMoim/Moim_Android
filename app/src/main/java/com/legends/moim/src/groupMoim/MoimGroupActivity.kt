@@ -60,7 +60,7 @@ class MoimGroupActivity : BaseActivity() {
         binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
 
         binding.moimGroupParticipantTv.text = participant.toString() + "명 참여"
-        }
+    }
 
     private fun setInitialize() {
         binding = ActivityMoimGroupBinding.inflate(layoutInflater)
@@ -69,7 +69,7 @@ class MoimGroupActivity : BaseActivity() {
         when( intent.getIntExtra("startActivityFlag", -1) ) {
             FLAG_ACTIVITY_MAIN, FLAG_ACTIVITY_VIEWMOIM -> { //main에서 진입 : 새로 모임에 참가 & View moim에서 진입 : 다시 조회
                 //getMoimInfoFromServer()
-                thisMoim = getMoimInfoFromMakeMoim()
+                thisMoim = getMoimInfo()
 
                 if (!(intent.getStringExtra("moimSchedule").isNullOrBlank())) {
                     userSchedules = gson.fromJson(intent.getStringExtra("moimSchedule"), Array<UserSchedules>::class.java)
@@ -84,7 +84,7 @@ class MoimGroupActivity : BaseActivity() {
                 setGroupScheduleFragment()
             }
             FLAG_ACTIVITY_MAKEMOIM -> { // make moim에서 진입 : 모임 생성
-                thisMoim = getMoimInfoFromMakeMoim()
+                thisMoim = getMoimInfo()
                 Log.d("MoimGroupActivity", "thisMoim Info : $thisMoim" )
                 setGroupScheduleFragment()
             }
@@ -110,7 +110,7 @@ class MoimGroupActivity : BaseActivity() {
             .commitAllowingStateLoss()
     }
 
-    private fun getMoimInfoFromMakeMoim(): Moim {
+    private fun getMoimInfo(): Moim {
         if (intent.getStringExtra("moimInfo").isNullOrBlank()) {
             Toast.makeText(this, "모임 생성 에러. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
             finish()
@@ -121,7 +121,6 @@ class MoimGroupActivity : BaseActivity() {
     override fun onClick(v: View?) {
         super.onClick(v)
         when(v!!.id) {
-
             /*
             R.id.moim_group_home_btn -> { //홈으로 돌아가기. 모임 저장은 생성 및 적용(개인쪽)시에 구현.
                 val intent = Intent(this, MainActivity::class.java)
@@ -133,7 +132,10 @@ class MoimGroupActivity : BaseActivity() {
             }
             R.id.moim_group_participant_tv -> { //참가인원 조회, ~명 참여, 누르면 참가자 명단도 나오도록.
                 val dig = ParticipantsDialog(this)
-                dig.showTimeDialog(userSchedules)
+                if( userSchedules == null )
+                    dig.showTimeDialog( arrayOf( UserSchedules( userName = myName!!, "") ) )
+                else
+                    dig.showTimeDialog(userSchedules)
 
             }
             R.id.moim_group_add_personal_btn -> { //개인 시간표 추가

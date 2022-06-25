@@ -146,7 +146,7 @@ class PersonalScheduleFragment(private val moim: Moim, private val schedule: Arr
             dateText.layoutParams = dateTextPm
     //            dateText.text = String.format("%d월\n%d일\n(%c)", moim.dates[i].month, moim.dates[i].day, moim.dates[i].dayOfWeek)
             dateText.text =
-                String.format("${moim.dates[i].month}월\n${moim.dates[i].day}\n(${moim.dates[i].dayOfWeek})")
+                String.format("${moim.dates[i].month}월\n${moim.dates[i].day}일\n(${moim.dates[i].dayOfWeek})")
 
             dateText.setTextColor(
                 ContextCompat.getColor(

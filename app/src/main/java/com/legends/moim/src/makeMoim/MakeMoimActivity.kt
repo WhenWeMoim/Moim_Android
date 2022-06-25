@@ -158,7 +158,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                 dates = ArrayList<DateStruct>()
                 for ( i: Int in 0 until selectCount ) {
                     val st = StringTokenizer(dateline[i], ",| ")
-                    val temp_dayOfWeek: String = st.nextToken().toString()
+                    val temp_dayOfWeek: String = st.nextToken()[0].toString()
                     val temp_day: Int = st.nextToken().toInt()
                     val temp_month: Int = st.nextToken().toString()[0]-'0'
                     val temp_year: Int = st.nextToken().toInt()

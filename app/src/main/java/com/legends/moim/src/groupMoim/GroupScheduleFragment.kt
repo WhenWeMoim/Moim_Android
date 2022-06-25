@@ -24,8 +24,8 @@ import java.lang.StringBuilder
 
 class GroupScheduleFragment(private val moim: Moim): Fragment() {
 
-    private var numOfDays = moim.dates.size //임시데이터 -> todo 행 수 = 선택한 날짜 개수 makingMoim.Date.size
-    private var numOfTimes = moim.endTimeHour - moim.startTimeHour //makingMoim.endTimeHour - makingMoim.startTimeHour //열 수 = 시간 구간 개수
+    private var numOfDays = moim.dates.size //행 수 = 선택한 날짜 개수
+    private var numOfTimes = moim.endTimeHour - moim.startTimeHour //열 수 = 시간 구간 개수
 
     private lateinit var dateLayout: LinearLayout
     private lateinit var timeLayout: LinearLayout
@@ -117,7 +117,7 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
             dateText = TextView(context)
             dateText.layoutParams = dateTextPm
 //            dateText.text = String.format("%d월\n%d일\n(%c)", moim.dates[i].month, moim.dates[i].day, moim.dates[i].dayOfWeek)
-            dateText.text = String.format("${moim.dates[i].month}월\n${moim.dates[i].day}\n(${moim.dates[i].dayOfWeek})")
+            dateText.text = String.format("${moim.dates[i].month}월\n${moim.dates[i].day}일\n(${moim.dates[i].dayOfWeek})")
 
             dateText.setTextColor(getColor(requireActivity().applicationContext, R.color.moim_main_1))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
