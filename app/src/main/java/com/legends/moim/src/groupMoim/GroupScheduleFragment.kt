@@ -138,15 +138,10 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
         scheduleButtons = Array<Array<Button>>(size = numOfTimes,
             init = { Array<Button>(size = numOfDays, init = {Button(v.context)} ) }
         )
-//        scheduleButtons = Array<Array<Button>>(size = numOfTimes,
-//            init = { Array<Button>(size = numOfDays, init = {Button(v.context, resources.getXml(R.drawable.bg_schedule_cell_btn2))} ) }
-//        )
 
         val rowPm: TableLayout.LayoutParams = TableLayout.LayoutParams(0, 40, 1F)
         val cellPm: TableRow.LayoutParams =
             TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1F)
-//        val cellPm: TableRow.LayoutParams =
-//            TableRow.LayoutParams(30, 40)
 
         i = 0
         var j: Int
@@ -169,7 +164,7 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
             j = 0
             while ( j < numOfDays ) {
                 //TableRow 안에 Button(cell) 생성
-                scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_btn2)
+                scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
                 scheduleButtons[i][j].layoutParams = cellPm
 
 //                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
