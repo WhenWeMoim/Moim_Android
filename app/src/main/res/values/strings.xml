@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Moim</string>
+    <string name="app_name">언제모임</string>
     <string name="dialog_base_ok">확인</string>
 
     //login
