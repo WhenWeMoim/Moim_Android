@@ -31,6 +31,11 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
         //dummy test Function todo delete
         //getDummyMoims()
 
+        //getMoims()
+    }
+
+    override fun onResume() {
+        super.onResume()
         getMoims()
     }
 
