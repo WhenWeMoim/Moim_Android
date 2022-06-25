@@ -3,14 +3,17 @@ package com.legends.moim.src.viewMoim
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityViewMoimBinding
 import com.legends.moim.src.groupMoim.MoimGroupActivity
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.makeMoim.MakeMoimActivity
 import com.legends.moim.src.viewMoim.model.GetMoimsRes
 import com.legends.moim.src.viewMoim.model.ListMoimInfo
 import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
@@ -28,34 +31,22 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
         binding = ActivityViewMoimBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //dummy test Function todo delete
-        //getDummyMoims()
+        binding.viewMoimFirstMsgTv.setOnClickListener (this)
+    }
 
+    override fun onResume() {
+        super.onResume()
         getMoims()
     }
 
-    private fun getDummyMoims() {
-        val dummyGetMoimsRes = arrayOf(
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 1", moimDescription = "모임 1에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 2", moimDescription = "모임 2에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 3", moimDescription = "모임 3에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 4", moimDescription = "모임 4에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 5", moimDescription = "모임 5에 대한 설명"), //연장시켜볼까?
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d6", moimDescription = "모임 6에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d7", moimDescription = "모임 7에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d8", moimDescription = "모임 8에 대한 설명"),
-            ListMoimInfo(moimIdx = -1, moimTitle = "모임 d9", moimDescription = "모임 9에 대한 설명")
-
-        )
-
-        initRVMoimsAdapter(dummyGetMoimsRes)
-    }
-
-    private fun getMoims() {
-        val retrofitService = RetrofitService()
-        retrofitService.setGetMoimsView(this)
-
-        retrofitService.getMoims()
+    override fun onClick(v: View?) {
+        super.onClick(v)
+        when(v!!.id) {
+            R.id.view_moim_first_msg_tv -> {
+                val intent = Intent(this, MakeMoimActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun initRVMoimsAdapter(moimsInfo: Array<ListMoimInfo>) {
@@ -70,6 +61,13 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
                 getMoimInfoFromServer(listMoimInfo.moimIdx)
             }
         })
+    }
+
+    private fun getMoims() {
+        val retrofitService = RetrofitService()
+        retrofitService.setGetMoimsView(this)
+
+        retrofitService.getMoims()
     }
 
     private fun getMoimInfoFromServer(moimIdx: Int) {
@@ -90,20 +88,24 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
         retrofitService.getMoim( moimIdx )
     }
 
-
-
     override fun onGetMoimsLoading() {
         //TODO("Not yet implemented")
     }
 
     override fun onGetMoimsSuccess( result: GetMoimsRes ) {
-        initRVMoimsAdapter(result.moimsInfo)
+        if( result.moimsInfo.isEmpty() ) {
+            binding.viewMoimFirstMsgTv.visibility = View.VISIBLE
+            binding.viewMoimRV.visibility = View.GONE
+        } else {
+            binding.viewMoimFirstMsgTv.visibility = View.GONE
+            binding.viewMoimRV.visibility = View.VISIBLE
+            initRVMoimsAdapter(result.moimsInfo)
+        }
     }
 
     override fun onGetMoimsFailure(code: Int, message: String) {
         Toast.makeText(this, "$code 모임 조회 실패. 다시 시도해주세요.", Toast.LENGTH_LONG).show()
     }
-
 
     override fun onGetMoimLoading() {
         //TODO("Not yet implemented")
@@ -132,7 +134,6 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
         intent.putExtra("moimSchedule", gson.toJson(result.userSchedules))
 
         startActivity(intent)
-
     }
 
     override fun onGetMoimFailure(code: Int, message: String) {
