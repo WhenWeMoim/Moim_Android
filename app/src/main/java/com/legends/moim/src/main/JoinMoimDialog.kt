@@ -37,7 +37,7 @@ class JoinMoimDialog(context : Context) {
 
             var moimPw: String? = null
             if( moimPwEt.text.isNotEmpty() )
-                moimPw = moimIdxEt.text.toString()
+                moimPw = moimPwEt.text.toString()
 
             listener!!.onJoinMoimDialogOKClicked( moimIdx, moimPw )
 

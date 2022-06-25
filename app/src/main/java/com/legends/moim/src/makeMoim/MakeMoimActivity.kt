@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.GridLayout
 import android.widget.TableLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
@@ -38,14 +39,14 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     lateinit var binding: ActivityMakeMoimBinding
     lateinit var datePicker: PrimeDatePicker
-    private lateinit var dateLayout: TableLayout
+    private lateinit var dateLayout: GridLayout
     private val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMakeMoimBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dateLayout = binding.makeMoimSelectDateTableLayout
+        dateLayout = binding.makeMoimSelectDateLayout
         dates.clear()
 
         initDatePickerDialog()
@@ -196,29 +197,33 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
                 if( dates.size <= 0 ) {
                     binding.makeMoimSelectDateBtn.visibility = View.VISIBLE
-                    binding.makeMoimSelectDateTableLayout.visibility = View.GONE
-
+                    binding.makeMoimSelectDateLayout.visibility = View.GONE
+                    binding.makeMoimNumDatesTv.visibility = View.INVISIBLE
                 } else {
                     binding.makeMoimSelectDateBtn.visibility = View.GONE
-                    binding.makeMoimSelectDateTableLayout.visibility = View.VISIBLE
+                    binding.makeMoimSelectDateLayout.visibility = View.VISIBLE
+                    binding.makeMoimNumDatesTv.visibility = View.VISIBLE
+                    binding.makeMoimNumDatesTv.text = String.format(" 총 %d개 선택", dates.size)
 
-                    binding.makeMoimSelectDateTableLayout.removeAllViews()
-                    for ( i: Int in 0 until selectCount ) {
+                    binding.makeMoimSelectDateLayout.removeAllViews()
+                    for ( i: Int in dates.indices ) {
+                        if( i >= 6 ) break
+
                         val tempDateString: String =
                             dates[i].month.toString() + "월 "+ dates[i].day.toString() + "일"
 
-                    val dateBtnPm = TableLayout.LayoutParams(0, 60, 1f)
+//                        val dateBtnPm = GridLayout.LayoutParams()
+//                            dateBtnPm.setMargins(4, 4, 4, 4)
 
                         val newDateBtn = AppCompatButton(this)
                             newDateBtn.background = resources.getDrawable(R.drawable.bg_makemoim_date_stroke_btn, null)
-                            newDateBtn.layoutParams = dateBtnPm
+//                            newDateBtn.layoutParams = dateBtnPm
                             newDateBtn.text = tempDateString
                             newDateBtn.textSize = 14f
                             newDateBtn.includeFontPadding = false
                             newDateBtn.setOnClickListener(dateClickListener())
-//                        newDateBtn.layoutParams = dateBtnPm
 
-                        binding.makeMoimSelectDateTableLayout.addView(newDateBtn)
+                        binding.makeMoimSelectDateLayout.addView(newDateBtn)
                     }
                 }
 

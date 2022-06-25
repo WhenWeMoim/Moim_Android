@@ -6,6 +6,7 @@ import android.view.Window
 import android.widget.GridLayout
 import android.widget.TextView
 import com.legends.moim.R
+import com.legends.moim.src.groupMoim.model.UserSchedules
 
 class ParticipantsDialog(context : Context) {
 
@@ -16,7 +17,7 @@ class ParticipantsDialog(context : Context) {
 
     private lateinit var participantsLayout: GridLayout
 
-    fun showTimeDialog() {
+    fun showTimeDialog(userSchedules: Array<UserSchedules>?) {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_participants)
@@ -30,7 +31,18 @@ class ParticipantsDialog(context : Context) {
         participantsLayout = dialog.findViewById(R.id.dialog_participants_gridLayout)
 
         tvTitle.text = "참가중인 인원" //모임 참가자 명단
-        tvMessage.text = "박재형" + ", " + "박민우" //임시 참가자 데이터. 그리드 레이아웃으로 구현할 생각 해야할지도, 아니면 String 집합으로 그냥?
+
+        var resultList = ""
+
+        if(userSchedules != null) {
+            for( i:Int in userSchedules.indices ) {
+                resultList += userSchedules[i].userName
+                if(i == userSchedules.size-1) break
+                resultList += ", "
+            }
+        }
+
+        tvMessage.text = resultList //임시 참가자 데이터. 그리드 레이아웃으로 구현할 생각 해야할지도, 아니면 String 집합으로 그냥?
 
         //btnOK = dialog.findViewById(R.id.dialog_base_ok_btn_tv)
 

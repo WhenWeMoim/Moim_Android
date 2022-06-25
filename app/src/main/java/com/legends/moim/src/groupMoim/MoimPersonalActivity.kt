@@ -1,6 +1,7 @@
 package com.legends.moim.src.groupMoim
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
@@ -69,9 +70,7 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
         when(v!!.id) {
             R.id.moim_personal_complete_btn -> {
                 postPersonalSchedule(personalScheduleFragment.getScheduleData())
-                //todo 서버로 전송
                 //todo 그룹 시간표에 적용
-                finish()
             }
             R.id.moim_personal_load_btn -> { // User 스케줄 불러오기 -> 아직 구현 x
                 binding.moimPersonalLoadBtn.visibility = View.INVISIBLE
@@ -116,6 +115,7 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
                 resultString += scheduleData[j][i].toString()
             }
         }
+        Log.d("postPersonalSchedule", "resultString : $resultString")
 
         val retrofitService = RetrofitService()
         retrofitService.setServerView(this)

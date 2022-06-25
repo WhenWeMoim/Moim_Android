@@ -1,6 +1,7 @@
 package com.legends.moim.utils.retrofit
 
 import android.util.Log
+import com.legends.moim.src.groupMoim.model.PersonalScheduleReq
 import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.model.PostMoimReq
 import com.legends.moim.utils.ApplicationClass.Companion.retrofit
@@ -184,13 +185,11 @@ class RetrofitService{
     fun patchPersonalSchedule( moimIdx: Int, personalSchedule: String ) {
         Log.d("CheckPoint : ", "Retrofit-patchPersonalSchedule Activated")
         serverView.onServerLoading()
-//        val params: HashMap<String, Any> = HashMap()
-//        params["courseTitle"] = personalSchedule
 
-        val userIdx = getUserIdx()
+        val personalScheduleReq=  PersonalScheduleReq(moimIdx = moimIdx, userIdx =  getUserIdx(), schedule = personalSchedule)
 
         val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.patchPersonalSchedule(userIdx, moimIdx, personalSchedule).enqueue(object : Callback<ServerDefaultResponse> {
+        cardRetrofitService.patchPersonalSchedule( personalScheduleReq ).enqueue(object : Callback<ServerDefaultResponse> {
             override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
                 if (response.isSuccessful) {
                     val res = response.body()!!
@@ -221,10 +220,10 @@ class RetrofitService{
         Log.d("CheckPoint : ", "CardService-postCard Activated")
         serverView.onServerLoading()
 
-        val userIdx = getUserIdx()
+        val personalScheduleReq=  PersonalScheduleReq(moimIdx = moimIdx, userIdx =  getUserIdx(), schedule = schedule)
 
         val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.patchPersonalSchedule(userIdx, moimIdx, schedule).enqueue(object : Callback<ServerDefaultResponse> {
+        cardRetrofitService.patchPersonalSchedule(personalScheduleReq).enqueue(object : Callback<ServerDefaultResponse> {
             override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!
@@ -251,12 +250,12 @@ class RetrofitService{
     /**
      * 3-1. 모임 참가
      */
-    fun postJoinMoim( JoinMoimReq: JoinMoimReq){
+    fun postJoinMoim( joinMoimReq: JoinMoimReq ){
         Log.d("CheckPoint ::: ", "RetrofitService-postJoinMoim Activated")
         serverView.onServerLoading()
 
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
-        retrofitService.postJoinMoim(JoinMoimReq).enqueue(object : Callback<ServerDefaultResponse> {
+        retrofitService.postJoinMoim( joinMoimReq ).enqueue(object : Callback<ServerDefaultResponse> {
             override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>){
                 if (response.isSuccessful) {
                     val res = response.body()!!
