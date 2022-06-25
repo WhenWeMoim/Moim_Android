@@ -25,6 +25,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <TextView
+        android:id="@+id/view_moim_first_msg_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="visible"
+
+        android:text="@string/nonMoim_msg"
+        android:textColor="@color/moim_main_1"
+        android:textSize="18sp"
+        android:fontFamily="@font/notosans_kr_bold"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/view_moim_RV"
         android:layout_width="match_parent"
