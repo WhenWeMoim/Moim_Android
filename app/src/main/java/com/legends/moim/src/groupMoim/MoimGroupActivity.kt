@@ -86,6 +86,7 @@ class MoimGroupActivity : BaseActivity() {
             FLAG_ACTIVITY_MAKEMOIM -> { // make moim에서 진입 : 모임 생성
                 thisMoim = getMoimInfo()
                 Log.d("MoimGroupActivity", "thisMoim Info : $thisMoim" )
+                mySchedule = null
                 setGroupScheduleFragment()
             }
             else -> {
