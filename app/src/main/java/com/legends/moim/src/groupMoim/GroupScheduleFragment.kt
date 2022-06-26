@@ -13,7 +13,9 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.config.baseModel.Moim
+import com.legends.moim.src.groupMoim.model.UserSchedules
 import com.legends.moim.src.groupMoim.model.selectedBtnFunc
+import com.legends.moim.utils.scheduleString2IntArray
 import java.lang.StringBuilder
 
 /**
@@ -22,7 +24,7 @@ import java.lang.StringBuilder
  * 배열은 두개가 들어감. 관리를 위한 실제 버튼 배열(buttons), 스케줄 결과가 들어가는 배열(resultSchedule)
  */
 
-class GroupScheduleFragment(private val moim: Moim): Fragment() {
+class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<UserSchedules>?): Fragment() {
 
     private var numOfDays = moim.dates.size //행 수 = 선택한 날짜 개수
     private var numOfTimes = moim.endTimeHour - moim.startTimeHour //열 수 = 시간 구간 개수
@@ -33,7 +35,6 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
     private lateinit var timeRows: Array<TableRow>
     private lateinit var scheduleButtons: Array<Array<Button>>
 
-    private var scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,8 +66,6 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
         }
         numOfDays = moim.dates.size
 
-        //todo Group용 scheduleData 초기화 필요
-        //scheduleData = Array(size = numOfDays, init = { IntArray( size = numOfTimes, init = { 2 } ) } )
     }
 
     private fun initScheduleTable(v: View) {
@@ -145,14 +144,8 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
 
         i = 0
         var j: Int
-        //임시로 모임 schedules String 정의.
         //todo schedules 스케줄데이터 가져오기.
-        var sb = StringBuilder()
-        for(temp_i:Int in 0 until numOfTimes*numOfDays){
-            sb.append(((temp_i%4)+1).toString())
-        }
-        //Log.d("SBCheckPoint : ", sb.toString())
-        var dummySchedulesData: String = sb.toString() //"111222333444"
+
         var scheduleCount: Int = 0
 
         while ( i < numOfTimes ) {
@@ -167,46 +160,92 @@ class GroupScheduleFragment(private val moim: Moim): Fragment() {
                 scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
                 scheduleButtons[i][j].layoutParams = cellPm
 
-//                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j))
+//                cellButtons[i][j]?.setOnClickListener(CellClickListener(scheduleResult, i, j)) //todo 클릭했을 때 인원들 의견 표시
                 timeRows[i].addView(scheduleButtons[i][j])
                 j += 1
             }
             i += 1
-
         }
+
         //여기서 모임 시간표 색깔 삽입.
-        j = 0
-        while ( j < numOfDays ){
-            i = 0
-            while ( i < numOfTimes ) {
-                var color = dummySchedulesData[scheduleCount]-'0'
-                //Log.d("SBCheckPoint : ", dummySchedulesData[scheduleCount].toString())
-                moimSceduleColor(scheduleButtons[i][j], color)
-                scheduleCount += 1
-                i += 1
+        if(schedule != null){
+            Log.d("scheduleAAAAAAAAA", "WTFISTHIS")
+
+            var numOfUsers: Int = schedule!!.size
+            var groupSchedulesArr = Array(size = numOfUsers, init = { IntArray( size = numOfTimes*numOfDays, init = { 1 } ) } )
+
+            for(i in 0 until numOfUsers){
+                for( j in 0 until numOfTimes*numOfDays ) {
+                    groupSchedulesArr[i][j] = ( schedule!![i].schedules!! )[j].digitToInt(10)
+                }
             }
-            j += 1
+
+
+            j = 0
+            while ( j < numOfDays ){
+                i = 0
+                while ( i < numOfTimes ) {
+                    //todo 여기서 개인 시간표들 종합시키기.
+                    var sumNumberOfColor = 0
+                    var numOfImpossible = 0 //미리 Array<UserSchedules> 조사 해서 불가능 인원 조사.
+                    //var intArr = Array(numOfTimes*numOfDays, {1})//임시 UserSchedules배열
+
+                    for(k:Int in 0 until numOfUsers){
+                        //var tempI:Int = groupSchedulesArr[k][numOfDays*j+numOfTimes]
+                        if(groupSchedulesArr[k][numOfTimes*j+i] == 4)
+                            numOfImpossible += 1
+                        Log.d("CheckigroupSch", "WTFISTHIS: ${k} ,  ${groupSchedulesArr[k][numOfTimes*j+i]}")
+                        sumNumberOfColor += convertScheduleData(groupSchedulesArr[k][numOfTimes*j+i])
+
+                    }
+                    Log.d("CheckiNumofColor", "WTFISTHIS:: ${sumNumberOfColor}")
+
+                    if(numOfImpossible > (numOfUsers/2)){ //과반수 불가능
+                        scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_impossible_high)
+                    }
+                    else{
+                        moimScheduleColor(scheduleButtons[i][j], sumNumberOfColor, numOfUsers)
+                    }
+                    scheduleCount += 1
+                    i += 1
+                }
+                j += 1
+            }
         }
     }
-
-    private fun moimSceduleColor(scheduleButtonsView: Button, color: Int){
-        //todo 여기서 숫자 몇에 어떤 색깔 쓸지 수정.
-        when(color) {
-            0 -> {
-                //default -> 아무것도 선택하지 않았을때, 생략
-            }
-            1 -> {
-                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice1_like_btn)
-            }
-            2 -> {
-                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
+    private fun convertScheduleData(ScheduleData: Int): Int{
+        var convertedData: Int = 0
+        when(ScheduleData){
+            4 -> {
+                convertedData = -2
             }
             3 -> {
-                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice3_dislike_btn)
+                convertedData = -1
             }
-            4 -> {
-                scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_choice4_impossible_btn)
+            2 -> {
+                convertedData = 1
             }
+            1 -> {
+                convertedData = 2
+            }
+        }
+        return convertedData
+
+    }
+
+    private fun moimScheduleColor(scheduleButtonsView: Button, sumNumberOfColor: Int, numOfUsers: Int){
+
+        if(sumNumberOfColor < 0){
+            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_impossible_low)
+        }
+        else if(sumNumberOfColor >= 0 && sumNumberOfColor < (numOfUsers/2)){
+            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_possible_low)
+        }
+        else if(sumNumberOfColor >= (numOfUsers/2) && sumNumberOfColor < numOfUsers){
+            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_possible_middle)
+        }
+        else if(sumNumberOfColor >= numOfUsers){
+            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_possible_high)
         }
 
     }

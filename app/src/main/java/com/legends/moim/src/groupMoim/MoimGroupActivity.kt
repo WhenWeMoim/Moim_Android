@@ -101,7 +101,7 @@ class MoimGroupActivity : BaseActivity() {
     }
 
     private fun setGroupScheduleFragment() {
-        groupScheduleFragment = GroupScheduleFragment(thisMoim)
+        groupScheduleFragment = GroupScheduleFragment(thisMoim, userSchedules)
 
         fragmentManager = supportFragmentManager
         transaction = fragmentManager.beginTransaction()
