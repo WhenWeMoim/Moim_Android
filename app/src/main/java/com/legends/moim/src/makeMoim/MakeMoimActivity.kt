@@ -13,6 +13,7 @@ import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.BaseDialog2
 import com.legends.moim.config.baseModel.DateStruct
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
@@ -27,7 +28,7 @@ import com.legends.moim.utils.retrofit.PostMoimView
 import com.legends.moim.utils.retrofit.RetrofitService
 import java.util.*
 
-class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener,
+class MakeMoimActivity: BaseActivity(),TimeDialog.TimeDialogClickListener, SettingDialog.SettingDialogClickListener,
     PostMoimView {
 
     companion object {
@@ -54,7 +55,15 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
 
     override fun onBackPressed() {
         //super.onBackPressed()
-        showDialog("모임 생성 취소", "모임 생성을 취소하시겠습니까?\n입력된 정보는 사라집니다.", "확인")
+        val dlg = BaseDialog2(this)
+        dlg.listener = CancleDialog()
+        dlg.showCancleDialog("모임 생성 취소", "모임 생성을 취소하시겠습니까?\n입력된 정보는 사라집니다.", "확인")
+    }
+
+    inner class CancleDialog(): BaseDialog2.BaseDialogClickListener {
+        override fun onOKClicked() {
+            finish()
+        }
     }
 
     override fun onOKClicked() {

@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.BaseDialog2
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
 import com.legends.moim.src.groupMoim.GroupMoimActivity
@@ -38,6 +39,19 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
         setContentView(binding.root)
 
         initView()
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        val dlg = BaseDialog2(this)
+        dlg.listener = CancleDialog()
+        dlg.showCancleDialog("어플리케이션 종료", "앱을 종료하시겠습니까?", "확인")
+    }
+
+    inner class CancleDialog(): BaseDialog2.BaseDialogClickListener {
+        override fun onOKClicked() {
+            finish()
+        }
     }
 
     private fun initView() {

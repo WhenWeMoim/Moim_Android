@@ -156,17 +156,16 @@ class GroupScheduleFragment(private val activityBinding: ActivityMoimGroupBindin
 
 
             j = 0
-            while ( j < numOfDays ){
+            while ( j < numOfDays ) {
                 i = 0
                 while ( i < numOfTimes ) {
-                    //todo 여기서 개인 시간표들 종합시키기.
                     var sumNumberOfColor = 0
                     var numOfImpossible = 0 //미리 Array<UserSchedules> 조사 해서 불가능 인원 조사.
                     //var intArr = Array(numOfTimes*numOfDays, {1})//임시 UserSchedules배열
 
                     for(k:Int in 0 until numOfParticipants){
                         //var tempI:Int = groupSchedulesArr[k][numOfDays*j+numOfTimes]
-                        if(groupSchedulesArr[k][numOfTimes*j+i] == 4)
+                        if(groupSchedulesArr[k][numOfTimes*j+i] == 1)
                             numOfImpossible += 1
                         sumNumberOfColor += convertScheduleData(groupSchedulesArr[k][numOfTimes*j+i])
 

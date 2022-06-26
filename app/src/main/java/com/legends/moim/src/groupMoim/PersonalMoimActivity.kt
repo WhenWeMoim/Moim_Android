@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
+import com.legends.moim.config.BaseDialog2
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
 import com.legends.moim.src.groupMoim.model.mySchedule
 import com.legends.moim.src.groupMoim.model.selectedBtnFunc
@@ -33,6 +34,19 @@ class PersonalMoimActivity: BaseActivity(), ServerView {
 
         setInitialize()
         initView()
+    }
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        val dlg = BaseDialog2(this)
+        dlg.listener = CancleDialog()
+        dlg.showCancleDialog("개인 시간표 입력 취소", "개인 시간표 입력을 취소하시겠습니까?\n 입력 내용은 저장되지않습니다.", "확인")
+    }
+
+    inner class CancleDialog(): BaseDialog2.BaseDialogClickListener {
+        override fun onOKClicked() {
+            finish()
+        }
     }
 
     private fun setInitialize() {
