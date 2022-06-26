@@ -50,7 +50,15 @@ class MoimGroupActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        //setGroupScheduleFragment() //todo 사용자가 방금 입력한 사간표 반영
+        if( userSchedules == null ) {
+            userSchedules = arrayOf( UserSchedules( userName = myName!!, schedules = mySchedule) )
+        } else {
+            for( i in userSchedules!!.indices ) {
+                if( userSchedules!![i].userName == myName )
+                    userSchedules!![i].schedules = mySchedule
+            }
+        }
+        setGroupScheduleFragment()
     }
 
     private fun initView() {

@@ -19,7 +19,7 @@ data class MoimInfo (
 )
 data class UserSchedules (
     @SerializedName("userName") val userName: String,
-    @SerializedName("schedules") val schedules: String?
+    @SerializedName("schedules") var schedules: String?
 )
 
 //data class UserSchedule(
