@@ -170,7 +170,7 @@ class GroupScheduleFragment(private val activityBinding: ActivityMoimGroupBindin
                             numOfImpossible += 1
                         sumNumberOfColor += convertScheduleData(groupSchedulesArr[k][numOfTimes*j+i])
 
-                        scheduleButtons[i][j].setOnClickListener( GroupCellClickListener( requireContext(), activityBinding,schedule, i, j, numOfDays) )
+                        scheduleButtons[i][j].setOnClickListener( GroupCellClickListener( requireContext(), activityBinding,schedule, i, j, numOfTimes) )
 
                     }
 
@@ -266,7 +266,7 @@ private open class GroupCellClickListener(private val context: Context,
                                           protected val binding: ActivityMoimGroupBinding,
                                           protected val schedule: Array<UserSchedules>?,
                                           protected val xAxis: Int, protected val yAxis: Int,
-                                          private val xMax: Int): View.OnClickListener {
+                                          private val yMax: Int): View.OnClickListener {
     override fun onClick(v: View?) {
 
         binding.moimGroupLikeMemberLinearLayout.removeAllViews()
@@ -274,7 +274,7 @@ private open class GroupCellClickListener(private val context: Context,
         binding.moimGroupPossibleMemberLinearLayout.removeAllViews()
         binding.moimGroupImpossibleMemberLinearLayout.removeAllViews()
 
-        val scheduleCellStringIndex = xMax*yAxis + xAxis
+        val scheduleCellStringIndex = yMax*yAxis + xAxis
         if( schedule != null ) {
             for ( i in schedule.indices ) {
                 if( schedule[i].schedules != null ) {
