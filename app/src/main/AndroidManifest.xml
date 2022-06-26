@@ -43,8 +43,8 @@
         <!--main-->
         <activity android:name=".src.main.MainActivity" />
         <!--groupMoim-->
-        <activity android:name=".src.groupMoim.MoimGroupActivity" />
-        <activity android:name=".src.groupMoim.MoimPersonalActivity" />
+        <activity android:name=".src.groupMoim.GroupMoimActivity" />
+        <activity android:name=".src.groupMoim.PersonalMoimActivity" />
         <!--makeMoim-->
         <activity android:name=".src.makeMoim.MakeMoimActivity" />
         <!--user-->

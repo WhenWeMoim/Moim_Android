@@ -10,14 +10,13 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
-import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.groupMoim.GroupMoimActivity
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
 import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.MakeMoimActivity
 import com.legends.moim.src.user.UserActivity
 import com.legends.moim.src.viewMoim.ViewMoimActivity
 import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
-import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
 import com.legends.moim.utils.dateInt2Structure
 import com.legends.moim.utils.getUserIdx
 import com.legends.moim.utils.retrofit.GetMoimView
@@ -127,7 +126,7 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
             password = result.moimInfo.passwd
         )
 
-        val intent = Intent(this, MoimGroupActivity::class.java)
+        val intent = Intent(this, GroupMoimActivity::class.java)
 
         val gson = Gson()
         intent.putExtra("startActivityFlag", FLAG_ACTIVITY_MAIN)

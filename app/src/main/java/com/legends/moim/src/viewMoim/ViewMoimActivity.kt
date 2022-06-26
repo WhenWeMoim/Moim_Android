@@ -11,7 +11,7 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityViewMoimBinding
-import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.groupMoim.GroupMoimActivity
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
 import com.legends.moim.src.makeMoim.MakeMoimActivity
 import com.legends.moim.src.viewMoim.model.GetMoimsRes
@@ -114,7 +114,7 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
     override fun onGetMoimSuccess(result: GroupScheduleRes) {
         Log.d("onGetMoimSuccess>>>>>>>", "result : $result")
 
-        val intent = Intent(this, MoimGroupActivity::class.java)
+        val intent = Intent(this, GroupMoimActivity::class.java)
 
         intent.putExtra("startActivityFlag", FLAG_ACTIVITY_VIEWMOIM)
 

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.GridLayout
-import android.widget.TableLayout
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.aminography.primecalendar.civil.CivilCalendar
@@ -17,7 +16,7 @@ import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.DateStruct
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMakeMoimBinding
-import com.legends.moim.src.groupMoim.MoimGroupActivity
+import com.legends.moim.src.groupMoim.GroupMoimActivity
 import com.legends.moim.src.makeMoim.dialog.SettingDialog
 import com.legends.moim.src.makeMoim.dialog.TimeDialog
 import com.legends.moim.src.makeMoim.model.PostMoimReq
@@ -286,7 +285,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
     }
 
     private fun startMoimGroupActivity(moim: Moim) {
-        val intent = Intent(this, MoimGroupActivity::class.java)
+        val intent = Intent(this, GroupMoimActivity::class.java)
         intent.putExtra("startActivityFlag", FLAG_ACTIVITY_MAKEMOIM)
         intent.putExtra("moimInfo", gson.toJson(moim))
         startActivity(intent)
