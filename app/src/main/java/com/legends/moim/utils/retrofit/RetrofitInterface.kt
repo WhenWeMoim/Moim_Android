@@ -43,14 +43,14 @@ interface RetrofitInterface {
 
     /*----- 아직 구현 안됨 -----*/
 
-    //모임 삭제
-    @PATCH("/app/trip/deleteTrip/{userIdx}/{tripIdx}")
-    fun deleteMoim(@Path("userIdx") userIdx : Int, @Path("moimIdx") moimIdx: Int) : Call<ServerDefaultResponse>
-
-    //모임 수정
-    @PATCH("/app/trip/deleteTrip/{userIdx}/{tripIdx}")
-    fun patchMoim(@Path("userIdx") userIdx : Int, @Path("moimIdx") moimIdx: Int) : Call<ServerDefaultResponse>
-
-    @PATCH("/app/course/deleteCourse/{userIdx}/{courseIdx}")
-    fun deleteCard(@Path("userIdx") userIdx : Int, @Path("courseIdx") courseIdx :String) : Call<ServerDefaultResponse>
+//    //모임 삭제
+//    @PATCH("/app/trip/deleteTrip/{userIdx}/{tripIdx}")
+//    fun deleteMoim(@Path("userIdx") userIdx : Int, @Path("moimIdx") moimIdx: Int) : Call<ServerDefaultResponse>
+//
+//    //모임 수정
+//    @PATCH("/app/trip/deleteTrip/{userIdx}/{tripIdx}")
+//    fun patchMoim(@Path("userIdx") userIdx : Int, @Path("moimIdx") moimIdx: Int) : Call<ServerDefaultResponse>
+//
+//    @PATCH("/app/course/deleteCourse/{userIdx}/{courseIdx}")
+//    fun deleteCard(@Path("userIdx") userIdx : Int, @Path("courseIdx") courseIdx :String) : Call<ServerDefaultResponse>
 }
