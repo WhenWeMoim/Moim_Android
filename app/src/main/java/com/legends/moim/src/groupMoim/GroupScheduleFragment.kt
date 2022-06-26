@@ -1,9 +1,7 @@
 package com.legends.moim.src.groupMoim
 
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +12,6 @@ import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.src.groupMoim.model.UserSchedules
-import com.legends.moim.src.groupMoim.model.selectedBtnFunc
-import com.legends.moim.utils.scheduleString2IntArray
-import java.lang.StringBuilder
 
 /**
  * 한 개 행(row) : 한 시간대
@@ -40,7 +35,7 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreateView(inflater, container, savedInstanceState)
 
         val v: View = inflater.inflate(R.layout.fragment_schedule_group, container, false)
@@ -74,11 +69,11 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
         timeLayout = v.findViewById(R.id.group_schedule_time_linearLayout) as LinearLayout
 
         val timeTextPm = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 0, 1F)
-        timeTextPm.gravity = Gravity.RIGHT
+        timeTextPm.gravity = Gravity.END
 
         lateinit var timeText: TextView
 
-        var i: Int = 0
+        var i = 0
 
         timeText = TextView(context)
         timeText.text = String.format("")
@@ -236,16 +231,16 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
     private fun moimScheduleColor(scheduleButtonsView: Button, sumNumberOfColor: Int, numOfUsers: Int){
 
         if(sumNumberOfColor < 0){
-            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_impossible_low)
+            scheduleButtonsView.setBackgroundResource(R.drawable.bg_schedule_cell_impossible_low)
         }
         else if(sumNumberOfColor >= 0 && sumNumberOfColor < (numOfUsers/2)){
-            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_possible_low)
+            scheduleButtonsView.setBackgroundResource(R.drawable.bg_schedule_cell_possible_low)
         }
         else if(sumNumberOfColor >= (numOfUsers/2) && sumNumberOfColor < numOfUsers){
-            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_possible_middle)
+            scheduleButtonsView.setBackgroundResource(R.drawable.bg_schedule_cell_possible_middle)
         }
         else if(sumNumberOfColor >= numOfUsers){
-            scheduleButtonsView!!.setBackgroundResource(R.drawable.bg_schedule_cell_possible_high)
+            scheduleButtonsView.setBackgroundResource(R.drawable.bg_schedule_cell_possible_high)
         }
 
     }

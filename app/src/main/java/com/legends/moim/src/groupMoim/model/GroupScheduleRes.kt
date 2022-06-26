@@ -6,7 +6,27 @@ data class GroupScheduleRes(
     @SerializedName("moimInfo")val moimInfo: MoimInfo,
     @SerializedName("dates")val dates: Array<Int>,
     @SerializedName("moimUserSchedules")val userSchedules: Array<UserSchedules>
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as GroupScheduleRes
+
+        if (moimInfo != other.moimInfo) return false
+        if (!dates.contentEquals(other.dates)) return false
+        if (!userSchedules.contentEquals(other.userSchedules)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = moimInfo.hashCode()
+        result = 31 * result + dates.contentHashCode()
+        result = 31 * result + userSchedules.contentHashCode()
+        return result
+    }
+}
 
 data class MoimInfo (
     @SerializedName("moimIdx") val moimIdx: Int,
@@ -19,7 +39,7 @@ data class MoimInfo (
 )
 data class UserSchedules (
     @SerializedName("userName") val userName: String,
-    @SerializedName("schedules") val schedules: String?
+    @SerializedName("schedules") var schedules: String?
 )
 
 //data class UserSchedule(

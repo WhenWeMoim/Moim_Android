@@ -1,15 +1,13 @@
-package com.legends.moim.src.groupMoim
+package com.legends.moim.src.groupMoim.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.EditText
-import android.widget.NumberPicker
 import android.widget.TextView
 import com.legends.moim.R
-import com.legends.moim.config.baseModel.Moim
 
-class InviteDialog(context : Context, val moimIdx: Int, val pw: String?) {
+class InviteDialog(context : Context, private val moimIdx: Int, private val pw: String?) {
 
     private val dialog = Dialog(context)
 

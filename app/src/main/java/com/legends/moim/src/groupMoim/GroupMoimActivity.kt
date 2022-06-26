@@ -2,7 +2,6 @@ package com.legends.moim.src.groupMoim
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -13,21 +12,18 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMoimGroupBinding
-import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.groupMoim.dialog.InviteDialog
+import com.legends.moim.src.groupMoim.dialog.ParticipantsDialog
 import com.legends.moim.src.groupMoim.model.UserSchedules
 import com.legends.moim.src.groupMoim.model.mySchedule
 import com.legends.moim.src.groupMoim.model.thisMoim
-import com.legends.moim.src.main.JoinMoimDialog
-import com.legends.moim.src.main.MainActivity
 import com.legends.moim.utils.FLAG_ACTIVITY_MAIN
 import com.legends.moim.utils.FLAG_ACTIVITY_MAKEMOIM
 import com.legends.moim.utils.FLAG_ACTIVITY_VIEWMOIM
 import com.legends.moim.utils.getNickname
-import com.legends.moim.utils.retrofit.GetMoimView
-import com.legends.moim.utils.retrofit.RetrofitService
 
 
-class MoimGroupActivity : BaseActivity() {
+class GroupMoimActivity : BaseActivity() {
 
     private lateinit var binding : ActivityMoimGroupBinding
     private lateinit var groupScheduleFragment: GroupScheduleFragment
@@ -37,9 +33,9 @@ class MoimGroupActivity : BaseActivity() {
     private val gson = Gson()
 
     private var userSchedules: Array<UserSchedules>? = null
-    private var participant = 1
+    private var numOfParticipants = 1
 
-    val myName = getNickname()
+    private val myName = getNickname()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +46,22 @@ class MoimGroupActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        //setGroupScheduleFragment() //todo 사용자가 방금 입력한 사간표 반영
+        if( userSchedules == null ) {
+            userSchedules = arrayOf( UserSchedules( userName = myName!!, schedules = mySchedule) )
+        } else {
+            for( i in userSchedules!!.indices ) {
+                if( userSchedules!![i].userName == myName )
+                    userSchedules!![i].schedules = mySchedule
+            }
+        }
+        setGroupScheduleFragment()
     }
 
     private fun initView() {
-        //binding.moimGroupTopbarLayout.layoutTopbarTitleTv.text = "우리 모임"
-
         binding.moimGroupMoimNameTv.text = thisMoim.moimTitle
         binding.moimGroupMoimExplainTv.text = thisMoim.moimDescription
 
-        binding.moimGroupParticipantTv.text = participant.toString() + "명 참여"
+        binding.moimGroupParticipantTv.text = String.format("%d명 참여", numOfParticipants)
     }
 
     private fun setInitialize() {
@@ -79,7 +81,7 @@ class MoimGroupActivity : BaseActivity() {
                             mySchedule = userSchedules!![i].schedules
                     }
 
-                    participant = userSchedules!!.size
+                    numOfParticipants = userSchedules!!.size
                 }
                 setGroupScheduleFragment()
             }
@@ -140,7 +142,7 @@ class MoimGroupActivity : BaseActivity() {
 
             }
             R.id.moim_group_add_personal_btn -> { //개인 시간표 추가
-                val intent = Intent(this, MoimPersonalActivity::class.java)
+                val intent = Intent(this, PersonalMoimActivity::class.java)
                 intent.putExtra("mySchedule", mySchedule)
                 startActivity(intent)
             }

@@ -2,18 +2,17 @@ package com.legends.moim.src.main
 
 import android.content.Intent
 import android.os.Bundle
-import com.legends.moim.config.BaseActivity
-import com.legends.moim.R
-import com.kakao.sdk.user.UserApiClient
-import android.widget.Toast
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.AuthErrorCause.*
-import android.widget.ImageButton
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import com.legends.moim.databinding.ActivityLoginBinding
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.AuthErrorCause.*
+import com.kakao.sdk.user.UserApiClient
+import com.legends.moim.R
+import com.legends.moim.config.BaseActivity
 import com.legends.moim.utils.retrofit.LoginView
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.saveNickname

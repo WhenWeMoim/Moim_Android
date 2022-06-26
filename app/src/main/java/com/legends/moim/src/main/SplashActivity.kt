@@ -1,11 +1,11 @@
 package com.legends.moim.src.main
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.legends.moim.R
 import com.legends.moim.utils.getUserIdx
 

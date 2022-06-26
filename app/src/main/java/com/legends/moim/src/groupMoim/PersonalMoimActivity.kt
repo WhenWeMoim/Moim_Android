@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.google.gson.Gson
 import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.databinding.ActivityMoimPersonalBinding
@@ -18,7 +17,7 @@ import com.legends.moim.utils.*
 import com.legends.moim.utils.retrofit.RetrofitService
 import com.legends.moim.utils.retrofit.ServerView
 
-class MoimPersonalActivity: BaseActivity(), ServerView {
+class PersonalMoimActivity: BaseActivity(), ServerView {
 
     lateinit var binding: ActivityMoimPersonalBinding
 
@@ -48,7 +47,6 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
         transaction = fragmentManager.beginTransaction()
 
         if( !(intent.getStringExtra("mySchedule").isNullOrEmpty()) ) {
-            val gson = Gson()
             val intScheduleArray = scheduleString2IntArray(intent.getStringExtra("mySchedule")!!, thisMoim.endTimeHour - thisMoim.startTimeHour, thisMoim.dates.size)
             personalScheduleFragment = PersonalScheduleFragment(thisMoim, intScheduleArray)
         } else
@@ -73,7 +71,6 @@ class MoimPersonalActivity: BaseActivity(), ServerView {
         when(v!!.id) {
             R.id.moim_personal_complete_btn -> {
                 postPersonalSchedule(personalScheduleFragment.getScheduleData())
-                //todo 그룹 시간표에 적용
             }
             R.id.moim_personal_load_btn -> { // User 스케줄 불러오기 -> 아직 구현 x
                 binding.moimPersonalLoadBtn.visibility = View.INVISIBLE
