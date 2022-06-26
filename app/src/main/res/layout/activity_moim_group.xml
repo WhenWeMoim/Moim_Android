@@ -143,9 +143,9 @@
 
             <!--선호 인원-->
             <LinearLayout
-                android:id="@+id/moim_group_like_member_linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginHorizontal="10dp">
@@ -167,70 +167,35 @@
                     android:layout_marginBottom="5dp"
                     />
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/moim_group_like_member_linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="박재형"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosans_kr_bold"
-                    android:includeFontPadding="false"
-                    android:layout_margin="2dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="박재형"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosans_kr_bold"
-                    android:includeFontPadding="false"
-                    android:layout_margin="2dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="박재형"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosans_kr_bold"
-                    android:includeFontPadding="false"
-                    android:layout_margin="2dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="박재형"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosans_kr_bold"
-                    android:includeFontPadding="false"
-                    android:layout_margin="2dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="박재형"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/notosans_kr_bold"
-                    android:includeFontPadding="false"
-                    android:layout_margin="2dp"
-                    />
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="7dp"
-                    android:layout_margin="2dp"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginHorizontal="10dp"
+                    >
 
-                    />
+                </LinearLayout>
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="박재형"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="14sp"-->
+<!--                    android:fontFamily="@font/notosans_kr_bold"-->
+<!--                    android:includeFontPadding="false"-->
+<!--                    android:layout_margin="2dp"-->
+<!--                    />-->
 
             </LinearLayout>
 
             <!--가능 인원-->
             <LinearLayout
-                android:id="@+id/moim_group_possible_member_linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginHorizontal="10dp">
@@ -253,14 +218,24 @@
                     android:layout_marginBottom="5dp"
                     />
 
+                <LinearLayout
+                    android:id="@+id/moim_group_possible_member_linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginHorizontal="10dp"
+                    >
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <!--비선호 인원-->
             <LinearLayout
-                android:id="@+id/moim_group_dislike_member_linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginHorizontal="10dp">
@@ -282,13 +257,24 @@
                     android:layout_marginBottom="5dp"
                     />
 
+                <LinearLayout
+                    android:id="@+id/moim_group_dislike_member_linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginHorizontal="10dp"
+                    >
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <!--불가능 인원-->
             <LinearLayout
-                android:id="@+id/moim_group_impossible_member_linearLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginHorizontal="10dp">
@@ -309,6 +295,16 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginBottom="5dp"
                     />
+                <LinearLayout
+                    android:id="@+id/moim_group_impossible_member_linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_marginHorizontal="10dp"
+                    >
+
+                </LinearLayout>
 
             </LinearLayout>
 

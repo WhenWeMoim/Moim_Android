@@ -1,5 +1,6 @@
 package com.legends.moim.src.groupMoim
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
@@ -7,11 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import com.legends.moim.R
 import com.legends.moim.config.baseModel.Moim
+import com.legends.moim.databinding.ActivityMoimGroupBinding
 import com.legends.moim.src.groupMoim.model.UserSchedules
+import com.legends.moim.src.groupMoim.model.selectedBtnFunc
+import com.legends.moim.utils.CHOICE_DISLIKE
+import com.legends.moim.utils.CHOICE_IMPOSSIBLE
+import com.legends.moim.utils.CHOICE_LIKE
+import com.legends.moim.utils.CHOICE_POSSIBLE
 
 /**
  * 한 개 행(row) : 한 시간대
@@ -19,7 +27,8 @@ import com.legends.moim.src.groupMoim.model.UserSchedules
  * 배열은 두개가 들어감. 관리를 위한 실제 버튼 배열(buttons), 스케줄 결과가 들어가는 배열(resultSchedule)
  */
 
-class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<UserSchedules>?): Fragment() {
+class GroupScheduleFragment(private val activityBinding: ActivityMoimGroupBinding,
+                            private val moim: Moim, private val schedule: Array<UserSchedules>?): Fragment() {
 
     private var numOfDays = moim.dates.size //행 수 = 선택한 날짜 개수
     private var numOfTimes = moim.endTimeHour - moim.startTimeHour //열 수 = 시간 구간 개수
@@ -64,40 +73,8 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
     }
 
     private fun initScheduleTable(v: View) {
+        setTimeLayout(v)
 
-        //time 시간표 삽입
-        timeLayout = v.findViewById(R.id.group_schedule_time_linearLayout) as LinearLayout
-
-        val timeTextPm = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 0, 1F)
-        timeTextPm.gravity = Gravity.END
-
-        lateinit var timeText: TextView
-
-        var i = 0
-
-        timeText = TextView(context)
-        timeText.text = String.format("")
-        timeText.textSize = 44.197F
-        timeLayout.addView(timeText)
-
-        while( i <= numOfTimes ) {
-            timeText = TextView(context)
-            timeText.layoutParams = timeTextPm
-            timeText.text = String.format("%d시", moim.startTimeHour + i )
-            timeText.textSize = 10F
-            timeText.setTextColor(getColor(requireActivity().applicationContext, R.color.black))
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                timeText.typeface = resources.getFont(R.font.notosans_kr_regular)
-            }
-            timeText.includeFontPadding = false
-
-            timeLayout.addView(timeText)
-            timeText = TextView(context)
-            timeText.text = String.format("")
-            timeText.textSize = 24.619F
-            timeLayout.addView(timeText)
-            i++
-        }
 
         //date 시간표 삽입
         dateLayout = v.findViewById(R.id.group_schedule_date_linearLayout) as LinearLayout
@@ -106,7 +83,7 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
             dateTextPm.gravity = Gravity.CENTER
         lateinit var dateText: TextView
 
-        i = 0
+        var i = 0
         while( i < numOfDays ) {
             dateText = TextView(context)
             dateText.layoutParams = dateTextPm
@@ -193,6 +170,8 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
                             numOfImpossible += 1
                         sumNumberOfColor += convertScheduleData(groupSchedulesArr[k][numOfTimes*j+i])
 
+                        scheduleButtons[i][j].setOnClickListener( GroupCellClickListener( requireContext(), activityBinding,schedule, i, j, numOfDays) )
+
                     }
 
                     if(numOfImpossible > (numOfParticipants/2)){ //과반수 불가능
@@ -208,19 +187,56 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
             }
         }
     }
+
+    private fun setTimeLayout(v: View) {
+        //time 시간표 삽입
+        timeLayout = v.findViewById(R.id.group_schedule_time_linearLayout) as LinearLayout
+
+        val timeTextPm = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 0, 1F)
+        timeTextPm.gravity = Gravity.END
+
+        lateinit var timeText: TextView
+
+        var i = 0
+
+        timeText = TextView(context)
+        timeText.text = String.format("")
+        timeText.textSize = 44.197F
+        timeLayout.addView(timeText)
+
+        while (i <= numOfTimes) {
+            timeText = TextView(context)
+            timeText.layoutParams = timeTextPm
+            timeText.text = String.format("%d시", moim.startTimeHour + i)
+            timeText.textSize = 10F
+            timeText.setTextColor(getColor(requireActivity().applicationContext, R.color.black))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                timeText.typeface = resources.getFont(R.font.notosans_kr_regular)
+            }
+            timeText.includeFontPadding = false
+
+            timeLayout.addView(timeText)
+            timeText = TextView(context)
+            timeText.text = String.format("")
+            timeText.textSize = 24.619F
+            timeLayout.addView(timeText)
+            i++
+        }
+    }
+
     private fun convertScheduleData(ScheduleData: Int): Int{
         var convertedData: Int = 0
         when(ScheduleData){
-            4 -> {
+            CHOICE_IMPOSSIBLE -> {
                 convertedData = -2
             }
-            3 -> {
+            CHOICE_DISLIKE -> {
                 convertedData = -1
             }
-            2 -> {
+            CHOICE_POSSIBLE -> {
                 convertedData = 1
             }
-            1 -> {
+            CHOICE_LIKE -> {
                 convertedData = 2
             }
         }
@@ -243,5 +259,54 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
             scheduleButtonsView.setBackgroundResource(R.drawable.bg_schedule_cell_possible_high)
         }
 
+    }
+}
+
+private open class GroupCellClickListener(private val context: Context,
+                                          protected val binding: ActivityMoimGroupBinding,
+                                          protected val schedule: Array<UserSchedules>?,
+                                          protected val xAxis: Int, protected val yAxis: Int,
+                                          private val xMax: Int): View.OnClickListener {
+    override fun onClick(v: View?) {
+
+        binding.moimGroupLikeMemberLinearLayout.removeAllViews()
+        binding.moimGroupDislikeMemberLinearLayout.removeAllViews()
+        binding.moimGroupPossibleMemberLinearLayout.removeAllViews()
+        binding.moimGroupImpossibleMemberLinearLayout.removeAllViews()
+
+        val scheduleCellStringIndex = xMax*yAxis + xAxis
+        if( schedule != null ) {
+            for ( i in schedule.indices ) {
+                if( schedule[i].schedules != null ) {
+                    when (schedule[i].schedules!![scheduleCellStringIndex].digitToInt(10) ) {
+                        CHOICE_LIKE -> addTextInLayout(schedule[i].userName, CHOICE_LIKE)
+                        CHOICE_POSSIBLE -> addTextInLayout(schedule[i].userName, CHOICE_POSSIBLE)
+                        CHOICE_DISLIKE -> addTextInLayout(schedule[i].userName, CHOICE_DISLIKE)
+                        CHOICE_IMPOSSIBLE -> addTextInLayout(schedule[i].userName, CHOICE_IMPOSSIBLE)
+                    }
+                }
+            }
+        }
+    }
+    private fun addTextInLayout(name: String, toWhere: Int) {
+        val nameTextPm = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            nameTextPm.gravity = Gravity.CENTER
+            nameTextPm.setMargins(2, 2, 2, 2)
+
+        val nameText = TextView(context)
+            nameText.layoutParams = nameTextPm
+            nameText.text = name
+
+            nameText.setTextColor( ContextCompat.getColor( context, R.color.white ) )
+            nameText.includeFontPadding = false
+            nameText.gravity = Gravity.CENTER
+            nameText.textSize = 14F
+
+        when( toWhere ) {
+            CHOICE_LIKE -> binding.moimGroupLikeMemberLinearLayout.addView(nameText)
+            CHOICE_POSSIBLE -> binding.moimGroupPossibleMemberLinearLayout.addView(nameText)
+            CHOICE_DISLIKE -> binding.moimGroupDislikeMemberLinearLayout.addView(nameText)
+            CHOICE_IMPOSSIBLE -> binding.moimGroupImpossibleMemberLinearLayout.addView(nameText)
+        }
     }
 }
