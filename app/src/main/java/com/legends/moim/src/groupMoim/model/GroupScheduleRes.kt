@@ -14,7 +14,8 @@ data class MoimInfo (
     @SerializedName("moimDescription") val moimDescription: String,
     @SerializedName("masterUserIdx") val masterUserIdx: Int,
     @SerializedName("startTime") val startTime: String,
-    @SerializedName("endTime") val endTime: String
+    @SerializedName("endTime") val endTime: String,
+    @SerializedName("passwd") val passwd: String
 )
 data class UserSchedules (
     @SerializedName("userName") val userName: String,

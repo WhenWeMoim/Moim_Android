@@ -47,7 +47,7 @@ class RetrofitService{
 
         val params: HashMap<String, String> = HashMap()
         params["userName"] = userName
-        params["kakaoToken"] = userEmail
+        params["ps"] = userEmail
 
         val retrofitService = retrofit.create(RetrofitInterface::class.java)
         retrofitService.postLogin( params ).enqueue(object : Callback<PostLoginResponse> {
@@ -182,36 +182,36 @@ class RetrofitService{
     /**
      * 2-3-1. 이미 post 한 유저의 PersonalSchedule 업로드(patch)
      */
-    fun patchPersonalSchedule( moimIdx: Int, personalSchedule: String ) {
-        Log.d("CheckPoint : ", "Retrofit-patchPersonalSchedule Activated")
-        serverView.onServerLoading()
-
-        val personalScheduleReq=  PersonalScheduleReq(moimIdx = moimIdx, userIdx =  getUserIdx(), schedule = personalSchedule)
-
-        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
-        cardRetrofitService.patchPersonalSchedule( personalScheduleReq ).enqueue(object : Callback<ServerDefaultResponse> {
-            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
-                if (response.isSuccessful) {
-                    val res = response.body()!!
-                    Log.d("__res", response.body()!!.toString())
-                    when (res.code) {
-                        1000 -> { //성공
-                            Log.d("Retrofit-PSchedule", res.code.toString() + " : " + res.message)
-                            serverView.onServerSuccess()
-                        }
-                        else -> { //의도된 실패
-                            Log.d("Retrofit-PSchedule", res.code.toString() + " : " + res.message)
-                            serverView.onServerFailure(res.code, res.message)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
-                serverView.onServerFailure(400, t.message.toString())
-                Log.d("CardService-patchTitle", t.toString()) //네트워크 실패
-            }
-        })
-    }
+//    fun patchPersonalSchedule( moimIdx: Int, personalSchedule: String ) {
+//        Log.d("CheckPoint : ", "Retrofit-patchPersonalSchedule Activated")
+//        serverView.onServerLoading()
+//
+//        val personalScheduleReq=  PersonalScheduleReq(moimIdx = moimIdx, userIdx =  getUserIdx(), schedule = personalSchedule)
+//
+//        val cardRetrofitService = retrofit.create(RetrofitInterface::class.java)
+//        cardRetrofitService.patchPersonalSchedule( personalScheduleReq ).enqueue(object : Callback<ServerDefaultResponse> {
+//            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
+//                if (response.isSuccessful) {
+//                    val res = response.body()!!
+//                    Log.d("__res", response.body()!!.toString())
+//                    when (res.code) {
+//                        1000 -> { //성공
+//                            Log.d("Retrofit-PSchedule", res.code.toString() + " : " + res.message)
+//                            serverView.onServerSuccess()
+//                        }
+//                        else -> { //의도된 실패
+//                            Log.d("Retrofit-PSchedule", res.code.toString() + " : " + res.message)
+//                            serverView.onServerFailure(res.code, res.message)
+//                        }
+//                    }
+//                }
+//            }
+//            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
+//                serverView.onServerFailure(400, t.message.toString())
+//                Log.d("CardService-patchTitle", t.toString()) //네트워크 실패
+//            }
+//        })
+//    }
 
     /**
      * 2-3-2. PersonalSchedule 전송
@@ -282,36 +282,36 @@ class RetrofitService{
     /**
      *  (아직 구현 안됨) - 모임 삭제
      */
-    fun deleteMoim(moimIdx: Int) {
-        Log.d("CheckPoint : ", "CardService-deleteTrip Activated")
-
-        val userIdx = getUserIdx()
-
-        serverView.onServerLoading()
-
-        val retrofitService = retrofit.create(RetrofitInterface::class.java)
-        retrofitService.deleteMoim(userIdx, moimIdx).enqueue(object : Callback<ServerDefaultResponse> {
-            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
-                if (response.isSuccessful) {
-                    val res = response.body()!!
-                    Log.d("__res", response.body()!!.toString())
-                    when (res.code) {
-                        1000 -> { //성공
-                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
-                            serverView.onServerSuccess()
-                        }
-                        else -> { //의도된 실패
-                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
-                            serverView.onServerFailure(res.code, res.message)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
-                serverView.onServerFailure(400, t.message.toString())
-                Log.d("CardService-deleteTrip", t.toString()) //네트워크 실패
-            }
-        })
-    }
+//    fun deleteMoim(moimIdx: Int) {
+//        Log.d("CheckPoint : ", "CardService-deleteTrip Activated")
+//
+//        val userIdx = getUserIdx()
+//
+//        serverView.onServerLoading()
+//
+//        val retrofitService = retrofit.create(RetrofitInterface::class.java)
+//        retrofitService.deleteMoim(userIdx, moimIdx).enqueue(object : Callback<ServerDefaultResponse> {
+//            override fun onResponse(call: Call<ServerDefaultResponse>, response: Response<ServerDefaultResponse>) {
+//                if (response.isSuccessful) {
+//                    val res = response.body()!!
+//                    Log.d("__res", response.body()!!.toString())
+//                    when (res.code) {
+//                        1000 -> { //성공
+//                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
+//                            serverView.onServerSuccess()
+//                        }
+//                        else -> { //의도된 실패
+//                            Log.d("CardService-deleteTrip", res.code.toString() + " : " + res.message)
+//                            serverView.onServerFailure(res.code, res.message)
+//                        }
+//                    }
+//                }
+//            }
+//            override fun onFailure(call: Call<ServerDefaultResponse>, t: Throwable) {
+//                serverView.onServerFailure(400, t.message.toString())
+//                Log.d("CardService-deleteTrip", t.toString()) //네트워크 실패
+//            }
+//        })
+//    }
 
 }
