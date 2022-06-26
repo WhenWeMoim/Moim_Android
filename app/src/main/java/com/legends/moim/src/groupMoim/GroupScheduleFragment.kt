@@ -169,14 +169,16 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
 
         //여기서 모임 시간표 색깔 삽입.
         if(schedule != null){
-            Log.d("scheduleAAAAAAAAA", "WTFISTHIS")
+            val size = numOfTimes*numOfDays
 
-            var numOfUsers: Int = schedule!!.size
-            var groupSchedulesArr = Array(size = numOfUsers, init = { IntArray( size = numOfTimes*numOfDays, init = { 1 } ) } )
+            val numOfParticipants: Int = schedule.size
+            val groupSchedulesArr = Array(size = numOfParticipants, init = { IntArray( size = numOfTimes*numOfDays, init = { 1 } ) } )
 
-            for(i in 0 until numOfUsers){
-                for( j in 0 until numOfTimes*numOfDays ) {
-                    groupSchedulesArr[i][j] = ( schedule!![i].schedules!! )[j].digitToInt(10)
+            for(i in 0 until numOfParticipants){
+
+                for( j in 0 until size ) {
+                    if( schedule[i].schedules != null)
+                        groupSchedulesArr[i][j] = ( schedule[i].schedules!! )[j].digitToInt(10)
                 }
             }
 
@@ -190,21 +192,19 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
                     var numOfImpossible = 0 //미리 Array<UserSchedules> 조사 해서 불가능 인원 조사.
                     //var intArr = Array(numOfTimes*numOfDays, {1})//임시 UserSchedules배열
 
-                    for(k:Int in 0 until numOfUsers){
+                    for(k:Int in 0 until numOfParticipants){
                         //var tempI:Int = groupSchedulesArr[k][numOfDays*j+numOfTimes]
                         if(groupSchedulesArr[k][numOfTimes*j+i] == 4)
                             numOfImpossible += 1
-                        Log.d("CheckigroupSch", "WTFISTHIS: ${k} ,  ${groupSchedulesArr[k][numOfTimes*j+i]}")
                         sumNumberOfColor += convertScheduleData(groupSchedulesArr[k][numOfTimes*j+i])
 
                     }
-                    Log.d("CheckiNumofColor", "WTFISTHIS:: ${sumNumberOfColor}")
 
-                    if(numOfImpossible > (numOfUsers/2)){ //과반수 불가능
+                    if(numOfImpossible > (numOfParticipants/2)){ //과반수 불가능
                         scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_impossible_high)
                     }
                     else{
-                        moimScheduleColor(scheduleButtons[i][j], sumNumberOfColor, numOfUsers)
+                        moimScheduleColor(scheduleButtons[i][j], sumNumberOfColor, numOfParticipants)
                     }
                     scheduleCount += 1
                     i += 1
