@@ -102,7 +102,7 @@ class PersonalScheduleFragment(private val moim: Moim, private val schedule: Arr
                     scheduleButtons[i][j].setBackgroundResource(R.drawable.bg_schedule_cell_choice2_possible_btn)
                     scheduleButtons[i][j].layoutParams = cellPm
 
-                    scheduleButtons[i][j].setOnClickListener( CellClickListener( scheduleData!!, i, j ) )
+                    scheduleButtons[i][j].setOnClickListener( PersonalCellClickListener( scheduleData!!, i, j ) )
                     timeRows[i].addView(scheduleButtons[i][j])
                 }
             }
@@ -126,7 +126,7 @@ class PersonalScheduleFragment(private val moim: Moim, private val schedule: Arr
                     }
                     scheduleButtons[i][j].layoutParams = cellPm
 
-                    scheduleButtons[i][j].setOnClickListener( CellClickListener( scheduleData!!, i, j ) )
+                    scheduleButtons[i][j].setOnClickListener( PersonalCellClickListener( scheduleData!!, i, j ) )
                     timeRows[i].addView(scheduleButtons[i][j])
                 }
             }
@@ -137,7 +137,7 @@ class PersonalScheduleFragment(private val moim: Moim, private val schedule: Arr
         dateLayout = v.findViewById(R.id.personal_schedule_date_linearLayout) as LinearLayout
 
         val dateTextPm = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1F)
-        dateTextPm.gravity = Gravity.CENTER
+            dateTextPm.gravity = Gravity.CENTER
         lateinit var dateText: TextView
 
         var i = 0
@@ -220,7 +220,7 @@ class PersonalScheduleFragment(private val moim: Moim, private val schedule: Arr
     public fun getNumOfTimes(): Int = numOfTimes
 }
 
-private open class CellClickListener(protected var scheduleResult: Array<IntArray>, protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {
+private open class PersonalCellClickListener(protected var scheduleResult: Array<IntArray>, protected var xAxis: Int, protected var yAxis: Int): View.OnClickListener {
     override fun onClick(v: View?) {
         when(selectedBtnFunc) {
             CHOICE_LIKE -> {

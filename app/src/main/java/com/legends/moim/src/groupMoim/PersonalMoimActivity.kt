@@ -24,7 +24,7 @@ class PersonalMoimActivity: BaseActivity(), ServerView {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var transaction: FragmentTransaction
     private lateinit var personalScheduleFragment: PersonalScheduleFragment
-    private lateinit var choiceButtons: Array<AppCompatButton>
+    private val choiceButtons = HashMap<Int, View>(4)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +36,11 @@ class PersonalMoimActivity: BaseActivity(), ServerView {
     }
 
     private fun setInitialize() {
-        choiceButtons = arrayOf(
-            findViewById(R.id.moim_personal_like_btn),
-            findViewById(R.id.moim_personal_possible_btn),
-            findViewById(R.id.moim_personal_dislike_btn),
-            findViewById(R.id.moim_personal_impossible_btn)
-        )
+
+        choiceButtons[CHOICE_LIKE] = findViewById(R.id.moim_personal_like_btn)
+        choiceButtons[CHOICE_POSSIBLE] = findViewById(R.id.moim_personal_possible_btn)
+        choiceButtons[CHOICE_DISLIKE] = findViewById(R.id.moim_personal_dislike_btn)
+        choiceButtons[CHOICE_IMPOSSIBLE] = findViewById(R.id.moim_personal_impossible_btn)
 
         fragmentManager = supportFragmentManager
         transaction = fragmentManager.beginTransaction()
@@ -93,15 +92,19 @@ class PersonalMoimActivity: BaseActivity(), ServerView {
         }
     }
 
-    private fun choiceButtonSelect(choiceNum: Int) {
-        selectedBtnFunc = choiceNum
+    private fun choiceButtonSelect(choice: Int) {
+        selectedBtnFunc = choice
 
-        for( i in choiceButtons.indices ) {
-            if ( i+1 == choiceNum ) {
-                choiceButtons[i].isSelected = true
-                continue
-            }
-            choiceButtons[i].isSelected = false
+        choiceButtons[CHOICE_LIKE]!!.isSelected = false
+        choiceButtons[CHOICE_DISLIKE]!!.isSelected = false
+        choiceButtons[CHOICE_POSSIBLE]!!.isSelected = false
+        choiceButtons[CHOICE_IMPOSSIBLE]!!.isSelected = false
+
+        when( choice ) {
+            CHOICE_LIKE -> choiceButtons[CHOICE_LIKE]!!.isSelected = true
+            CHOICE_DISLIKE -> choiceButtons[CHOICE_DISLIKE]!!.isSelected = true
+            CHOICE_POSSIBLE -> choiceButtons[CHOICE_POSSIBLE]!!.isSelected = true
+            CHOICE_IMPOSSIBLE -> choiceButtons[CHOICE_IMPOSSIBLE]!!.isSelected = true
         }
     }
 
