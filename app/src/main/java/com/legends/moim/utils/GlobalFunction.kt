@@ -60,10 +60,8 @@ public fun scheduleString2IntArray(rawSchedule: String, numOfRow: Int, numOfColu
     for( i in 0 until numOfColumns ) {
         for( j in 0 until numOfRow ) {
             resultIntArray[j][i] = rawSchedule[numOfRow*i+j].digitToInt(10)
-            Log.d("AAAAAAAAAAAAAAAAA", "WTFISTHIS:: ${resultIntArray[j][i]}")
         }
     }
-    Log.d("AAAAAAAAAAAAAAAAA", "resultIntArray:: $resultIntArray")
     return resultIntArray
 }
 
