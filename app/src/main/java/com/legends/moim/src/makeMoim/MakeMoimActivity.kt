@@ -220,7 +220,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
                             newDateBtn.text = tempDateString
                             newDateBtn.textSize = 14f
                             newDateBtn.includeFontPadding = false
-                            newDateBtn.setOnClickListener(dateClickListener())
+                            newDateBtn.setOnClickListener(DateClickListener())
 
                         binding.makeMoimSelectDateLayout.addView(newDateBtn)
                     }
@@ -242,7 +242,7 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
             .build()
     }
 
-    private inner class dateClickListener: View.OnClickListener {
+    private inner class DateClickListener: View.OnClickListener {
         override fun onClick(v: View?) {
             initDatePickerDialog()
             datePicker.show(supportFragmentManager, "SOME_TAG")

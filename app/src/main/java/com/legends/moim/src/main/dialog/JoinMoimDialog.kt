@@ -1,13 +1,11 @@
-package com.legends.moim.src.main
+package com.legends.moim.src.main.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.view.Window
 import android.widget.EditText
-import android.widget.NumberPicker
 import android.widget.TextView
 import com.legends.moim.R
-import com.legends.moim.config.baseModel.Moim
 
 class JoinMoimDialog(context : Context) {
 

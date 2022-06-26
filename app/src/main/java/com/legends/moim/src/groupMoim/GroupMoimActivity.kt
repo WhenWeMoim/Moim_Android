@@ -12,6 +12,8 @@ import com.legends.moim.R
 import com.legends.moim.config.BaseActivity
 import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMoimGroupBinding
+import com.legends.moim.src.groupMoim.dialog.InviteDialog
+import com.legends.moim.src.groupMoim.dialog.ParticipantsDialog
 import com.legends.moim.src.groupMoim.model.UserSchedules
 import com.legends.moim.src.groupMoim.model.mySchedule
 import com.legends.moim.src.groupMoim.model.thisMoim

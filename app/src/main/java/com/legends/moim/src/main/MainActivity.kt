@@ -12,6 +12,7 @@ import com.legends.moim.config.baseModel.Moim
 import com.legends.moim.databinding.ActivityMainBinding
 import com.legends.moim.src.groupMoim.GroupMoimActivity
 import com.legends.moim.src.groupMoim.model.GroupScheduleRes
+import com.legends.moim.src.main.dialog.JoinMoimDialog
 import com.legends.moim.src.main.model.JoinMoimReq
 import com.legends.moim.src.makeMoim.MakeMoimActivity
 import com.legends.moim.src.user.UserActivity

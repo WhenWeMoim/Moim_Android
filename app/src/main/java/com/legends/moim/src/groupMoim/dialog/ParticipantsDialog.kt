@@ -1,4 +1,4 @@
-package com.legends.moim.src.groupMoim
+package com.legends.moim.src.groupMoim.dialog
 
 import android.app.Dialog
 import android.content.Context

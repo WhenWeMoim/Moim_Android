@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.legends.moim.databinding.ItemMoimBinding
-import com.legends.moim.src.viewMoim.model.*
+import com.legends.moim.src.viewMoim.model.ListMoimInfo
+import com.legends.moim.src.viewMoim.model.currentMoimPosition
 
 class RVMoimsAdapter(private val moims: Array<ListMoimInfo>) : RecyclerView.Adapter<RVMoimsAdapter.GroupViewHolder>() {
 
