@@ -216,16 +216,16 @@ class GroupScheduleFragment(private val moim: Moim, private val schedule: Array<
     private fun convertScheduleData(ScheduleData: Int): Int{
         var convertedData: Int = 0
         when(ScheduleData){
-            1 -> {
+            4 -> {
                 convertedData = -2
             }
-            2 -> {
+            3 -> {
                 convertedData = -1
             }
-            3 -> {
+            2 -> {
                 convertedData = 1
             }
-            4 -> {
+            1 -> {
                 convertedData = 2
             }
         }
