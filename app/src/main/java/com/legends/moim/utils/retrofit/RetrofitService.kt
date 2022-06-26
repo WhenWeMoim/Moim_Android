@@ -92,7 +92,7 @@ class RetrofitService{
                     when (res.code) {
                         1000 -> { //성공
                             Log.d("Retrofit-postMoim", res.code.toString() + " : " + res.message+ "courseIdx : "+ res.result)
-                            postMoimView.onPostMoimSuccess( res.result.moimIdx )
+                            postMoimView.onPostMoimSuccess( res.result.moimIdx, res.result.pw )
                         }
                         else -> { //의도된 실패
                             Log.d("Retrofit-postMoim", res.code.toString() + " : " + res.message)

@@ -123,7 +123,8 @@ class MainActivity : BaseActivity(), JoinMoimDialog.JoinMoimDialogClickListener,
             masterUserIdx = result.moimInfo.masterUserIdx,
             startTimeHour = result.moimInfo.startTime.toInt(),
             endTimeHour = result.moimInfo.endTime.toInt(),
-            dates = dates
+            dates = dates,
+            password = result.moimInfo.passwd
         )
 
         val intent = Intent(this, MoimGroupActivity::class.java)

@@ -17,7 +17,7 @@ interface LoginView {
 
 interface PostMoimView {
     fun onPostMoimLoading()
-    fun onPostMoimSuccess(result: Int)
+    fun onPostMoimSuccess(moimIdx: Int, pw: String)
     fun onPostMoimFailure(code : Int, message : String)
 }
 

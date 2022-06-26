@@ -126,7 +126,8 @@ class ViewMoimActivity: BaseActivity(), GetMoimsView, GetMoimView {
             masterUserIdx = result.moimInfo.masterUserIdx,
             startTimeHour = result.moimInfo.startTime.toInt(),
             endTimeHour = result.moimInfo.endTime.toInt(),
-            dates = dates
+            dates = dates,
+            password = result.moimInfo.passwd
         )
 
         val gson = Gson()

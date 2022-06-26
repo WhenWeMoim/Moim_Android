@@ -273,9 +273,10 @@ class MakeMoimActivity: BaseActivity(), TimeDialog.TimeDialogClickListener, Sett
         //todo Loading Effect
     }
 
-    override fun onPostMoimSuccess(result: Int) {
+    override fun onPostMoimSuccess(moimIdx: Int, pw: String) {
         Toast.makeText(this, "모임 생성 성공.", Toast.LENGTH_SHORT).show()
-        makingMoim.moimIdx =  result
+        makingMoim.moimIdx =  moimIdx
+        makingMoim.password = pw
 
         startMoimGroupActivity( makingMoim )
     }
